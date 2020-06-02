@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
     //decodes the token to extract information
     const decoded = jwt.verify(token, config.get('jwtSecret'));
 
-    req.traveler = decoded.traveler;
+    req.user = decoded.user;
     next();
   } catch (err) {
     res.status(401).json({

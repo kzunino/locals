@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const createTraveler_controller = require('../controllers/createTraveler');
+const createUser_controller = require('../controllers/createUser');
 const {check} = require('express-validator');
 
 //@Route    POST /traveler
@@ -17,7 +17,7 @@ router.post(
       'Please enter a password with 6 or more characters'
     ).isLength({min: 6}),
   ],
-  createTraveler_controller.create_traveler
+  createUser_controller.create_user
 );
 
 module.exports = router;

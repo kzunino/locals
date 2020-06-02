@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const traveler_sign_in_controller = require('../controllers/authTraveler');
+const authUser_controller = require('../controllers/authUser');
 const {check} = require('express-validator');
 const auth = require('../middleware/auth');
 
-//@Route    GET api/auth
+//@Route    GET /auth
 //@desc     Test Route
 //@access   Public
-router.get('/', auth, traveler_sign_in_controller.get_traveler);
+router.get('/', auth, authUser_controller.get_user);
 
-//@Route    GET api/auth
+//@Route    POST /auth
 //@desc     Authenticate User & get token
 //@access   Public
 
@@ -19,7 +19,7 @@ router.post(
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Password is required').exists(),
   ],
-  traveler_sign_in_controller.sign_in
+  authUser_controller.sign_in
 );
 
 module.exports = router;

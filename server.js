@@ -20,8 +20,9 @@ app.use(
 app.get('/', (req, res) => res.send('API Running'));
 
 //Routes
-app.use('/traveler', require('./routes/traveler'));
+app.use('/users', require('./routes/users'));
 app.use('/auth', require('./routes/auth'));
+app.use('/posts', require('./routes/posts'));
 
 // send 404 if no other route matched
 app.use((req, res) => {

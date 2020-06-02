@@ -1,23 +1,23 @@
-const Traveler = require('../models').traveler;
+const User = require('../models').users;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const {validationResult} = require('express-validator');
 
 const asyncHandler = require('../middleware/asyncHandler');
-const auth = require('../middleware/auth');
 
 //@Route    GET /auth
 //@desc     Test Route
 //@access   Public
 
-exports.get_traveler = asyncHandler(async (req, res) => {
+exports.get_user = asyncHandler(async (req, res) => {
   //returns all data minus password
-  const traveler = await Traveler.findByPk(req.traveler.traveler_uid);
-  //    {
-  //     attributes: {exclude: [traveler.password]},
-  //   });
-  res.json(traveler);
+  console.log(req.user);
+  const user = await User.findByPk(req.user.user_uid, {
+    attributes: {exclude: ['password']},
+  });
+
+  res.json(user);
 });
 
 //@Route    POST auth
@@ -35,12 +35,12 @@ exports.sign_in = asyncHandler(async (req, res) => {
   const {email, password} = req.body;
 
   //See if user exists
-  let traveler = await Traveler.findOne({
+  let user = await User.findOne({
     where: {
       email,
     },
   });
-  if (!traveler) {
+  if (!user) {
     return res.status(400).json({
       errors: [
         {
@@ -50,7 +50,7 @@ exports.sign_in = asyncHandler(async (req, res) => {
     });
   }
   //Compares the password and matches it to encrypted password
-  const isMatch = await bcrypt.compare(password, traveler.password);
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     return res.status(400).json({
       errors: [
@@ -63,8 +63,8 @@ exports.sign_in = asyncHandler(async (req, res) => {
 
   //Return jsonwebtoken
   const payload = {
-    traveler: {
-      traveler_uid: traveler.traveler_uid,
+    user: {
+      user_uid: user.user_uid,
     },
   };
 

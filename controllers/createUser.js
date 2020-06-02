@@ -1,4 +1,4 @@
-const Traveler = require('../models').traveler;
+const User = require('../models').users;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -11,7 +11,7 @@ const {validationResult} = require('express-validator');
 //@desc     Create User
 //@access   Public
 
-exports.create_traveler = asyncHandler(async (req, res) => {
+exports.create_user = asyncHandler(async (req, res) => {
   //checks for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -23,12 +23,12 @@ exports.create_traveler = asyncHandler(async (req, res) => {
   let {email, first_name, last_name, password} = req.body;
 
   // See if user exists
-  let traveler = await Traveler.findAll({
+  let user = await User.findAll({
     where: {
       email,
     },
   });
-  if (traveler.length > 0) {
+  if (user.length > 0) {
     return res.status(400).json({
       errors: [
         {
@@ -43,19 +43,19 @@ exports.create_traveler = asyncHandler(async (req, res) => {
   //hash password
   password = await bcrypt.hash(password, salt);
 
-  traveler = await Traveler.create({
+  user = await User.create({
     email,
     first_name,
     last_name,
     password,
   });
 
-  //res.status(201).send(`traveler created`);
+  //res.status(201).send(`User created`);
 
   //Return jsonwebtoken
   const payload = {
-    traveler: {
-      traveler_uid: traveler.traveler_uid,
+    user: {
+      user_uid: user.user_uid,
     },
   };
 

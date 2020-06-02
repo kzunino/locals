@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Traveler = sequelize.define(
-    'traveler',
+  const Users = sequelize.define(
+    'users',
     {
-      traveler_uid: {
+      user_uid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
@@ -57,10 +57,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    {tableName: 'traveler'}
+    {tableName: 'users'}
   );
-  Traveler.associate = function (models) {
+  Users.associate = (models) => {
     // associations can be defined here
+    //Users.hasMany(models.post);
   };
-  return Traveler;
+  return Users;
 };
