@@ -14,17 +14,23 @@ router.post(
   post_controller.create_post
 );
 
-//@Route    GET api/posts
+//@Route    GET /posts
 //@desc     Get all posts
 //@access   Private
 
-//@Route    GET api/posts/:id
+router.get('/', auth, post_controller.get_all_posts);
+
+//@Route    GET /posts/:id
 //@desc     Get post by ID
 //@access   Private
 
-//@Route    DELETE api/posts/:id
+router.get('/:id', auth, post_controller.get_post_by_pk);
+
+//@Route    DELETE /posts/:id
 //@desc     Delete a post
 //@access   Private
+
+router.delete('/:id', auth, post_controller.delete_post);
 
 //@Route    PUT api/posts/like/:id
 //@desc     Like a post
