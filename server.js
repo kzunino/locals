@@ -42,9 +42,9 @@ app.use((err, req, res, next) => {
       errors: ['Email for user already exists'],
     });
   }
-  if (err.name === 'SequelizeDatabaseError') {
-    return res.status(404).json({errors: 'Oh no! Page not found'});
-  }
+  // if (err.name === 'SequelizeDatabaseError') {
+  //   return res.status(404).json({errors: 'Oh no! Page not found.'});
+  // }
   res.status(err.status || 500).json({
     message: err.message,
     name: err.name,

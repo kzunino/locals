@@ -20,6 +20,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      liked: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      likeCounts: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        validate: {
+          min: 0,
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

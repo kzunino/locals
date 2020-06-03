@@ -32,9 +32,11 @@ router.get('/:id', auth, post_controller.get_post_by_pk);
 
 router.delete('/:id', auth, post_controller.delete_post);
 
-//@Route    PUT api/posts/like/:id
+//@Route    PUT /posts/like/:id
 //@desc     Like a post
 //@access   Private
+
+router.put('/like/:id', auth, post_controller.like_post);
 
 //@Route    PUT api/posts/unlike/:id
 //@desc     Unlike a post

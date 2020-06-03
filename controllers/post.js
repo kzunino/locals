@@ -1,5 +1,6 @@
 const User = require('../models').users;
 const Post = require('../models').post;
+const Like = require('../models').likes;
 const {validationResult} = require('express-validator');
 const asyncHandler = require('../middleware/asyncHandler');
 
@@ -77,5 +78,43 @@ exports.delete_post = asyncHandler(async (req, res) => {
     res.status(204).end();
   } else {
     res.status(403).json({error: 'Post is not associated with user'});
+  }
+});
+
+//@Route    PUT /posts/like/:id
+//@desc     Like a post
+//@access   Private
+
+exports.like_post = asyncHandler(async (req, res) => {
+  //Finds like
+  const likeExists = await Like.findOne({
+    where: {
+      user_uid: req.user.user_uid,
+      fk_post_uid: req.params.id,
+    },
+  });
+  console.log(likeExists);
+  //finds post
+  const post = await Post.findByPk(req.params.id);
+
+  //creates like if like doesn't exist
+  if (!likeExists && post) {
+    await Like.create({
+      user_uid: req.user.user_uid,
+      fk_post_uid: post.post_uid,
+    });
+    await post.increment('likeCounts', {by: 1});
+    await post.update({liked: req.user.user_uid ? true : false});
+    res.status(200).send({
+      msg: 'You liked this post',
+    });
+  } else if (!post) {
+    res.status(400).send({msg: 'There is no post to be liked'});
+  } else {
+    await Like.destroy({where: {user_uid: req.user.user_uid}});
+    await post.decrement('likeCounts', {by: 1});
+    res.status(200).send({
+      message: 'You unliked this post',
+    });
   }
 });

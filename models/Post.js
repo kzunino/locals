@@ -20,6 +20,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      liked: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      likeCounts: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        validate: {
+          min: 0,
+        },
+      },
     },
     {tableName: 'post'}
   );
@@ -30,6 +43,10 @@ module.exports = (sequelize, DataTypes) => {
         fieldName: 'fk_user_uid',
         allowNull: false,
       },
+    });
+    Post.hasMany(models.likes, {
+      foreignKey: 'fk_post_uid',
+      allowNull: false,
     });
   };
   return Post;
