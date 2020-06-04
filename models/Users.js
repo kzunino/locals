@@ -65,6 +65,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,
+        onDelete: 'CASCADE',
+        hooks: true,
       },
     });
   };

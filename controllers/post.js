@@ -37,16 +37,23 @@ exports.create_post = asyncHandler(async (req, res) => {
 
 exports.get_all_posts = asyncHandler(async (req, res) => {
   const posts = await Post.findAll({
+    include: [
+      {
+        model: Like,
+      },
+    ],
     order: [['createdAt', 'DESC']],
     attributes: [
       'post_uid',
       'text',
       'first_name',
       'last_name',
+      'likeCounts',
       'fk_user_uid',
       'createdAt',
     ],
   });
+
   res.json(posts);
 });
 
@@ -55,7 +62,13 @@ exports.get_all_posts = asyncHandler(async (req, res) => {
 //@access   Private
 
 exports.get_post_by_pk = asyncHandler(async (req, res) => {
-  const post = await Post.findByPk(req.params.id);
+  const post = await Post.findByPk(req.params.id, {
+    include: [
+      {
+        model: Like,
+      },
+    ],
+  });
   if (post) res.json(post);
   else return res.status(404).json({msg: 'Post not found'});
 });
@@ -82,7 +95,7 @@ exports.delete_post = asyncHandler(async (req, res) => {
 });
 
 //@Route    PUT /posts/like/:id
-//@desc     Like a post
+//@desc     Like or Unlike a post
 //@access   Private
 
 exports.like_post = asyncHandler(async (req, res) => {
@@ -93,18 +106,18 @@ exports.like_post = asyncHandler(async (req, res) => {
       fk_post_uid: req.params.id,
     },
   });
-  console.log(likeExists);
+
   //finds post
   const post = await Post.findByPk(req.params.id);
 
   //creates like if like doesn't exist
+  //if like exists then unlikes the post
   if (!likeExists && post) {
     await Like.create({
       user_uid: req.user.user_uid,
       fk_post_uid: post.post_uid,
     });
     await post.increment('likeCounts', {by: 1});
-    await post.update({liked: req.user.user_uid ? true : false});
     res.status(200).send({
       msg: 'You liked this post',
     });
@@ -118,3 +131,12 @@ exports.like_post = asyncHandler(async (req, res) => {
     });
   }
 });
+
+// created as virtual and false
+//if liked.user_uid === post user_uid return true else false
+
+//@Route    POST /posts/comment/:id
+//@desc     Comment on a post
+//@access   Private
+
+exports.post_comment = asyncHandler(async (req, res) => {});

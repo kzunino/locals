@@ -20,11 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      liked: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
       likeCounts: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -47,6 +42,8 @@ module.exports = (sequelize, DataTypes) => {
     Post.hasMany(models.likes, {
       foreignKey: 'fk_post_uid',
       allowNull: false,
+      onDelete: 'CASCADE',
+      hooks: true,
     });
   };
   return Post;

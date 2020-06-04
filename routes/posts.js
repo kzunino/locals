@@ -33,20 +33,18 @@ router.get('/:id', auth, post_controller.get_post_by_pk);
 router.delete('/:id', auth, post_controller.delete_post);
 
 //@Route    PUT /posts/like/:id
-//@desc     Like a post
+//@desc     Like or Unlikes a post
 //@access   Private
 
 router.put('/like/:id', auth, post_controller.like_post);
 
-//@Route    PUT api/posts/unlike/:id
-//@desc     Unlike a post
-//@access   Private
-
-//@Route    POST api/posts/comment/:id
+//@Route    POST /posts/comment/:id
 //@desc     Comment on a post
 //@access   Private
 
-//@Route    DELETE api/posts/comment/:id/:comment_id
+router.post('/comment/:id', auth, post_controller.post_comment);
+
+//@Route    DELETE /posts/comment/:id/:comment_id
 //@desc     Delete Comment
 //@access   Private
 
