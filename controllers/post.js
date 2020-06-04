@@ -1,6 +1,7 @@
 const User = require('../models').users;
 const Post = require('../models').post;
 const Like = require('../models').likes;
+const Comment = require('../models').comment;
 const {validationResult} = require('express-validator');
 const asyncHandler = require('../middleware/asyncHandler');
 
@@ -132,11 +133,56 @@ exports.like_post = asyncHandler(async (req, res) => {
   }
 });
 
-// created as virtual and false
-//if liked.user_uid === post user_uid return true else false
+//@Route    PUT /posts/:id
+//@desc     Update Post
+//@access   Private
+
+exports.update_post = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array(),
+    });
+  }
+  const post = await Post.findByPk(req.params.id);
+
+  if (post) {
+    post.update({text: req.body.text});
+    res.json(post);
+  } else return res.status(404).json({msg: 'Post not found'});
+});
 
 //@Route    POST /posts/comment/:id
 //@desc     Comment on a post
 //@access   Private
 
-exports.post_comment = asyncHandler(async (req, res) => {});
+exports.post_comment = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array(),
+    });
+  }
+
+  //find user and remove password
+  const user = await User.findByPk(req.user.user_uid, {
+    attributes: {exclude: ['password']},
+  });
+
+  const post = await Post.findByPk(req.params.id);
+
+  //instantiate a new post from request and user
+  const comment = await Comment.create({
+    text: req.body.text,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    fk_user_uid: user.user_uid,
+    fk_post_uid: post.post_uid,
+  });
+
+  res.json(comment).status(201);
+});
+
+//@Route    DELETE posts/comment/:id/:comment_id
+//@desc     Delete Comment
+//@access   Private

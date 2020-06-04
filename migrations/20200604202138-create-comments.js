@@ -1,8 +1,8 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('posts', {
-      post_uid: {
+    return queryInterface.createTable('comment', {
+      comment_uid: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
@@ -39,6 +39,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('posts');
+    return queryInterface.dropTable('comment');
   },
 };

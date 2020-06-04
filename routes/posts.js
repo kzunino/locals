@@ -38,15 +38,31 @@ router.delete('/:id', auth, post_controller.delete_post);
 
 router.put('/like/:id', auth, post_controller.like_post);
 
+//@Route    PUT posts/:id
+//@desc     Update Post
+//@access   Private
+
+router.put(
+  '/:id',
+  [auth, [check('text', 'Text is required').notEmpty()]],
+  post_controller.update_post
+);
+
 //@Route    POST /posts/comment/:id
 //@desc     Comment on a post
 //@access   Private
 
-router.post('/comment/:id', auth, post_controller.post_comment);
+router.post(
+  '/comment/:id',
+  [auth, [check('text', 'Text is required').notEmpty()]],
+  post_controller.post_comment
+);
 
 //@Route    DELETE /posts/comment/:id/:comment_id
 //@desc     Delete Comment
 //@access   Private
+
+//router.post('/comment/:id', auth, post_controller.delete_comment);
 
 //UPDATE COMMENT CAN STILL BE DONE
 module.exports = router;

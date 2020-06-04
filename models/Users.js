@@ -69,6 +69,15 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true,
       },
     });
+
+    Users.hasMany(models.comment, {
+      foreignKey: {
+        fieldName: 'fk_user_uid',
+        allowNull: false,
+        onDelete: 'CASCADE',
+        hooks: true,
+      },
+    });
   };
   return Users;
 };
