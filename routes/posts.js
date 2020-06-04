@@ -58,11 +58,20 @@ router.post(
   post_controller.post_comment
 );
 
+//@Route    PUT /posts/comment/:id
+//@desc     Update a comment
+//@access   Private
+
+router.put(
+  '/comment/:comment_id',
+  [auth, [check('text', 'Text is required').notEmpty()]],
+  post_controller.update_comment
+);
+
 //@Route    DELETE /posts/comment/:id/:comment_id
 //@desc     Delete Comment
 //@access   Private
 
-//router.post('/comment/:id', auth, post_controller.delete_comment);
+router.delete('/comment/:comment_id', auth, post_controller.delete_comment);
 
-//UPDATE COMMENT CAN STILL BE DONE
 module.exports = router;

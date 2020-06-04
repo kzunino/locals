@@ -87,11 +87,15 @@ exports.delete_post = asyncHandler(async (req, res) => {
     ],
   });
 
-  if (post.fk_user_uid === req.user.user_uid) {
-    await post.destroy();
-    res.status(204).end();
+  if (post) {
+    if (post.fk_user_uid === req.user.user_uid) {
+      await post.destroy();
+      res.status(204).end();
+    } else {
+      return res.status(500).json({msg: 'Post not associated with user'});
+    }
   } else {
-    res.status(403).json({error: 'Post is not associated with user'});
+    return res.status(404).json({msg: 'Post not found'});
   }
 });
 
@@ -147,9 +151,15 @@ exports.update_post = asyncHandler(async (req, res) => {
   const post = await Post.findByPk(req.params.id);
 
   if (post) {
-    post.update({text: req.body.text});
-    res.json(post);
-  } else return res.status(404).json({msg: 'Post not found'});
+    if (post.fk_user_uid === req.user.user_uid) {
+      post.update({text: req.body.text});
+      res.json(post);
+    } else {
+      return res.status(500).json({msg: 'Post not associated with user'});
+    }
+  } else {
+    return res.status(404).json({msg: 'Post not found'});
+  }
 });
 
 //@Route    POST /posts/comment/:id
@@ -183,6 +193,52 @@ exports.post_comment = asyncHandler(async (req, res) => {
   res.json(comment).status(201);
 });
 
-//@Route    DELETE posts/comment/:id/:comment_id
+//@Route    DELETE posts/comment/:comment_id
 //@desc     Delete Comment
 //@access   Private
+
+exports.delete_comment = asyncHandler(async (req, res) => {
+  const comment = await Comment.findByPk(req.params.comment_id, {
+    include: [
+      {
+        model: User,
+      },
+    ],
+  });
+
+  if (comment) {
+    if (comment.fk_user_uid === req.user.user_uid) {
+      await comment.destroy();
+      res.status(204).end();
+    } else {
+      res.status(500).json({error: 'Comment is not found'});
+    }
+  } else {
+    res.status(403).json({error: 'Post is not associated with user'});
+  }
+});
+
+//@Route    PUT /posts/comment/:id
+//@desc     Update a comment
+//@access   Private
+
+exports.update_comment = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array(),
+    });
+  }
+  const comment = await Comment.findByPk(req.params.comment_id);
+
+  if (comment) {
+    if (comment.fk_user_uid === req.user.user_uid) {
+      comment.update({text: req.body.text});
+      res.json(comment);
+    } else {
+      return res.status(500).json({msg: 'Comment not associated with user'});
+    }
+  } else {
+    return res.status(404).json({msg: 'Comment not found'});
+  }
+});
