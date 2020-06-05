@@ -42,6 +42,9 @@ exports.get_all_posts = asyncHandler(async (req, res) => {
       {
         model: Like,
       },
+      {
+        model: Comment,
+      },
     ],
     order: [['createdAt', 'DESC']],
     attributes: [
@@ -67,6 +70,9 @@ exports.get_post_by_pk = asyncHandler(async (req, res) => {
     include: [
       {
         model: Like,
+      },
+      {
+        model: Comment,
       },
     ],
   });

@@ -37,9 +37,16 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,
+        constraints: false,
       },
     });
     Post.hasMany(models.likes, {
+      foreignKey: 'fk_post_uid',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
+    Post.hasMany(models.comment, {
       foreignKey: 'fk_post_uid',
       allowNull: false,
       onDelete: 'CASCADE',

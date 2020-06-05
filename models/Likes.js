@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         fieldName: 'fk_post_uid',
         allowNull: false,
+        constraints: false,
       },
     });
   };
