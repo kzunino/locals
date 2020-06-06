@@ -68,6 +68,12 @@ router.put(
   post_controller.update_comment
 );
 
+//@Route    PUT /posts/comment/like/:comment_id
+//@desc     Like/Unlike Comment
+//@access   Private
+
+router.put('/comment/like/:comment_id', auth, post_controller.like_comment);
+
 //@Route    DELETE /posts/comment/:id/:comment_id
 //@desc     Delete Comment
 //@access   Private

@@ -48,12 +48,12 @@ module.exports = (sequelize, DataTypes) => {
         constraints: false,
       },
     });
-    // Post.hasMany(models.likes, {
-    //   foreignKey: 'fk_post_uid',
-    //   allowNull: false,
-    //   onDelete: 'CASCADE',
-    //   hooks: true,
-    // });
+    Comment.hasMany(models.comment_likes, {
+      foreignKey: 'fk_comment_uid',
+      allowNull: false,
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
   };
   return Comment;
 };

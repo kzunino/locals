@@ -1,8 +1,8 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('post_likes', {
-      post_like_uid: {
+    return queryInterface.createTable('comment_likes', {
+      comment_like_uid: {
         type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
@@ -26,6 +26,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('post_likes');
+    return queryInterface.dropTable('comment_likes');
   },
 };

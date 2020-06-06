@@ -1,7 +1,8 @@
 const User = require('../models').users;
 const Post = require('../models').post;
-const Like = require('../models').likes;
+const PostLike = require('../models').post_likes;
 const Comment = require('../models').comment;
+const CommentLike = require('../models').comment_likes;
 const {validationResult} = require('express-validator');
 const asyncHandler = require('../middleware/asyncHandler');
 
@@ -40,10 +41,15 @@ exports.get_all_posts = asyncHandler(async (req, res) => {
   const posts = await Post.findAll({
     include: [
       {
-        model: Like,
+        model: PostLike,
       },
       {
         model: Comment,
+        include: [
+          {
+            model: CommentLike,
+          },
+        ],
       },
     ],
     order: [['createdAt', 'DESC']],
@@ -69,10 +75,15 @@ exports.get_post_by_pk = asyncHandler(async (req, res) => {
   const post = await Post.findByPk(req.params.id, {
     include: [
       {
-        model: Like,
+        model: PostLike,
       },
       {
         model: Comment,
+        include: [
+          {
+            model: CommentLike,
+          },
+        ],
       },
     ],
   });
@@ -111,7 +122,7 @@ exports.delete_post = asyncHandler(async (req, res) => {
 
 exports.like_post = asyncHandler(async (req, res) => {
   //Finds like
-  const likeExists = await Like.findOne({
+  const likeExists = await PostLike.findOne({
     where: {
       user_uid: req.user.user_uid,
       fk_post_uid: req.params.id,
@@ -124,7 +135,7 @@ exports.like_post = asyncHandler(async (req, res) => {
   //creates like if like doesn't exist
   //if like exists then unlikes the post
   if (!likeExists && post) {
-    await Like.create({
+    await PostLike.create({
       user_uid: req.user.user_uid,
       fk_post_uid: post.post_uid,
     });
@@ -135,7 +146,7 @@ exports.like_post = asyncHandler(async (req, res) => {
   } else if (!post) {
     res.status(400).send({msg: 'There is no post to be liked'});
   } else {
-    await Like.destroy({where: {user_uid: req.user.user_uid}});
+    await PostLike.destroy({where: {user_uid: req.user.user_uid}});
     await post.decrement('likeCounts', {by: 1});
     res.status(200).send({
       message: 'You unliked this post',
@@ -246,5 +257,43 @@ exports.update_comment = asyncHandler(async (req, res) => {
     }
   } else {
     return res.status(404).json({msg: 'Comment not found'});
+  }
+});
+
+//@Route    PUT /posts/comment/like/:comment_id
+//@desc     Like/Unlike Comment
+//@access   Private
+
+exports.like_comment = asyncHandler(async (req, res) => {
+  //Finds like
+  const likeExists = await CommentLike.findOne({
+    where: {
+      user_uid: req.user.user_uid,
+      fk_comment_uid: req.params.comment_id,
+    },
+  });
+
+  //finds post
+  const comment = await Comment.findByPk(req.params.comment_id);
+
+  //creates like if like doesn't exist
+  //if like exists then unlikes the post
+  if (!likeExists && comment) {
+    await CommentLike.create({
+      user_uid: req.user.user_uid,
+      fk_comment_uid: comment.comment_uid,
+    });
+    await comment.increment('likeCounts', {by: 1});
+    res.status(200).send({
+      msg: 'You liked this comment',
+    });
+  } else if (!comment) {
+    res.status(400).send({msg: 'There is no comment to be liked'});
+  } else {
+    await CommentLike.destroy({where: {user_uid: req.user.user_uid}});
+    await comment.decrement('likeCounts', {by: 1});
+    res.status(200).send({
+      message: 'You unliked this comment',
+    });
   }
 });

@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Likes = sequelize.define(
-    'likes',
+  const CommentLikes = sequelize.define(
+    'comment_likes',
     {
-      like_uid: {
+      comment_like_uid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
@@ -13,17 +13,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     },
-    {tableName: 'likes'}
+    {tableName: 'comment_likes'}
   );
-  Likes.associate = function (models) {
+  CommentLikes.associate = function (models) {
     // associations can be defined here
-    Likes.belongsTo(models.post, {
+    CommentLikes.belongsTo(models.comment, {
       foreignKey: {
-        fieldName: 'fk_post_uid',
+        fieldName: 'fk_comment_uid',
         allowNull: false,
         constraints: false,
       },
     });
   };
-  return Likes;
+  return CommentLikes;
 };

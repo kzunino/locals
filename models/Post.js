@@ -37,10 +37,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,
-        constraints: false,
+        constraints: false, //disables constraint for cascade deletes
       },
     });
-    Post.hasMany(models.likes, {
+    Post.hasMany(models.post_likes, {
       foreignKey: 'fk_post_uid',
       allowNull: false,
       onDelete: 'CASCADE',
