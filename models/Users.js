@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
+        allowNull: false,
       },
       first_name: {
         type: DataTypes.STRING,
@@ -71,6 +72,14 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Users.hasMany(models.comment, {
+      foreignKey: {
+        fieldName: 'fk_user_uid',
+        allowNull: false,
+        onDelete: 'CASCADE',
+        hooks: true,
+      },
+    });
+    Users.hasOne(models.profile, {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,

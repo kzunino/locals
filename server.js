@@ -23,6 +23,7 @@ app.get('/', (req, res) => res.send('API Running'));
 app.use('/users', require('./routes/users'));
 app.use('/auth', require('./routes/auth'));
 app.use('/posts', require('./routes/posts'));
+app.use('/profile', require('./routes/profile'));
 
 // send 404 if no other route matched
 app.use((req, res) => {
