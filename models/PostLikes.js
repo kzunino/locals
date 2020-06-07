@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         fieldName: 'fk_post_uid',
         allowNull: false,
-        constraints: false,
       },
+      constraints: false, //disables constraint for cascade deletes
     });
   };
   return PostLikes;

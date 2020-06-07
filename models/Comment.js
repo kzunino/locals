@@ -38,15 +38,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,
-        constraints: false,
       },
+      constraints: false,
     });
     Comment.belongsTo(models.post, {
       foreignKey: {
         fieldName: 'fk_post_uid',
         allowNull: false,
-        constraints: false,
       },
+      constraints: false,
     });
     Comment.hasMany(models.comment_likes, {
       foreignKey: 'fk_comment_uid',

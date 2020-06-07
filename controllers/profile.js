@@ -1,5 +1,6 @@
 const User = require('../models').users;
 const Profile = require('../models').profile;
+
 //const {validationResult} = require('express-validator');
 const asyncHandler = require('../middleware/asyncHandler');
 
@@ -8,7 +9,10 @@ const asyncHandler = require('../middleware/asyncHandler');
 //@access   Private
 
 exports.get_my_profile = asyncHandler(async (req, res) => {
-  const profile = await Profile.findByPk(req.user.user_uid, {
+  const profile = await Profile.findOne({
+    where: {
+      fk_user_uid: req.user.user_uid,
+    },
     include: [
       {
         model: User,
@@ -28,7 +32,7 @@ exports.get_my_profile = asyncHandler(async (req, res) => {
 //@access   Private
 
 exports.update_profile = asyncHandler(async (req, res) => {
-  const {
+  let {
     date_of_birth,
     country,
     bio,
@@ -39,35 +43,93 @@ exports.update_profile = asyncHandler(async (req, res) => {
   } = req.body;
   const fk_user_uid = req.user.user_uid;
 
-  //   const profileFields = {};
-  //   //profileFields.user = req.user.user_uid;
-  //   date_of_birth ? (profileFields.date_of_birth = date_of_birth) : null;
-  //   country ? (profileFields.country = country) : null;
-  //   bio ? (profileFields.bio = bio) : null;
-  //   languages ? (profileFields.languages = languages) : null;
-  //   phone_number ? (profileFields.phone_number = phone_number) : null;
-  //   gender ? (profileFields.gender = gender) : null;
-  //   verified ? (profileFields.verified = verified) : null;
+  // If no value insert null
+  date_of_birth ? date_of_birth : (date_of_birth = null);
+  country ? country : (country = null);
+  bio ? bio : (bio = null);
+  languages ? languages : (languages = null);
+  phone_number ? phone_number : (phone_number = null);
+  gender ? gender : (gender = null);
+  verified ? verified : (verified = false);
 
-  //   //find by user uid
-  //   let profile = await Profile.findByPk(req.user.user_uid);
-  //   //if profile exists, update it
-  //   if (profile) {
-  //     await Profile.update({
-  //       profileFields,
-  //     });
-  //     return res.json({profile}).status(200);
-  //   } else {
-  profile = await Profile.create({
-    date_of_birth,
-    country,
-    bio,
-    languages,
-    phone_number,
-    gender,
-    verified,
-    fk_user_uid,
+  //find by user uid
+  let profile = await Profile.findOne({
+    where: {
+      fk_user_uid: req.user.user_uid,
+    },
   });
-  res.status(201).end();
-  //   }
+  //if profile exists, update it
+
+  if (profile) {
+    profile = await profile.update({
+      date_of_birth,
+      country,
+      bio,
+      languages,
+      phone_number,
+      gender,
+      verified,
+    });
+    return res.json({msg: 'Profile Updated'}).status(200);
+  } else {
+    profile = await Profile.create({
+      date_of_birth,
+      country,
+      bio,
+      languages,
+      phone_number,
+      gender,
+      verified,
+      fk_user_uid,
+    });
+    res.status(201).end();
+  }
+});
+
+//@Route    GET /profile
+//@desc     Get all profile
+//@access   Public
+exports.get_all_profiles = asyncHandler(async (req, res) => {
+  const profiles = await Profile.findAll({
+    include: {
+      model: User,
+      attributes: ['first_name', 'last_name'],
+    },
+  });
+  if (profiles) res.json({profiles});
+});
+
+// @route    GET /profile/user/:user_uid
+// @desc     Get profile by user uid
+// @access   Private
+
+exports.get_user = asyncHandler(async (req, res) => {
+  const profile = await Profile.findOne({
+    where: {
+      fk_user_uid: req.params.user_uid,
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['first_name', 'last_name'],
+      },
+    ],
+  });
+
+  if (profile) res.json(profile);
+  else res.json({msg: 'Profile not found'});
+});
+
+// @route    DELETE /profile
+// @desc     Delete profile, user & posts
+// @access   Private
+
+exports.delete_user = asyncHandler(async (req, res) => {
+  const user = await User.findByPk(req.user.user_uid);
+  if (user) {
+    await user.destroy();
+    res.json({msg: 'User deleted'});
+  } else {
+    res.json({msg: 'User not found'});
+  }
 });

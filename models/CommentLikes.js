@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         fieldName: 'fk_comment_uid',
         allowNull: false,
-        constraints: false,
       },
+      constraints: false,
     });
   };
   return CommentLikes;

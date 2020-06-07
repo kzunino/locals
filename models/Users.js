@@ -66,26 +66,26 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,
-        onDelete: 'CASCADE',
-        hooks: true,
       },
+      onDelete: 'CASCADE',
+      hooks: true,
     });
 
     Users.hasMany(models.comment, {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,
-        onDelete: 'CASCADE',
-        hooks: true,
       },
+      onDelete: 'CASCADE',
+      hooks: true,
     });
     Users.hasOne(models.profile, {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,
-        onDelete: 'CASCADE',
-        hooks: true,
       },
+      onDelete: 'CASCADE',
+      hooks: true,
     });
   };
   return Users;
