@@ -32,15 +32,7 @@ exports.get_my_profile = asyncHandler(async (req, res) => {
 //@access   Private
 
 exports.update_profile = asyncHandler(async (req, res) => {
-  let {
-    date_of_birth,
-    country,
-    bio,
-    languages,
-    phone_number,
-    gender,
-    verified,
-  } = req.body;
+  let {date_of_birth, country, bio, languages, phone_number, gender} = req.body;
   const fk_user_uid = req.user.user_uid;
 
   // If no value insert null
@@ -50,7 +42,6 @@ exports.update_profile = asyncHandler(async (req, res) => {
   languages ? languages : (languages = null);
   phone_number ? phone_number : (phone_number = null);
   gender ? gender : (gender = null);
-  verified ? verified : (verified = false);
 
   //find by user uid
   let profile = await Profile.findOne({
@@ -68,7 +59,6 @@ exports.update_profile = asyncHandler(async (req, res) => {
       languages,
       phone_number,
       gender,
-      verified,
     });
     return res.json({msg: 'Profile Updated'}).status(200);
   } else {
@@ -79,7 +69,6 @@ exports.update_profile = asyncHandler(async (req, res) => {
       languages,
       phone_number,
       gender,
-      verified,
       fk_user_uid,
     });
     res.status(201).end();

@@ -83,3 +83,22 @@ exports.sign_in = asyncHandler(async (req, res) => {
     }
   );
 });
+
+//@Route    POST /auth/verify
+//@desc     Verified User
+//@access   Private
+
+exports.verify_user = asyncHandler(async (req, res) => {
+  const user = await User.findByPk(req.user.user_uid);
+
+  if (user) {
+    if (!user.verified) {
+      user.update({verified: 'true'});
+      res.json({msg: 'User is now verified'}).status(201);
+    } else {
+      res.json({msg: 'User is already verified'});
+    }
+  } else {
+    res.json({msg: 'User not found!'}).status(404);
+  }
+});

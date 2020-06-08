@@ -32,6 +32,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      verified: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     });

@@ -22,4 +22,10 @@ router.post(
   authUser_controller.sign_in
 );
 
+//@Route    POST /auth/verify
+//@desc     Verified User
+//@access   Private
+
+router.post('/verify', auth, authUser_controller.verify_user);
+
 module.exports = router;

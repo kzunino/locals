@@ -3,51 +3,64 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('adventures', {
       adventure_uid: {
-        type: DataTypes.UUID,
+        type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: Sequelize.UUIDV4,
       },
       title: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       description: {
-        type: DataTypes.TEXT,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
-
+      languages: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      group_size: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      phone_number: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       street: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       city: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       state: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       zip_code: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       duration: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       start: {
-        type: DataTypes.TIME,
+        type: Sequelize.TIME,
         allowNull: false,
       },
       included: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true,
+        defaultValue: null,
       },
       recommended: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true,
+        defaultValue: null,
       },
       createdAt: {
         allowNull: false,

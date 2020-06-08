@@ -57,6 +57,11 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please provide a value for "password"',
         },
       },
+      verified: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
     },
     {tableName: 'users'}
   );
@@ -80,6 +85,14 @@ module.exports = (sequelize, DataTypes) => {
       hooks: true,
     });
     Users.hasOne(models.profile, {
+      foreignKey: {
+        fieldName: 'fk_user_uid',
+        allowNull: false,
+      },
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
+    Users.hasMany(models.adventure, {
       foreignKey: {
         fieldName: 'fk_user_uid',
         allowNull: false,

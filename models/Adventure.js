@@ -17,7 +17,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-
+      languages: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      group_size: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      phone_number: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       street: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -45,16 +56,25 @@ module.exports = (sequelize, DataTypes) => {
       included: {
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue: null,
       },
       recommended: {
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue: null,
       },
     },
     {tableName: 'adventure'}
   );
   Adventure.associate = function (models) {
     // associations can be defined here
+    Adventure.belongsTo(models.users, {
+      foreignKey: {
+        fieldName: 'fk_user_uid',
+        allowNull: false,
+      },
+      constraints: false,
+    });
   };
   return Adventure;
 };
