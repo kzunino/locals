@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 const verifiedUser = require('../middleware/verifiedUser');
 
 //@Route    GET /adventure
-//@desc     Post an adventure
+//@desc     get adventures
 //@access   Public
 
 router.get('/', adventure_controller.get_all_adventures);

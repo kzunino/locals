@@ -52,15 +52,19 @@ exports.update_profile = asyncHandler(async (req, res) => {
   //if profile exists, update it
 
   if (profile) {
-    profile = await profile.update({
-      date_of_birth,
-      country,
-      bio,
-      languages,
-      phone_number,
-      gender,
-    });
-    return res.json({msg: 'Profile Updated'}).status(200);
+    if (profile.fk_user_uid === fk_user_uid) {
+      profile = await profile.update({
+        date_of_birth,
+        country,
+        bio,
+        languages,
+        phone_number,
+        gender,
+      });
+      return res.json({msg: 'Profile Updated'}).status(200);
+    } else {
+      return res.json({msg: 'User is not associated with profile'}).status(404);
+    }
   } else {
     profile = await Profile.create({
       date_of_birth,
