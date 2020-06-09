@@ -1,12 +1,12 @@
 const User = require('../models').users;
-const Profile = require('../models').profile;
+const Review = require('../models').Review;
 const Adventure = require('../models').adventure;
 
 const {validationResult} = require('express-validator');
 const asyncHandler = require('../middleware/asyncHandler');
 
 //@Route    GET /adventure
-//@desc     Post an adventure
+//@desc     Get all adventures
 //@access   Public
 
 exports.get_all_adventures = asyncHandler(async (req, res) => {
@@ -21,6 +21,27 @@ exports.get_all_adventures = asyncHandler(async (req, res) => {
     exclude: ['updatedAt'],
   });
   if (adventures) res.json(adventures);
+  else res.json({msg: 'No adventures found'}).status(404);
+});
+
+//@Route    GET /adventure/:adventure_uid
+//@desc     Get adventure
+//@access   Public
+
+exports.get_adventure_by_uid = asyncHandler(async (req, res) => {
+  const adventure = await Adventure.findByPk(req.params.adventure_uid, {
+    include: [
+      {
+        model: User,
+        attributes: ['first_name', 'last_name'],
+      },
+      {
+        model: Review,
+        attributes: ['first_name', 'review', 'rating'],
+      },
+    ],
+  });
+  if (adventure) res.json(adventure);
   else res.json({msg: 'No adventures found'}).status(404);
 });
 

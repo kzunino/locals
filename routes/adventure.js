@@ -11,12 +11,20 @@ const verifiedUser = require('../middleware/verifiedUser');
 
 router.get('/', adventure_controller.get_all_adventures);
 
+//@Route    GET /adventure/:adventure_uid
+//@desc     Get adventure
+//@access   Public
+
+router.get('/:adventure_uid', adventure_controller.get_adventure_by_uid);
+
 //@Route    POST /adventure
 //@desc     Post an adventure
 //@access   Private & Verified
 
 router.post(
   '/',
+  auth,
+  verifiedUser,
   [
     check('title', 'Please enter a title for your adventure').not().isEmpty(),
     check('description', 'Please enter a description').not().isEmpty(),
@@ -32,8 +40,6 @@ router.post(
     check('duration', 'Please enter number of hours').not().isEmpty().isInt(),
     check('start', 'Please enter a start time').not().isEmpty(),
   ],
-  auth,
-  verifiedUser,
   adventure_controller.post_adventure
 );
 

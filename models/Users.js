@@ -100,6 +100,14 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       hooks: true,
     });
+    Users.hasMany(models.review, {
+      foreignKey: {
+        fieldName: 'fk_user_uid',
+        allowNull: false,
+      },
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
   };
   return Users;
 };

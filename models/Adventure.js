@@ -75,6 +75,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       constraints: false,
     });
+
+    Adventure.hasMany(models.review, {
+      foreignKey: {
+        fieldName: 'fk_adventure_uid',
+        allowNull: false,
+      },
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
   };
   return Adventure;
 };

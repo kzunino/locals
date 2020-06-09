@@ -25,6 +25,7 @@ app.use('/auth', require('./routes/auth'));
 app.use('/posts', require('./routes/posts'));
 app.use('/profile', require('./routes/profile'));
 app.use('/adventure', require('./routes/adventure'));
+app.use('/review', require('./routes/review'));
 
 // send 404 if no other route matched
 app.use((req, res) => {
