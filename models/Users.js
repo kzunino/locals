@@ -108,6 +108,14 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       hooks: true,
     });
+    Users.hasMany(models.favorites, {
+      foreignKey: {
+        fieldName: 'fk_user_uid',
+        allowNull: false,
+      },
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
   };
   return Users;
 };

@@ -84,6 +84,14 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       hooks: true,
     });
+    Adventure.hasMany(models.favorites, {
+      foreignKey: {
+        fieldName: 'fk_adventure_uid',
+        allowNull: false,
+      },
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
   };
   return Adventure;
 };
