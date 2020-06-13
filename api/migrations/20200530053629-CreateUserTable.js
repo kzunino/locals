@@ -37,6 +37,10 @@ module.exports = {
         allowNull: true,
         defaultValue: false,
       },
+      avatar: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     });

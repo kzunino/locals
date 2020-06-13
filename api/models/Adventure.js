@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      cost: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       phone_number: {
         type: DataTypes.BIGINT,
         allowNull: false,
@@ -59,6 +63,11 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: null,
       },
       recommended: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
+      picture: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: null,

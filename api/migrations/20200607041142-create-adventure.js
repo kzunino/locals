@@ -24,6 +24,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      cost: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       phone_number: {
         type: Sequelize.BIGINT,
         allowNull: false,
@@ -58,6 +62,11 @@ module.exports = {
         defaultValue: null,
       },
       recommended: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
+      picture: {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null,

@@ -1,0 +1,129 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+:root {
+  --primary-color: 191, 36, 152;
+}
+
+a:hover {
+  color: rgb(var(--primary-color));
+}
+.primary-color {
+  color: rgb(var(--primary-color));
+}
+.jumbotron {
+  background: url('../src/img/jumbotron-kimson-doan.jpg');
+  background-repeat: no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  height: 50vh;
+  width: 100%;
+}
+
+.nav-item {
+  color: white;
+}
+
+.secondary-nav-link {
+}
+
+/* Experience Cards */
+
+.experience-card {
+  width: 18rem;
+  box-shadow: 0px 4px 20px 1px grey;
+}
+
+.experience-user-avatar {
+  border-radius: 50%;
+  width: 25%;
+  border: white solid;
+  margin-top: -40px;
+  margin-left: 15px;
+}
+
+.experience-subheading {
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: small;
+}
+.experience-card span {
+  color: rgb(var(--primary-color));
+}
+.card-title {
+  font-weight: bold;
+}
+
+/* xs < 768 */
+@media screen and (max-width: 550px) {
+  .secondary-nav-item {
+    border-right: none;
+  }
+
+  .secondary-nav {
+    background-color: white;
+    box-shadow: 0px 4px 20px 1px grey;
+    border-radius: 3px;
+    width: 90%;
+    margin: auto;
+    margin-top: -20px;
+  }
+}
+
+/* xs < 768 */
+@media screen and (min-width: 551px) {
+  .secondary-nav-item {
+    border-right: none;
+  }
+
+  .secondary-nav {
+    background-color: white;
+    box-shadow: 0px 4px 20px 1px grey;
+    border-radius: 3px;
+    width: 70%;
+    margin: auto;
+    margin-top: -20px;
+  }
+}
+
+/* xs < 768 */
+@media screen and (min-width: 767px) {
+  .secondary-nav {
+    background-color: white;
+    box-shadow: 0px 4px 20px 1px grey;
+    border-radius: 3px;
+    width: 50%;
+    margin: auto;
+    margin-top: -20px;
+  }
+
+  .secondary-nav-item {
+    border-right: 1px solid lightgrey;
+  }
+}
+
+/* sm */
+@media screen and (min-width: 768px) {
+}
+
+/* md */
+@media screen and (min-width: 992px) {
+}
+
+/* lg */
+@media screen and (min-width: 1200px) {
+}

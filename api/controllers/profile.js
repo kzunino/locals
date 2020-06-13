@@ -120,8 +120,12 @@ exports.get_user = asyncHandler(async (req, res) => {
 exports.delete_user = asyncHandler(async (req, res) => {
   const user = await User.findByPk(req.user.user_uid);
   if (user) {
-    await user.destroy();
-    res.json({msg: 'User deleted'});
+    if (user.user_uid === req.user.user_uid) {
+      await user.destroy();
+      res.json({msg: 'User deleted'});
+    } else {
+      res.json({msg: 'Cannot delete another user'});
+    }
   } else {
     res.json({msg: 'User not found'});
   }

@@ -12,26 +12,32 @@ module.exports = (sequelize, DataTypes) => {
       date_of_birth: {
         type: DataTypes.DATEONLY,
         allowNull: true,
+        defaultValue: null,
       },
       country: {
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue: null,
       },
       bio: {
         type: DataTypes.TEXT,
         allowNull: true,
+        defaultValue: null,
       },
       languages: {
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue: null,
       },
       phone_number: {
         type: DataTypes.BIGINT,
         allowNull: true,
+        defaultValue: null,
       },
       gender: {
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue: null,
       },
     },
     {tableName: 'profile'}

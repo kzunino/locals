@@ -11,26 +11,32 @@ module.exports = {
       date_of_birth: {
         type: Sequelize.DATEONLY,
         allowNull: true,
+        defaultValue: null,
       },
       country: {
         type: Sequelize.STRING,
         allowNull: true,
+        defaultValue: null,
       },
       bio: {
         type: Sequelize.TEXT,
         allowNull: true,
+        defaultValue: null,
       },
       languages: {
         type: Sequelize.STRING,
         allowNull: true,
+        defaultValue: null,
       },
       phone_number: {
         type: Sequelize.BIGINT,
         allowNull: true,
+        defaultValue: null,
       },
       gender: {
         type: Sequelize.STRING,
         allowNull: true,
+        defaultValue: null,
       },
       createdAt: {
         allowNull: false,
