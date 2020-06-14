@@ -30,26 +30,45 @@ export class Provider extends Component {
   }
 
   signIn = async (email, password) => {
-    const headers = {
-      'Content-Type': 'application/json',
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
     };
 
-    const data = JSON.stringify({email, password});
-    console.log(data);
+    const body = JSON.stringify({email, password});
+    console.log(body);
     try {
-      const res = await fetch(
-        'http://localhost:5000/auth',
-        {method: 'post'},
-        data,
-        {
-          headers,
-        }
-      );
-      //   console.log(res);
-      //   this.setState({
-      //     userToken: res.data,
-      //   });
+      const res = await axios.post('http://localhost:5000/auth', body, config);
+      if (res.status === 200) {
+        this.setState({
+          userToken: res.data.token,
+        });
+        localStorage.setItem('token', res.data.token);
+      }
     } catch (error) {
+      // Error 😨
+      if (error.response) {
+        /*
+         * The request was made and the server responded with a
+         * status code that falls out of the range of 2xx
+         */
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+      } else if (error.request) {
+        /*
+         * The request was made but no response was received, `error.request`
+         * is an instance of XMLHttpRequest in the browser and an instance
+         * of http.ClientRequest in Node.js
+         */
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
       console.log(error);
     }
   };
@@ -60,6 +79,7 @@ export class Provider extends Component {
         userToken: null,
       };
     });
+    localStorage.removeItem('token');
   };
 }
 

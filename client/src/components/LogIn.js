@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -7,23 +7,58 @@ function LogIn({context}) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    errors: [],
   });
 
-  const {email, password} = formData;
+  const {email, password, errors} = formData;
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    //resets error state to empty if previously rendered validation errors
+    if (errors.length) {
+      setFormData((formData) => [...formData.errors, []]);
+    }
+
     //fires login action
-    await context.actions.signIn(email, password);
+    //if errors are returned it takes error object values and adds them to error array
+
+    const res = await context.actions.signIn(email, password);
+    console.log(res.errors[0].msg);
+    setFormData({...formData, errors: [...formData.errors, res.errors[0].msg]});
   };
+
+  const ErrorsDisplay = () => {
+    let errorsDisplay = null;
+    if (errors.length) {
+      errorsDisplay = (
+        <div>
+          <h4 className='validation--errors--label text-center secondary'>
+            Validation errors:
+          </h4>
+          <div className='validation-errors text-center primary-color'>
+            <ul>
+              {errors.map((error, i) => (
+                <li key={i}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+    return errorsDisplay;
+  };
+
   return (
     <div className='container pt-5'>
       <div className='form-size'>
         <Form className='container' onSubmit={(e) => onSubmit(e)}>
           <h1 className='text-center primary-color'>Sign In</h1>
+
+          <ErrorsDisplay errors={errors} />
 
           <Form.Group controlId='formBasicEmail'>
             <Form.Label>Email address</Form.Label>
@@ -34,9 +69,6 @@ function LogIn({context}) {
               placeholder='Enter email'
               onChange={(e) => onChange(e)}
             />
-            <Form.Text className='text-muted'>
-              We'll never share your email with anyone else.
-            </Form.Text>
           </Form.Group>
 
           <Form.Group controlId='formBasicPassword'>

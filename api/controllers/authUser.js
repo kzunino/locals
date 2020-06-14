@@ -99,6 +99,6 @@ exports.verify_user = asyncHandler(async (req, res) => {
       res.json({msg: 'User is already verified'});
     }
   } else {
-    res.json({msg: 'User not found!'}).status(404);
+    res.json({error: [{msg: 'User not found!'}]}).status(400);
   }
 });
