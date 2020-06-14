@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       cost: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       phone_number: {
         type: DataTypes.BIGINT,

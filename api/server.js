@@ -1,12 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
+
 const path = require('path');
 const models = require('./models');
 
 // variable to enable global error logging
 const enableGlobalErrorLogging =
   process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
+
+// Enable All CORS Requests
+app.use(cors());
 
 //Init Middleware
 app.use(bodyParser.json());

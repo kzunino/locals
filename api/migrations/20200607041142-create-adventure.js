@@ -26,7 +26,7 @@ module.exports = {
       },
       cost: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       phone_number: {
         type: Sequelize.BIGINT,

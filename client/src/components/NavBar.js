@@ -10,14 +10,12 @@ const NavBar = () => {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link eventKey='link-1' className='nav-item'>
+        <Nav.Link href='/login' className='nav-item'>
           Log In
         </Nav.Link>
       </Nav.Item>
       <Nav.Item className='signup'>
-        <Nav.Link eventKey='link-2' className='nav-item'>
-          Signup
-        </Nav.Link>
+        <Nav.Link className='nav-item'>Signup</Nav.Link>
       </Nav.Item>
     </Nav>
   );
