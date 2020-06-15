@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useReducer} from 'react';
 import {Link} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -7,10 +7,11 @@ function LogIn({context}) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    errors: [],
   });
 
-  const {email, password, errors} = formData;
+  const [errors, setErrors] = useState([]);
+
+  const {email, password} = formData;
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -20,15 +21,17 @@ function LogIn({context}) {
 
     //resets error state to empty if previously rendered validation errors
     if (errors.length) {
-      setFormData((formData) => [...formData.errors, []]);
+      console.log('I work');
+      setErrors([]);
     }
 
     //fires login action
     //if errors are returned it takes error object values and adds them to error array
 
     const res = await context.actions.signIn(email, password);
-    console.log(res.errors[0].msg);
-    setFormData({...formData, errors: [...formData.errors, res.errors[0].msg]});
+    console.log(res.errors);
+
+    setErrors([...errors, ...res.errors]);
   };
 
   const ErrorsDisplay = () => {

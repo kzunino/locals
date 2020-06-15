@@ -17,7 +17,7 @@ router.post(
   '/',
   [
     check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is required').exists(),
+    check('password', 'Password is required').exists().not().isEmpty(),
   ],
   authUser_controller.sign_in
 );

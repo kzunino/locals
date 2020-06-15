@@ -27,10 +27,12 @@ exports.get_user = asyncHandler(async (req, res) => {
 exports.sign_in = asyncHandler(async (req, res) => {
   //checks for validation errors
   const errors = validationResult(req);
+  // If there are validation errors...
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    // Use the Array `map()` method to get a list of error messages.
+    const errorMessages = errors.array().map((error) => error.msg);
+    // Return the validation errors to the client.
+    return res.status(400).json({errors: errorMessages});
   }
   const {email, password} = req.body;
 
