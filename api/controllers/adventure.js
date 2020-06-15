@@ -21,7 +21,7 @@ exports.get_all_adventures = asyncHandler(async (req, res) => {
     exclude: ['updatedAt'],
   });
   if (adventures) res.json(adventures);
-  else res.json({msg: 'No adventures found'}).status(404);
+  else res.json({errors: ['No adventures found']}).status(400);
 });
 
 //@Route    GET /adventure/:adventure_uid
@@ -42,7 +42,7 @@ exports.get_adventure_by_uid = asyncHandler(async (req, res) => {
     ],
   });
   if (adventure) res.json(adventure);
-  else res.json({msg: 'No adventures found'}).status(404);
+  else res.json({errors: ['No adventures found']}).status(400);
 });
 
 //@Route    POST /adventure
@@ -135,10 +135,10 @@ exports.update_adventure = asyncHandler(async (req, res) => {
       });
       res.json({msg: 'Adventure updated'}).status(200);
     } else {
-      res.json({msg: 'User is not associated with this post'}).status(401);
+      res.json({errors: ['User is not associated with this post']}).status(400);
     }
   } else {
-    res.json({msg: "Adventure doesn't exist"}).status(404);
+    res.json({errors: ["Adventure doesn't exist"]}).status(400);
   }
 });
 
@@ -153,9 +153,9 @@ exports.delete_adventure = asyncHandler(async (req, res) => {
       adventure.destroy();
       res.json({msg: 'Adventure deleted'});
     } else {
-      res.json({msg: 'User is not associated with this post'}).status(401);
+      res.json({errors: ['User is not associated with this post']}).status(400);
     }
   } else {
-    res.json({msg: "Adventure doesn't exist"}).res.status(404);
+    res.json({errors: ["Adventure doesn't exist"]}).res.status(400);
   }
 });

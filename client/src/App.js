@@ -9,10 +9,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import LogIn from './components/LogIn';
+import SignUp from './components/SignUp';
 
 //Components with context
 const HomeWithContext = withContext(Home);
 const LogInWithContext = withContext(LogIn);
+const SignUpWithContext = withContext(SignUp);
 
 function App() {
   //if token exists then sets api header with token
@@ -26,6 +28,7 @@ function App() {
         <Switch>
           <Route exact path='/home' component={HomeWithContext} />
           <Route path='/login' component={LogInWithContext} />
+          <Route path='/signup' component={SignUpWithContext} />
         </Switch>
       </Fragment>
     </Router>

@@ -12,7 +12,7 @@ exports.get_favorites = asyncHandler(async (req, res) => {
     where: {fk_user_uid: req.user.user_uid},
   });
   if (favorites) res.json(favorites).status(200);
-  else res.json({msg: 'No favorites yet!'});
+  //else res.json({errors: ['No favorites yet!']}).status(400);
 });
 
 //@Route    POST /favorites/:adventure_uid
@@ -43,7 +43,7 @@ exports.add_to_favorites = asyncHandler(async (req, res) => {
       msg: 'Adventure added to favorites',
     });
   } else if (!adventure) {
-    res.status(400).send({msg: 'There is no adventure to be liked'});
+    res.status(400).send({errors: ['There is no adventure to be liked']});
   } else {
     await Favorites.destroy({where: {fk_user_uid: req.user.user_uid}});
     res.status(200).send({

@@ -7,7 +7,7 @@ const asyncHandler = require('../middleware/asyncHandler');
 
 const {validationResult} = require('express-validator');
 
-//@Route    POST /traveler
+//@Route    POST /users
 //@desc     Create User
 //@access   Public
 
@@ -15,9 +15,8 @@ exports.create_user = asyncHandler(async (req, res) => {
   //checks for validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({errors: errorMessages});
   }
 
   let {email, first_name, last_name, password} = req.body;
@@ -30,11 +29,7 @@ exports.create_user = asyncHandler(async (req, res) => {
   });
   if (user.length > 0) {
     return res.status(400).json({
-      errors: [
-        {
-          msg: 'User already exists',
-        },
-      ],
+      errors: ['User already exists'],
     });
   }
 

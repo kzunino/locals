@@ -3,7 +3,7 @@ const router = express.Router();
 const createUser_controller = require('../controllers/createUser');
 const {check} = require('express-validator');
 
-//@Route    POST /traveler
+//@Route    POST /users
 //@desc     Create User
 //@access   Public
 router.post(

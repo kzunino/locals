@@ -3,15 +3,17 @@ import {Link} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function LogIn({context, history}) {
+function SignUp({context}) {
   const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
   });
 
   const [errors, setErrors] = useState([]);
 
-  const {email, password} = formData;
+  const {first_name, last_name, email, password} = formData;
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -22,14 +24,14 @@ function LogIn({context, history}) {
     //fires login action
     //if errors are returned it takes error object values and adds them to error array
 
-    const res = await context.actions.signIn(email, password);
-    console.log(res);
-    if (res === 200) {
-      history.push('/home');
-      console.log(`SUCCESS! ${email} is logged in`);
-    } else if (res.errors) {
-      setErrors([[], ...res.errors]);
-    }
+    const res = await context.actions.signUp(
+      first_name,
+      last_name,
+      email,
+      password
+    );
+
+    if (res.errors) setErrors([[], ...res.errors]);
   };
 
   const ErrorsDisplay = () => {
@@ -52,7 +54,6 @@ function LogIn({context, history}) {
     }
     return errorsDisplay;
   };
-
   return (
     <div className='container pt-5'>
       <div className='form-size'>
@@ -60,6 +61,28 @@ function LogIn({context, history}) {
           <h1 className='text-center primary-color'>Sign In</h1>
 
           <ErrorsDisplay errors={errors} />
+
+          <Form.Group controlId='formBasicFirstName'>
+            <Form.Label>First Name</Form.Label>
+            <Form.Control
+              type='text'
+              name='first_name'
+              value={first_name}
+              placeholder='Enter first name'
+              onChange={(e) => onChange(e)}
+            />
+          </Form.Group>
+
+          <Form.Group controlId='formBasicLastName'>
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control
+              type='text'
+              name='last_name'
+              value={last_name}
+              placeholder='Enter last name'
+              onChange={(e) => onChange(e)}
+            />
+          </Form.Group>
 
           <Form.Group controlId='formBasicEmail'>
             <Form.Label>Email address</Form.Label>
@@ -87,11 +110,11 @@ function LogIn({context, history}) {
             Submit
           </Button>
           <p>
-            Don't have a user account?{' '}
-            <Link to='/signup' className='primary-color'>
+            Already have a user account?{' '}
+            <Link to='/login' className='primary-color'>
               Click here
             </Link>{' '}
-            to sign up!
+            to sign in!
           </p>
           <Link to='/home' className='primary-color'>
             Back
@@ -102,4 +125,4 @@ function LogIn({context, history}) {
   );
 }
 
-export default LogIn;
+export default SignUp;

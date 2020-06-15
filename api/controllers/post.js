@@ -88,7 +88,7 @@ exports.get_post_by_pk = asyncHandler(async (req, res) => {
     ],
   });
   if (post) res.json(post);
-  else return res.status(404).json({msg: 'Post not found'});
+  else return res.status(400).json({errors: ['Post not found']});
 });
 
 //@Route    DELETE /posts/:id
@@ -109,10 +109,10 @@ exports.delete_post = asyncHandler(async (req, res) => {
       await post.destroy();
       res.status(204).end();
     } else {
-      return res.status(500).json({msg: 'Post not associated with user'});
+      return res.status(400).json({errors: ['Post not associated with user']});
     }
   } else {
-    return res.status(404).json({msg: 'Post not found'});
+    return res.status(400).json({errors: ['Post not found']});
   }
 });
 
@@ -144,7 +144,7 @@ exports.like_post = asyncHandler(async (req, res) => {
       msg: 'You liked this post',
     });
   } else if (!post) {
-    res.status(400).send({msg: 'There is no post to be liked'});
+    res.status(400).send({errors: ['There is no post to be liked']});
   } else {
     await PostLike.destroy({where: {user_uid: req.user.user_uid}});
     await post.decrement('likeCounts', {by: 1});
@@ -172,10 +172,10 @@ exports.update_post = asyncHandler(async (req, res) => {
       post.update({text: req.body.text});
       res.json(post);
     } else {
-      return res.status(500).json({msg: 'Post not associated with user'});
+      return res.status(400).json({errors: ['Post not associated with user']});
     }
   } else {
-    return res.status(404).json({msg: 'Post not found'});
+    return res.status(400).json({errors: ['Post not found']});
   }
 });
 
@@ -228,10 +228,10 @@ exports.delete_comment = asyncHandler(async (req, res) => {
       await comment.destroy();
       res.status(204).end();
     } else {
-      res.status(500).json({error: 'Comment is not found'});
+      res.status(400).json({errors: ['Comment is not found']});
     }
   } else {
-    res.status(403).json({error: 'Post is not associated with user'});
+    res.status(400).json({errors: ['Post is not associated with user']});
   }
 });
 
@@ -253,10 +253,12 @@ exports.update_comment = asyncHandler(async (req, res) => {
       comment.update({text: req.body.text});
       res.json(comment);
     } else {
-      return res.status(500).json({msg: 'Comment not associated with user'});
+      return res
+        .status(400)
+        .json({errors: ['Comment not associated with user']});
     }
   } else {
-    return res.status(404).json({msg: 'Comment not found'});
+    return res.status(400).json({errors: ['Comment not found']});
   }
 });
 
@@ -288,7 +290,7 @@ exports.like_comment = asyncHandler(async (req, res) => {
       msg: 'You liked this comment',
     });
   } else if (!comment) {
-    res.status(400).send({msg: 'There is no comment to be liked'});
+    res.status(400).send({errors: ['There is no comment to be liked']});
   } else {
     await CommentLike.destroy({where: {user_uid: req.user.user_uid}});
     await comment.decrement('likeCounts', {by: 1});

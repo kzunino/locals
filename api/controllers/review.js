@@ -19,7 +19,7 @@ exports.get_all_user_reviews = asyncHandler(async (req, res) => {
   if (reviews) {
     res.json(reviews).status(200);
   } else {
-    res.json({msg: 'No reviews found'}).status(404);
+    res.json({errors: ['No reviews found']}).status(400);
   }
 });
 
@@ -37,7 +37,7 @@ exports.get_all_adventure_reviews = asyncHandler(async (req, res) => {
   if (reviews) {
     res.json(reviews).status(200);
   } else {
-    res.json({msg: 'No reviews found'}).status(404);
+    res.json({errors: ['No reviews found']}).status(400);
   }
 });
 
@@ -71,10 +71,10 @@ exports.post_review = asyncHandler(async (req, res) => {
       });
       res.json(review).status(201);
     } else {
-      res.json({msg: 'Adventure not found'}).status(404);
+      res.json({errors: ['Adventure not found']}).status(400);
     }
   } else {
-    res.json({msg: 'User not found'}).status(404);
+    res.json({errors: ['User not found']}).status(400);
   }
 });
 
@@ -93,10 +93,10 @@ exports.update_review = asyncHandler(async (req, res) => {
       });
       res.json(review).status(201);
     } else {
-      res.json({msg: 'User is not associated with review'});
+      res.json({errors: ['User is not associated with review']}).status(400);
     }
   } else {
-    res.json({msg: 'Review is not found'}).status(404);
+    res.json({errors: ['Review is not found']}).status(400);
   }
 });
 
@@ -112,9 +112,9 @@ exports.delete_review = asyncHandler(async (req, res) => {
       await review.destroy();
       res.status(201).end();
     } else {
-      res.json({msg: 'User is not associated with review'});
+      res.json({errors: ['User is not associated with review']}).status(400);
     }
   } else {
-    res.json({msg: 'Review is not found'}).status(404);
+    res.json({errors: ['Review is not found']}).status(400);
   }
 });

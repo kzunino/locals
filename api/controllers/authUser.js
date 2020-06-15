@@ -43,24 +43,12 @@ exports.sign_in = asyncHandler(async (req, res) => {
     },
   });
   if (!user) {
-    return res.status(400).json({
-      errors: [
-        {
-          msg: 'Invalid Credentials',
-        },
-      ],
-    });
+    return res.status(400).json({errors: ['Invalid Credentials']});
   }
   //Compares the password and matches it to encrypted password
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    return res.status(400).json({
-      errors: [
-        {
-          msg: 'Invalid Credentials',
-        },
-      ],
-    });
+    return res.status(400).json({errors: ['Invalid Credentials']});
   }
 
   //Return jsonwebtoken
@@ -69,7 +57,12 @@ exports.sign_in = asyncHandler(async (req, res) => {
       user_uid: user.user_uid,
     },
   };
-
+  user = await User.findOne({
+    where: {
+      email,
+    },
+    attributes: {exclude: ['password', 'createdAt', 'updatedAt']},
+  });
   //put secret in config then get secret
   jwt.sign(
     payload,
@@ -81,6 +74,7 @@ exports.sign_in = asyncHandler(async (req, res) => {
       if (err) throw err;
       res.json({
         token,
+        user,
       });
     }
   );
@@ -101,6 +95,6 @@ exports.verify_user = asyncHandler(async (req, res) => {
       res.json({msg: 'User is already verified'});
     }
   } else {
-    res.json({error: [{msg: 'User not found!'}]}).status(400);
+    res.json({error: ['User not found!']}).status(400);
   }
 });

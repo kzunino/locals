@@ -15,7 +15,9 @@ const NavBar = () => {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item className='signup'>
-        <Nav.Link className='nav-item'>Signup</Nav.Link>
+        <Nav.Link href='/signup' className='nav-item'>
+          Signup
+        </Nav.Link>
       </Nav.Item>
     </Nav>
   );

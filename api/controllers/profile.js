@@ -23,7 +23,7 @@ exports.get_my_profile = asyncHandler(async (req, res) => {
   if (profile) {
     res.status(200).json({profile});
   } else {
-    res.status(400).json({msg: 'Profile not found'});
+    res.status(400).json({errors: ['Profile not found']});
   }
 });
 
@@ -63,7 +63,9 @@ exports.update_profile = asyncHandler(async (req, res) => {
       });
       return res.json({msg: 'Profile Updated'}).status(200);
     } else {
-      return res.json({msg: 'User is not associated with profile'}).status(404);
+      return res
+        .json({errors: ['User is not associated with profile']})
+        .status(400);
     }
   } else {
     profile = await Profile.create({
@@ -110,7 +112,7 @@ exports.get_user = asyncHandler(async (req, res) => {
   });
 
   if (profile) res.json(profile);
-  else res.json({msg: 'Profile not found'});
+  else res.json({errors: ['Profile not found']}).status(400);
 });
 
 // @route    DELETE /profile
@@ -122,11 +124,11 @@ exports.delete_user = asyncHandler(async (req, res) => {
   if (user) {
     if (user.user_uid === req.user.user_uid) {
       await user.destroy();
-      res.json({msg: 'User deleted'});
+      res.json({msg: 'User deleted'}).status(200);
     } else {
-      res.json({msg: 'Cannot delete another user'});
+      res.json({errors: ['Cannot delete another user']}).status(400);
     }
   } else {
-    res.json({msg: 'User not found'});
+    res.json({errors: ['User not found']}).status(400);
   }
 });
