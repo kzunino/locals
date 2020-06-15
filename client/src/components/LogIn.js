@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -20,10 +20,10 @@ function LogIn({context}) {
     e.preventDefault();
 
     //resets error state to empty if previously rendered validation errors
-    if (errors.length) {
-      console.log('I work');
-      setErrors([]);
-    }
+    // if (errors.length) {
+    //   console.log('I work');
+    //   setErrors([]);
+    // }
 
     //fires login action
     //if errors are returned it takes error object values and adds them to error array
@@ -31,7 +31,7 @@ function LogIn({context}) {
     const res = await context.actions.signIn(email, password);
     console.log(res.errors);
 
-    setErrors([...errors, ...res.errors]);
+    setErrors([[], ...res.errors]);
   };
 
   const ErrorsDisplay = () => {
