@@ -1,0 +1,18 @@
+/* Card Slider */
+
+.cards-slider-wrapper {
+  margin-top: 25px;
+  height: 285px;
+  display: flex;
+  padding-left: 20px;
+
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  background: #fff;
+}
+
+.cards-slider-wrapper::-webkit-scrollbar {
+  display: none;
+}

@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-}
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -29,6 +29,8 @@ ul {
 .secondary {
   color: grey;
 }
+
+/* Jumbotron */
 .jumbotron {
   background: url('../src/img/jumbotron-kimson-doan.jpg');
   background-repeat: no-repeat center center;
@@ -41,14 +43,12 @@ ul {
   width: 100%;
 }
 
+/* NavBar */
 .nav-item {
   color: white;
 }
 .nav-item:hover {
   color: rgb(var(--primary-color));
-}
-
-.secondary-nav-link {
 }
 
 /* Form */
@@ -67,10 +67,12 @@ ul {
 /* Experience Cards */
 
 .experience-card {
-  width: 275px;
-  box-shadow: 0px 4px 20px 1px grey;
-  flex: 1;
-  margin-right: 10px;
+  width: 200px;
+  box-shadow: 0px 4px 5px 0px grey;
+  /* flex: 1; */
+  margin-right: 20px;
+
+  flex: 0 0 auto;
 }
 
 .experience-user-avatar {
@@ -92,28 +94,6 @@ ul {
 }
 .card-title {
   font-weight: bold;
-}
-
-/* Card Slider */
-.cards-slider-wrapper {
-  display: flex;
-  position: absolute;
-}
-.cards-slider {
-  position: relative;
-  max-width: 275px;
-  margin: 0 auto;
-}
-
-.cards-slider::after {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 280px;
-  outline: 5px solid red;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 /* xs < 768 */

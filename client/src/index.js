@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './normalize.css';
 import './index.css';
+import './slider.css';
 import App from './App';
 import {Provider} from './Context';
 
