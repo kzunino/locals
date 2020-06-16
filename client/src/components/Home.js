@@ -1,16 +1,20 @@
 import React, {Fragment} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import withContext from '../Context';
+
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import NavBar from './NavBar';
 import SecondaryNav from './SecondaryNav';
 
 import Featured from '../components/Featured';
 
+const NavBarWithContext = withContext(NavBar);
+
 const Home = () => {
   return (
     <Fragment>
       <Jumbotron fluid className='jumbotron pt-0 pb-sm-1 md-pb-5 mb-0'>
-        <NavBar />
+        <NavBarWithContext />
         <div className='container'>
           <h1 className='text-center text-white '>
             Explore New Places With{' '}

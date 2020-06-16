@@ -92,9 +92,11 @@ export class Provider extends Component {
     this.setState(() => {
       return {
         userToken: null,
+        first_name: null,
       };
     });
     localStorage.removeItem('token');
+    localStorage.removeItem('first_name');
   };
 
   signUp = async (first_name, last_name, email, password) => {
@@ -110,10 +112,15 @@ export class Provider extends Component {
     try {
       const res = await axios.post('http://localhost:5000/users', body, config);
       if (res.status === 201) {
-        this.setState({
-          userToken: res.data.token,
-        });
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('first_name', res.data.user.first_name);
+        this.setState(() => {
+          return {
+            userToken: localStorage.getItem('token'),
+            first_name: localStorage.getItem('first_name'),
+          };
+        });
+        return 201;
       }
     } catch (error) {
       // Error 😨

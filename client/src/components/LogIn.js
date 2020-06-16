@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function LogIn({context, history}) {
+function LogIn({context, history, context: {userToken}}) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -12,6 +12,11 @@ function LogIn({context, history}) {
   const [errors, setErrors] = useState([]);
 
   const {email, password} = formData;
+
+  // Redirect if already logged in
+  if (userToken) {
+    return <Redirect to='/home' />;
+  }
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});

@@ -54,6 +54,13 @@ exports.create_user = asyncHandler(async (req, res) => {
     },
   };
 
+  user = await User.findOne({
+    where: {
+      email,
+    },
+    attributes: {exclude: ['password', 'createdAt', 'updatedAt']},
+  });
+
   //put secret in config then get secret
   jwt.sign(
     payload,
@@ -65,6 +72,7 @@ exports.create_user = asyncHandler(async (req, res) => {
       if (err) throw err;
       res.status(201).json({
         token,
+        user,
       });
     }
   );

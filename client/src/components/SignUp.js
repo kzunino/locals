@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function SignUp({context}) {
+function SignUp({context, history, context: {userToken}}) {
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -14,6 +14,10 @@ function SignUp({context}) {
   const [errors, setErrors] = useState([]);
 
   const {first_name, last_name, email, password} = formData;
+
+  if (userToken) {
+    return <Redirect to='/home' />;
+  }
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -30,8 +34,13 @@ function SignUp({context}) {
       email,
       password
     );
-
-    if (res.errors) setErrors([[], ...res.errors]);
+    console.log(res);
+    if (res === 201) {
+      history.push('/home');
+      console.log(`SUCCESS! ${email}'s account was created`);
+    } else if (res.errors) {
+      setErrors([[], ...res.errors]);
+    }
   };
 
   const ErrorsDisplay = () => {
@@ -58,7 +67,7 @@ function SignUp({context}) {
     <div className='container pt-5'>
       <div className='form-size'>
         <Form className='container' onSubmit={(e) => onSubmit(e)}>
-          <h1 className='text-center primary-color'>Sign In</h1>
+          <h1 className='text-center primary-color'>Sign Up</h1>
 
           <ErrorsDisplay errors={errors} />
 
