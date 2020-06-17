@@ -1,18 +1,68 @@
 /* Card Slider */
 
+.cards-slider {
+  position: relative;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .cards-slider-wrapper {
   margin-top: 25px;
   height: 285px;
   display: flex;
-  padding-left: 20px;
 
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 
   background: #fff;
 }
 
+div.cards-slider-wrapper:last-child {
+  margin-right: 0px;
+}
 .cards-slider-wrapper::-webkit-scrollbar {
   display: none;
+}
+
+.cards-slider button {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  z-index: 2;
+  font-size: large;
+  font-weight: bold;
+  background-color: #fff;
+  border: none;
+  box-shadow: 0px 0px 1px 1px grey;
+}
+.scroll-left {
+  margin-right: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 130px;
+  text-align: left;
+}
+.scroll-right {
+  margin-left: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 130px;
+  text-align: right;
+}
+
+@media screen and (max-width: 550px) {
+  .cards-slider {
+    position: relative;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .cards-slider button {
+    visibility: hidden;
+  }
 }
