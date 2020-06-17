@@ -3,11 +3,14 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import withContext from './Context';
 import setAuthToken from './utilites/setAuthToken';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 //Components
 import NavBar from './components/NavBar';
 import Home from './components/Home';
+import Featured from './components/Featured';
+import Experiences from './components/Experiences';
+
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
 
@@ -26,7 +29,15 @@ function App() {
     <Router>
       <Fragment>
         <Switch>
-          <Route exact path='/home' component={HomeWithContext} />
+          <Route
+            exact
+            path='/home'
+            component={() => <HomeWithContext component={<Featured />} />}
+          />
+          <Route
+            path='/home/experiences'
+            component={() => <HomeWithContext component={<Experiences />} />}
+          />
           <Route path='/login' component={LogInWithContext} />
           <Route path='/signup' component={SignUpWithContext} />
         </Switch>
