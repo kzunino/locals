@@ -6,6 +6,7 @@ import './styles/post.css';
 import './styles/slider.css';
 import './styles/index.css';
 import './styles/profile.css';
+import './styles/experiencePage.css';
 
 import App from './App';
 import {Provider} from './Context';

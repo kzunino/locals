@@ -34,11 +34,22 @@ a {
   background-position: center;
   height: 50vh;
   width: 100%;
+  margin-top: -62px;
+}
+
+.jumbotron h1 {
+  padding-top: 50px;
 }
 
 /* NavBar */
+.nav {
+  z-index: 2;
+  background: transparent;
+}
+
 .nav-item {
-  color: white;
+  color: #4a4a4a;
+  z-index: 2;
 }
 .nav-item:hover {
   color: rgb(var(--primary-color));

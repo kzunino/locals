@@ -6,9 +6,11 @@ import setAuthToken from './utilites/setAuthToken';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 //Components
+import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Featured from './components/Featured';
-import Experiences from './components/Experiences';
+import Experiences from './components/experiences/Experiences';
+import ExperiencePage from './components/experiences/ExperiencePage';
 
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
@@ -20,7 +22,9 @@ import Classifieds from './components/Classifieds';
 
 //Components with context
 const HomeWithContext = withContext(Home);
+const NavBarWithContext = withContext(NavBar);
 const ExperiencesWithContext = withContext(Experiences);
+const ExperiencePageWithContext = withContext(ExperiencePage);
 const ClassifiedsWithContext = withContext(Classifieds);
 const ProfileWithContext = withContext(Profile);
 const LogInWithContext = withContext(LogIn);
@@ -34,6 +38,7 @@ function App({location}) {
 
   return (
     <Fragment>
+      <Route component={NavBarWithContext} />
       {/* chekcs path to render nav & footer */}
       {location.pathname.includes('/home') ? (
         <Route component={HomeWithContext} />
@@ -44,6 +49,7 @@ function App({location}) {
         <Route path='/home/classifieds' component={ClassifiedsWithContext} />
         <Route path='/post' component={Post} />
         <Route path='/profile' component={ProfileWithContext} />
+        <Route path='/experience' component={ExperiencePageWithContext} />
 
         <Route path='/login' component={LogInWithContext} />
         <Route path='/signup' component={SignUpWithContext} />

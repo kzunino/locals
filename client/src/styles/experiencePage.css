@@ -1,0 +1,23 @@
+.experience-wrapper {
+  z-index: 0;
+  margin-top: -60px;
+}
+.experience-avatar {
+  border-radius: 100%;
+  width: 25%;
+  border: 4px white solid;
+  margin-top: -80px;
+  margin-left: 37%;
+}
+
+.text-small {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+@media screen and (max-width: 550px) {
+  .experience-avatar {
+    margin-top: -40px;
+    margin-left: 37%;
+  }
+}

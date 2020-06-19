@@ -1,3 +1,8 @@
+.profile-wrapper {
+  z-index: 0;
+  margin-top: -60px;
+}
+
 .profile-bg-img {
   background-repeat: no-repeat center center;
   -webkit-background-size: cover;
@@ -7,6 +12,15 @@
   background-position: center;
   height: 50vh;
   width: 100%;
+  z-index: 0;
+}
+
+.profile-picture {
+  border-radius: 100%;
+  width: 25%;
+  border: 4px white solid;
+  margin-top: -80px;
+  margin-left: 37%;
 }
 
 @media screen and (max-width: 550px) {

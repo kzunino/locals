@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import ExperienceCard from './ExperienceCard';
+import ExperienceCard from './experiences/ExperienceCard';
 
 function Slider() {
   const ref = useRef(null);

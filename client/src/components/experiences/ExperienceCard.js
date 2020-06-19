@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import SampleImg from '../img/experience-sample.jpg';
-import Portrait from '../img/portrait.jpg';
+import SampleImg from '../../img/experience-sample.jpg';
+import Portrait from '../../img/portrait.jpg';
 
 function ExperienceCard() {
   return (
