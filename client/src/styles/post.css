@@ -1,0 +1,54 @@
+.post-form .post-form-header {
+  padding: 0.5rem;
+}
+
+.post {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 2rem;
+  align-items: center;
+  border: thin solid lightgray;
+}
+
+.post > div:first-child {
+  text-align: center;
+}
+.post-btn {
+  display: block;
+}
+
+.post img {
+  width: 100px;
+  border-radius: 100%;
+}
+
+.post .comment-count {
+  background: var(--light-color);
+  color: var(--primary-color);
+  padding: 0.1rem 0.2rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+
+.post .post-date {
+  color: #aaa;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+textarea {
+  width: 100%;
+}
+
+@media screen and (max-width: 550px) {
+  .post p {
+    font-size: 10px;
+  }
+  .post img {
+    width: 75px;
+    padding-left: 10px;
+  }
+  h4 {
+    font-size: 12px;
+  }
+}

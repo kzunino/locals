@@ -99,7 +99,7 @@ function LogIn({context, history, context: {userToken}}) {
             to sign up!
           </p>
           <Link to='/home' className='primary-color'>
-            Back
+            Home
           </Link>
         </Form>
       </div>

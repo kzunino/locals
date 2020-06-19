@@ -6,6 +6,9 @@ code {
 ul {
   list-style-type: none;
 }
+a {
+  text-decoration: none;
+}
 :root {
   --primary-color: 191, 36, 152;
 }
@@ -22,7 +25,7 @@ ul {
 
 /* Jumbotron */
 .jumbotron {
-  background: url('../src/img/jumbotron-kimson-doan.jpg');
+  background: url('../img/jumbotron-kimson-doan.jpg');
   background-repeat: no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -85,6 +88,10 @@ ul {
 }
 .card-title {
   font-weight: bold;
+}
+
+.experience {
+  margin-bottom: 15px;
 }
 
 /* Footer */

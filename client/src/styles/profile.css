@@ -1,0 +1,17 @@
+.profile-bg-img {
+  background-repeat: no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  height: 50vh;
+  width: 100%;
+}
+
+@media screen and (max-width: 550px) {
+  .profile-bg-img {
+    height: 35vh;
+    width: 100%;
+  }
+}

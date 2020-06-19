@@ -15,7 +15,7 @@ const SecondaryNav = () => {
       </Nav.Item>
       <Nav.Item className='secondary-nav-item'>
         <Nav.Link
-          href='home/classifieds'
+          href='/home/classifieds'
           eventKey='one'
           className=' secondary hover'
         >

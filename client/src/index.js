@@ -1,21 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './normalize.css';
-import './slider.css';
+import './styles/normalize.css';
+import './styles/post.css';
+import './styles/slider.css';
+import './styles/index.css';
+import './styles/profile.css';
+
 import App from './App';
-import './index.css';
-
 import {Provider} from './Context';
-
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  <Provider>
+    <Router>
+      <Route component={App} />
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 
