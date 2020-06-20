@@ -1,6 +1,6 @@
 import React from 'react';
-import SampleImg from '../img/experience-sample.jpg';
-import Portrait from '../img/portrait.jpg';
+import SampleImg from '../../img/experience-sample.jpg';
+import Portrait from '../../img/portrait.jpg';
 
 function Profile() {
   return (

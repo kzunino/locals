@@ -15,7 +15,8 @@ import ExperiencePage from './components/experiences/ExperiencePage';
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
 import Post from './components/posts/Post';
-import Profile from './components/Profile';
+import Profile from './components/profile/Profile';
+import ProfileEdit from './components/profile/ProfileEdit';
 
 import Footer from './components/Footer';
 import Classifieds from './components/Classifieds';
@@ -27,6 +28,7 @@ const ExperiencesWithContext = withContext(Experiences);
 const ExperiencePageWithContext = withContext(ExperiencePage);
 const ClassifiedsWithContext = withContext(Classifieds);
 const ProfileWithContext = withContext(Profile);
+const ProfileEditWithContext = withContext(ProfileEdit);
 const LogInWithContext = withContext(LogIn);
 const SignUpWithContext = withContext(SignUp);
 
@@ -39,7 +41,7 @@ function App({location}) {
   return (
     <Fragment>
       <Route component={NavBarWithContext} />
-      {/* chekcs path to render nav & footer */}
+      {/* checks path to render nav & footer */}
       {location.pathname.includes('/home') ? (
         <Route component={HomeWithContext} />
       ) : null}
@@ -49,6 +51,7 @@ function App({location}) {
         <Route path='/home/classifieds' component={ClassifiedsWithContext} />
         <Route path='/post' component={Post} />
         <Route path='/profile' component={ProfileWithContext} />
+        <Route path='/edit/profile' component={ProfileEditWithContext} />
         <Route path='/experience' component={ExperiencePageWithContext} />
 
         <Route path='/login' component={LogInWithContext} />

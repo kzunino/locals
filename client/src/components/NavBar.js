@@ -1,7 +1,8 @@
 import React, {Fragment} from 'react';
+
 import Nav from 'react-bootstrap/Nav';
 
-const NavBar = ({context, context: {userToken, first_name}}) => {
+const NavBar = ({location, context, context: {userToken, first_name}}) => {
   const onClick = async (e) => {
     e.preventDefault();
     await context.actions.signOut();
@@ -34,6 +35,7 @@ const NavBar = ({context, context: {userToken, first_name}}) => {
               Welcome, {first_name}!
             </Nav.Link>
           </Nav.Item>
+
           <Nav.Item>
             <Nav.Link
               href='/home'
