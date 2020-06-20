@@ -7,32 +7,32 @@ function Experiences() {
       <Fragment>
         <h3 className='mt-4 pl-3'>Experiences</h3>
         <div className='container-lg'>
-          <div class='row justify-content-center'>
-            <div class='col-auto experience'>
+          <div className='row justify-content-center'>
+            <div className='col-auto experience'>
               <ExperienceCard />
             </div>
-            <div class='col-auto  experience'>
+            <div className='col-auto  experience'>
               <ExperienceCard />
             </div>
-            <div class='col-auto experience'>
+            <div className='col-auto experience'>
               <ExperienceCard />
             </div>
-            <div class='col-auto experience'>
+            <div className='col-auto experience'>
               <ExperienceCard />
             </div>
-            <div class='col-auto  experience'>
+            <div className='col-auto  experience'>
               <ExperienceCard />
             </div>
-            <div class='col-auto experience'>
+            <div className='col-auto experience'>
               <ExperienceCard />
             </div>
-            <div class='col-auto experience'>
+            <div className='col-auto experience'>
               <ExperienceCard />
             </div>
-            <div class='col-auto  experience'>
+            <div className='col-auto  experience'>
               <ExperienceCard />
             </div>
-            <div class='col-auto experience'>
+            <div className='col-auto experience'>
               <ExperienceCard />
             </div>
           </div>

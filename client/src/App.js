@@ -11,6 +11,7 @@ import Home from './components/Home';
 import Featured from './components/Featured';
 import Experiences from './components/experiences/Experiences';
 import ExperiencePage from './components/experiences/ExperiencePage';
+import CreateExperience from './components/experiences/CreateExperience';
 
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
@@ -26,6 +27,7 @@ const HomeWithContext = withContext(Home);
 const NavBarWithContext = withContext(NavBar);
 const ExperiencesWithContext = withContext(Experiences);
 const ExperiencePageWithContext = withContext(ExperiencePage);
+const CreateExperienceWithContext = withContext(CreateExperience);
 const ClassifiedsWithContext = withContext(Classifieds);
 const ProfileWithContext = withContext(Profile);
 const ProfileEditWithContext = withContext(ProfileEdit);
@@ -53,6 +55,10 @@ function App({location}) {
         <Route path='/profile' component={ProfileWithContext} />
         <Route path='/edit/profile' component={ProfileEditWithContext} />
         <Route path='/experience' component={ExperiencePageWithContext} />
+        <Route
+          path='/create/experience'
+          component={CreateExperienceWithContext}
+        />
 
         <Route path='/login' component={LogInWithContext} />
         <Route path='/signup' component={SignUpWithContext} />

@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
 function EditProfileInfo({context}) {
   const [profileData, setProfileData] = useState({
     bio: '',
     gender: '',
-    date_of_birth: null,
+    date_of_birth: '',
     country: '',
     languages: '',
     phone_number: '',
@@ -21,6 +22,19 @@ function EditProfileInfo({context}) {
     languages,
     phone_number,
   } = profileData;
+
+  //gets max data for DOB field
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1; //January is 0!
+  let yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  today = yyyy + '-' + mm + '-' + dd;
 
   const onChange = (e) =>
     setProfileData({...profileData, [e.target.name]: e.target.value});
@@ -78,7 +92,7 @@ function EditProfileInfo({context}) {
           <Form.Group controlId='formBasicBio'>
             <Form.Label>Bio</Form.Label>
             <Form.Control
-              type='text'
+              as='textarea'
               name='bio'
               value={bio}
               placeholder='bio...'
@@ -90,8 +104,8 @@ function EditProfileInfo({context}) {
             <Form.Label>Date of Birth</Form.Label>
             <Form.Control
               type='date'
-              value='2018-07-22'
               min='1900-01-01'
+              max={today}
               name='date_of_birth'
               value={date_of_birth}
               onChange={(e) => onChange(e)}
@@ -126,18 +140,21 @@ function EditProfileInfo({context}) {
               type='text'
               name='languages'
               value={languages}
-              placeholder='languages...'
+              placeholder='English, Spanish, etc...'
               onChange={(e) => onChange(e)}
             />
           </Form.Group>
 
           <Form.Group controlId='formBasicPhoneNumber'>
             <Form.Label>Phone Number</Form.Label>
+
             <Form.Control
-              type='text'
+              type='tel'
               name='phone_number'
               value={phone_number}
-              placeholder='gender...'
+              maxLength='10'
+              pattern='[0-9]{3}[0-9]{3}0-9]{4}'
+              placeholder='Phone Number...'
               onChange={(e) => onChange(e)}
             />
           </Form.Group>
