@@ -1,11 +1,45 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import SampleImg from '../../img/experience-sample.jpg';
 import Portrait from '../../img/portrait.jpg';
 import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 function Profile({context}) {
-  const coverPhoto = null;
-  const profilePhoto = null;
+  const [profileData, setProfileData] = useState({
+    coverPhoto: null,
+    first_name: '',
+    last_name: '',
+    avatar: '',
+    bio: '',
+    gender: '',
+    age: '',
+    country: '',
+    phone_number: '',
+  });
+
+  let {
+    coverPhoto,
+    first_name,
+    last_name,
+    avatar,
+    bio,
+    gender,
+    age,
+    country,
+    phone_number,
+  } = profileData;
+
+  const getProfile = async () => {
+    let res = await context.actions.get_my_profile();
+    if (res === 400) res = await context.actions.create_profile();
+    console.log(res.profile);
+  };
+  useEffect(() => {
+    getProfile();
+
+    //setProfileData(profileData, ...res.data.profile);
+  }, []);
+
+  //res.data.profile;
 
   return (
     <div className='profile-wrapper'>
@@ -14,7 +48,7 @@ function Profile({context}) {
       ) : (
         <img className='profile-bg-img' src={StockCoverPhoto} alt='' />
       )}
-      {profilePhoto ? (
+      {avatar ? (
         <img className='profile-picture' src={Portrait} alt='' />
       ) : (
         <img className='profile-picture' src={PortraitPlaceholder} alt='' />

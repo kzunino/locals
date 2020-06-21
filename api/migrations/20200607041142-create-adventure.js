@@ -79,8 +79,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      // onUpdate: 'CASCADE',
+      // onDelete: 'CASCADE',
     });
   },
   down: (queryInterface, Sequelize) => {

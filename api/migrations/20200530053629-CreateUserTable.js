@@ -41,8 +41,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      // onUpdate: 'CASCADE',
+      // onDelete: 'CASCADE',
     });
   },
   down: (queryInterface, Sequelize) => {

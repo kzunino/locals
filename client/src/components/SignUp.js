@@ -60,8 +60,8 @@ function SignUp({context, history, context: {userToken}}) {
           </div>
         </div>
       );
-      return errorsDisplay;
     }
+    return errorsDisplay;
   };
   return (
     <div className='container pt-5'>

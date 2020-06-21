@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
       },
+      cover_photo: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
       date_of_birth: {
         type: DataTypes.DATEONLY,
         allowNull: true,

@@ -14,19 +14,22 @@ export class Provider extends Component {
   state = {
     userToken: localStorage.getItem('token') || null,
     first_name: localStorage.getItem('first_name') || null,
+    avatar: localStorage.getItem('avatar') || null,
   };
 
   render() {
-    const {userToken, first_name} = this.state;
+    const {userToken, first_name, avatar} = this.state;
 
     const value = {
       userToken,
       first_name,
+      avatar,
       //stores any handlers or actions to perform on data passed through context
       actions: {
         signIn: this.signIn,
         signOut: this.signOut,
         signUp: this.signUp,
+        get_my_profile: this.get_my_profile,
       },
     };
 
@@ -52,10 +55,12 @@ export class Provider extends Component {
       if (res.status === 200) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('first_name', res.data.user.first_name);
+        localStorage.setItem('avatar', res.data.user.avatar);
         this.setState(() => {
           return {
             userToken: localStorage.getItem('token'),
             first_name: localStorage.getItem('first_name'),
+            avatar: localStorage.getItem('avatar'),
           };
         });
         console.log(res.data);
@@ -93,10 +98,12 @@ export class Provider extends Component {
       return {
         userToken: null,
         first_name: null,
+        avatar: null,
       };
     });
     localStorage.removeItem('token');
     localStorage.removeItem('first_name');
+    localStorage.removeItem('avatar');
   };
 
   signUp = async (first_name, last_name, email, password) => {
@@ -114,10 +121,12 @@ export class Provider extends Component {
       if (res.status === 201) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('first_name', res.data.user.first_name);
+        localStorage.setItem('avatar', res.data.user.avatar);
         this.setState(() => {
           return {
             userToken: localStorage.getItem('token'),
             first_name: localStorage.getItem('first_name'),
+            avatar: localStorage.getItem('avatar'),
           };
         });
         return 201;
@@ -130,6 +139,32 @@ export class Provider extends Component {
         console.log(error.response.status);
         console.log(error.response.headers);
         if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  get_my_profile = async () => {
+    console.log('get_my_profile works');
+    try {
+      const res = await axios.get('http://localhost:5000/profile/me');
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return 400;
         if (error.response.status === 500) return 500;
       } else if (error.request) {
         console.log(error.request);

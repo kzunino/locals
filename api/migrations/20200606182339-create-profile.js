@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
       },
+      cover_photo: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
       date_of_birth: {
         type: Sequelize.DATEONLY,
         allowNull: true,
@@ -46,8 +51,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      // onUpdate: 'CASCADE',
+      // onDelete: 'CASCADE',
     });
   },
   down: (queryInterface, Sequelize) => {

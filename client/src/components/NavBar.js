@@ -2,10 +2,11 @@ import React, {Fragment} from 'react';
 
 import Nav from 'react-bootstrap/Nav';
 
-const NavBar = ({location, context, context: {userToken, first_name}}) => {
+const NavBar = ({history, context, context: {userToken, first_name}}) => {
   const onClick = async (e) => {
     e.preventDefault();
     await context.actions.signOut();
+    history.push('/home');
   };
 
   return (
@@ -31,7 +32,7 @@ const NavBar = ({location, context, context: {userToken, first_name}}) => {
       ) : (
         <Fragment>
           <Nav.Item>
-            <Nav.Link href='/home' className='nav-item'>
+            <Nav.Link href='/profile/me' className='nav-item'>
               Welcome, {first_name}!
             </Nav.Link>
           </Nav.Item>
