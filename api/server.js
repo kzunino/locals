@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+
+const upload = require('express-fileupload');
+app.use(upload({useTempFiles: true}));
+
 const cors = require('cors');
 
 const path = require('path');
@@ -32,6 +36,7 @@ app.use('/profile', require('./routes/profile'));
 app.use('/adventure', require('./routes/adventure'));
 app.use('/review', require('./routes/review'));
 app.use('/favorites', require('./routes/favorites'));
+app.use('/upload', require('./routes/uploadImage'));
 
 // send 404 if no other route matched
 app.use((req, res) => {

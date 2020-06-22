@@ -22,6 +22,12 @@ a {
 .secondary {
   color: grey;
 }
+.hide {
+  visibility: hidden;
+}
+.show {
+  visibility: visible;
+}
 
 /* Jumbotron */
 .jumbotron {

@@ -6,7 +6,15 @@ function EditName({context}) {
     first_name: '',
     last_name: '',
   });
+  const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
+
+  const showSubmit = () => {
+    setSubmitButtonDisplay('show');
+  };
+  const hideSubmit = () => {
+    setSubmitButtonDisplay('hide');
+  };
 
   const {first_name, last_name} = nameData;
 
@@ -20,9 +28,10 @@ function EditName({context}) {
     getName();
   }, [context]);
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setNameData({...nameData, [e.target.name]: e.target.value});
-
+    showSubmit();
+  };
   const onSubmit = async (e) => {
     e.preventDefault();
     //fires login action
@@ -36,6 +45,7 @@ function EditName({context}) {
     } else if (res.errors) {
       setErrors([[], ...res.errors]);
     }
+    hideSubmit();
   };
 
   const ErrorsDisplay = () => {
@@ -88,7 +98,12 @@ function EditName({context}) {
             />
           </Form.Group>
 
-          <Button size='md' variant='secondary' type='submit'>
+          <Button
+            size='md'
+            variant='secondary'
+            type='submit'
+            className={submitButtonDisplay}
+          >
             Update
           </Button>
         </Form>
