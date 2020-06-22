@@ -98,3 +98,27 @@ exports.verify_user = asyncHandler(async (req, res) => {
     res.json({error: ['User not found!']}).status(400);
   }
 });
+
+//@Route    PUT /auth/update
+//@desc     Update User Details
+//@access   Private
+
+exports.update_details = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({errors: errorMessages});
+  }
+  const {first_name, last_name} = req.body;
+
+  const user = await User.findByPk(req.user.user_uid);
+  if (user) {
+    user.update({
+      first_name,
+      last_name,
+    });
+    return res.status(200).end();
+  } else {
+    return res.status(400).json({errors: ['User not found']});
+  }
+});

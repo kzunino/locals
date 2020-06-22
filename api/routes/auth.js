@@ -22,6 +22,20 @@ router.post(
   authUser_controller.sign_in
 );
 
+//@Route    put /auth/update
+//@desc     Update User Details
+//@access   Private
+
+router.put(
+  '/update',
+  [
+    check('first_name', 'Please include your first name').not().isEmpty(),
+    check('last_name', 'Please include your last name').not().isEmpty(),
+  ],
+  auth,
+  authUser_controller.update_details
+);
+
 //@Route    POST /auth/verify
 //@desc     Verified User
 //@access   Private

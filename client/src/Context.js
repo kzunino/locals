@@ -30,6 +30,7 @@ export class Provider extends Component {
         signOut: this.signOut,
         signUp: this.signUp,
         get_my_profile: this.get_my_profile,
+        update_name: this.update_name,
       },
     };
 
@@ -151,7 +152,6 @@ export class Provider extends Component {
   };
 
   get_my_profile = async () => {
-    console.log('get_my_profile works');
     try {
       const res = await axios.get('http://localhost:5000/profile/me');
       if (res.status === 200) {
@@ -165,6 +165,43 @@ export class Provider extends Component {
         console.log(error.response.status);
         console.log(error.response.headers);
         if (error.response.status === 400) return 400;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  update_name = async (first_name, last_name) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    const body = JSON.stringify({first_name, last_name});
+    try {
+      const res = await axios.put(
+        'http://localhost:5000/auth/update',
+        body,
+        config
+      );
+      if (res.status === 200) {
+        return 200;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
         if (error.response.status === 500) return 500;
       } else if (error.request) {
         console.log(error.request);

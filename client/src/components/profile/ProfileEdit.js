@@ -5,10 +5,13 @@ import EditCoverPhoto from './EditCoverPhoto';
 import EditProfileInfo from './EditProfileInfo';
 import VerifyProfile from './VerifyProfile';
 
+import withContext from '../../Context';
+const EditNameWithContext = withContext(EditName);
+
 function ProfileEdit() {
   return (
     <div className='container-fluid'>
-      <EditName />
+      <EditNameWithContext />
       <EditAvatar />
       <EditCoverPhoto />
       <EditProfileInfo />
