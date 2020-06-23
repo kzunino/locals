@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function EditAvatar({context}) {
-  const [avatar, setAvatar] = useState(null);
+  const [avatarData, setAvatarData] = useState([]);
   const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
 
@@ -18,21 +18,26 @@ function EditAvatar({context}) {
   };
 
   const onChange = (e) => {
-    setAvatar(...e.target.value);
+    setAvatarData(e.target.files[0] || []);
+    setErrors([]);
     showSubmit();
   };
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!avatar) {
+    console.log(avatarData);
+    if (
+      avatarData === null ||
+      avatarData === undefined ||
+      avatarData.length === 0
+    ) {
       return setErrors(['Please choose a photo to upload before updating']);
     }
-    //fires login action
-    //if errors are returned it takes error object values and adds them to error array
 
-    const res = await context.actions.update_profile_photo(avatar);
+    const res = await context.actions.update_profile_photo(avatarData);
     console.log(res);
-    if (res === 200) {
+    if (res.status === 200) {
+      console.log('I uploaded the file bb');
       //history.push('/home');
     } else if (res.errors) {
     }

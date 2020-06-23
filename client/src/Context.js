@@ -32,6 +32,7 @@ export class Provider extends Component {
         get_my_profile: this.get_my_profile,
         create_profile: this.create_profile,
         update_name: this.update_name,
+        update_profile_photo: this.update_profile_photo,
       },
     };
 
@@ -153,8 +154,14 @@ export class Provider extends Component {
   };
 
   get_my_profile = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
     try {
-      const res = await axios.get('http://localhost:5000/profile/me');
+      const res = await axios.get('http://localhost:5000/profile/me', config);
       if (res.status === 200) {
         return res.data;
       }
@@ -178,8 +185,14 @@ export class Provider extends Component {
   };
 
   create_profile = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
     try {
-      const res = await axios.post('http://localhost:5000/profile/me');
+      const res = await axios.post('http://localhost:5000/profile/me', config);
       if (res.status === 200) {
         return res.data;
       }
@@ -238,22 +251,33 @@ export class Provider extends Component {
       console.log(error);
     }
   };
+
   update_profile_photo = async (photo) => {
-    const config = {
+    let config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         // 'Access-Control-Allow-Origin': '*',
       },
     };
 
+    let formData = new FormData();
+    formData.append('photo', photo);
+
     //const body = JSON.stringify({first_name, last_name});
     try {
-      const res = await axios.put(
-        'http://localhost:5000/auth/update',
-        photo,
+      const res = await axios.post(
+        'http://localhost:5000/upload/profile_photo',
+        formData,
         config
       );
       if (res.status === 200) {
+        console.log(res.data);
+        localStorage.setItem('avatar', res.data.user.avatar);
+        this.setState(() => {
+          return {
+            avatar: localStorage.getItem('avatar'),
+          };
+        });
         return res.data;
       }
     } catch (error) {

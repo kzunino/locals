@@ -21,9 +21,9 @@ exports.get_my_profile = asyncHandler(async (req, res) => {
     ],
   });
   if (profile) {
-    res.status(200).json({profile});
+    return res.status(200).json({profile});
   } else {
-    res.status(400).json({errors: ['Profile not found']});
+    return res.status(400).json({errors: ['Profile not found']});
   }
 });
 
