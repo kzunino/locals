@@ -67,7 +67,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: null,
       },
-      picture: {
+      cover_photo: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
+      cover_photo_id: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: null,

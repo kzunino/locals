@@ -11,7 +11,8 @@ function Profile({context}) {
   const [profileName, setProfileName] = useState({});
 
   let {
-    coverPhoto,
+    cover_photo,
+    cover_photo_id,
     avatar,
     bio,
     gender,
@@ -26,8 +27,14 @@ function Profile({context}) {
   useEffect(() => {
     const getProfile = async () => {
       let res = await context.actions.get_my_profile();
-      if (res === 400) res = await context.actions.create_profile();
-      console.log(res.profile);
+      console.log(res);
+      if (res === 400) {
+        res = await context.actions.create_profile();
+        console.log(res);
+        setProfileData({...res.profile});
+        setProfileName({...res.profile.user});
+      }
+      console.log(res);
       setProfileData({...res.profile});
       setProfileName({...res.profile.user});
     };
@@ -37,7 +44,7 @@ function Profile({context}) {
 
   return (
     <div className='profile-wrapper'>
-      {coverPhoto ? (
+      {cover_photo ? (
         <img className='profile-bg-img' src={SampleImg} alt='' />
       ) : (
         <img className='profile-bg-img' src={StockCoverPhoto} alt='' />
@@ -62,7 +69,10 @@ function Profile({context}) {
           <div className='row'>
             <div className='col-sm-4 '>Gender {gender}</div>
             <div className='col-sm-4'>
-              Age <Moment diff={date_of_birth} unit='years'></Moment>
+              Age
+              {date_of_birth ? (
+                <Moment diff={date_of_birth} unit='years'></Moment>
+              ) : null}
             </div>
             <div className='col-sm-4'>Country {country}</div>
             <div className='col-sm-4'>Languages {languages}</div>

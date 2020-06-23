@@ -66,7 +66,12 @@ module.exports = {
         allowNull: true,
         defaultValue: null,
       },
-      picture: {
+      cover_photo: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
+      cover_photo_id: {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null,

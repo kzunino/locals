@@ -6,42 +6,54 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function EditAvatar({context}) {
-  const [avatar, setAvatar] = useState({});
+  const [avatar, setAvatar] = useState(null);
+  const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
+  const [errors, setErrors] = useState([]);
 
-  const [image, setImage] = useState('');
-  const config = {
-    headers: {
-      // 'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    },
+  const showSubmit = () => {
+    setSubmitButtonDisplay('show');
   };
-  const uploadImage = async (e) => {
-    const file = e.target.files;
-    const body = new FormData();
-    body.append('file', file[0]);
-    body.append('upload_preset', 'locals_images');
-    // body.headers('Access-Control-Allow-Origin', 'http://localhost:3000');
-    //get request
-    const res = await axios
-      .post('https://api.cloudinary.com/v1_1/localscloud', body, config)
-      .then((res) => console.log(res.data.secure_url))
-      .catch((err) => console.log(err));
-    // file = await res.json();
-    // console.log(file);
+  const hideSubmit = () => {
+    setSubmitButtonDisplay('hide');
   };
 
+  const onChange = (e) => {
+    setAvatar(...e.target.value);
+    showSubmit();
+  };
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    if (!avatar) {
+      return setErrors(['Please choose a photo to upload before updating']);
+    }
     //fires login action
     //if errors are returned it takes error object values and adds them to error array
 
-    const res = await context.actions.signUp(avatar);
+    const res = await context.actions.update_profile_photo(avatar);
     console.log(res);
     if (res === 200) {
       //history.push('/home');
     } else if (res.errors) {
     }
+  };
+
+  const ErrorsDisplay = () => {
+    let errorsDisplay = null;
+    if (errors.length) {
+      errorsDisplay = (
+        <div>
+          <div className='validation-errors text-center primary-color'>
+            <ul>
+              {errors.map((error, i) => (
+                <li key={i}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+    return errorsDisplay;
   };
 
   return (
@@ -50,17 +62,28 @@ function EditAvatar({context}) {
         <Form className='container' onSubmit={(e) => onSubmit(e)}>
           <h1 className='primary-color'>Change Profile Picture</h1>
 
+          <ErrorsDisplay errors={errors} />
+
           <Form.Group controlId='formBasicProfilePicture'>
             <img
               src={StockCoverPhoto}
               alt=''
               className='edit-profile-picture'
             />
-            <Form.Control type='file' name='avatar' onChange={uploadImage} />
+            <Form.Control
+              type='file'
+              name='avatar'
+              onChange={(e) => onChange(e)}
+            />
           </Form.Group>
 
-          <Button size='md' variant='secondary' type='submit'>
-            Submit
+          <Button
+            size='md'
+            variant='secondary'
+            type='submit'
+            className={submitButtonDisplay}
+          >
+            Update Photo
           </Button>
         </Form>
       </div>

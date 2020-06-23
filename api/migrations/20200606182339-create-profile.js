@@ -13,6 +13,11 @@ module.exports = {
         allowNull: true,
         defaultValue: null,
       },
+      cover_photo_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
       date_of_birth: {
         type: Sequelize.DATEONLY,
         allowNull: true,

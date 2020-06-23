@@ -32,7 +32,16 @@ exports.get_my_profile = asyncHandler(async (req, res) => {
 //@access   Private
 
 exports.update_profile = asyncHandler(async (req, res) => {
-  let {date_of_birth, country, bio, languages, phone_number, gender} = req.body;
+  let {
+    date_of_birth,
+    country,
+    bio,
+    languages,
+    phone_number,
+    gender,
+    cover_photo,
+    cover_photo_id,
+  } = req.body;
   const fk_user_uid = req.user.user_uid;
 
   // If no value insert null
@@ -76,8 +85,24 @@ exports.update_profile = asyncHandler(async (req, res) => {
       phone_number,
       gender,
       fk_user_uid,
+      cover_photo,
+      cover_photo_id,
     });
-    res.status(201).end();
+
+    profile = await Profile.findOne({
+      where: {
+        fk_user_uid: req.user.user_uid,
+      },
+      attributes: {exclude: ['createdAt', 'updatedAt']},
+      include: [
+        {
+          model: User,
+          attributes: ['first_name', 'last_name'],
+        },
+      ],
+    });
+
+    res.json({profile}).status(201);
   }
 });
 

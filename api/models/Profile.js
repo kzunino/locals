@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: null,
       },
+      cover_photo_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
       date_of_birth: {
         type: DataTypes.DATEONLY,
         allowNull: true,

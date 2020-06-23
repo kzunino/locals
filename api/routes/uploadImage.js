@@ -9,4 +9,10 @@ const auth = require('../middleware/auth');
 
 router.post('/profile_photo', auth, photo_controller.upload_profile_photo);
 
+//@Route    POST /upload/delete_photo
+//@desc     Deletes a user's photo
+//@access   Private
+
+router.post('/delete_photo', auth, photo_controller.delete_photo);
+
 module.exports = router;

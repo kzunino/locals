@@ -41,6 +41,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      avatar_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       // onUpdate: 'CASCADE',
       // onDelete: 'CASCADE',
     });
