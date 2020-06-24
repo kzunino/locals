@@ -9,6 +9,12 @@ const auth = require('../middleware/auth');
 
 router.post('/profile_photo', auth, photo_controller.upload_profile_photo);
 
+//@Route    POST /upload/cover_photo
+//@desc     Post a user profile photo
+//@access   Private
+
+router.post('/profile_cover_photo', auth, photo_controller.upload_cover_photo);
+
 //@Route    POST /upload/delete_photo
 //@desc     Deletes a user's photo
 //@access   Private

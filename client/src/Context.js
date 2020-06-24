@@ -33,6 +33,8 @@ export class Provider extends Component {
         create_profile: this.create_profile,
         update_name: this.update_name,
         update_profile_photo: this.update_profile_photo,
+        update_profile_cover_photo: this.update_profile_cover_photo,
+        update_profile_info: this.update_profile_info,
       },
     };
 
@@ -279,6 +281,98 @@ export class Provider extends Component {
           };
         });
         return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  update_profile_cover_photo = async (photo) => {
+    let config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    let formData = new FormData();
+    formData.append('photo', photo);
+
+    //const body = JSON.stringify({first_name, last_name});
+    try {
+      const res = await axios.post(
+        'http://localhost:5000/upload/profile_cover_photo',
+        formData,
+        config
+      );
+      if (res.status === 200) {
+        console.log(res.data);
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  update_profile_info = async (
+    bio,
+    gender,
+    date_of_birth,
+    country,
+    languages,
+    phone_number
+  ) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    const body = JSON.stringify({
+      bio,
+      gender,
+      date_of_birth,
+      country,
+      languages,
+      phone_number,
+    });
+    try {
+      const res = await axios.post(
+        'http://localhost:5000/profile/me',
+        body,
+        config
+      );
+      if (res.status === 200) {
+        return 200;
       }
     } catch (error) {
       // Error 😨

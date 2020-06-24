@@ -8,14 +8,16 @@ import VerifyProfile from './VerifyProfile';
 import withContext from '../../Context';
 const EditNameWithContext = withContext(EditName);
 const EditAvatarWithContext = withContext(EditAvatar);
+const EditCoverPhotoWithContext = withContext(EditCoverPhoto);
+const EditProfileInfoWithContext = withContext(EditProfileInfo);
 
 function ProfileEdit() {
   return (
     <div className='container-fluid'>
       <EditNameWithContext />
       <EditAvatarWithContext />
-      <EditCoverPhoto />
-      <EditProfileInfo />
+      <EditCoverPhotoWithContext />
+      <EditProfileInfoWithContext />
       <VerifyProfile />
     </div>
   );

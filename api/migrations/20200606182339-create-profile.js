@@ -19,7 +19,7 @@ module.exports = {
         defaultValue: null,
       },
       date_of_birth: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null,
       },

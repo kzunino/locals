@@ -21,8 +21,7 @@ function EditName({context}) {
   useEffect(() => {
     const getName = async () => {
       let res = await context.actions.get_my_profile();
-      if (res === 400) res = await context.actions.create_profile();
-      console.log(res.profile);
+      console.log(res.profile.user);
       setNameData({...res.profile.user});
     };
     getName();

@@ -1,18 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Moment from 'react-moment';
 
 function EditProfileInfo({context}) {
-  const [profileData, setProfileData] = useState({
-    bio: '',
-    gender: '',
-    date_of_birth: '',
-    country: '',
-    languages: '',
-    phone_number: '',
-  });
+  const [profileInfo, setProfileInfo] = useState({});
 
   const [errors, setErrors] = useState([]);
+  const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
 
   const {
     bio,
@@ -21,7 +16,7 @@ function EditProfileInfo({context}) {
     country,
     languages,
     phone_number,
-  } = profileData;
+  } = profileInfo;
 
   //gets max data for DOB field
   let today = new Date();
@@ -36,16 +31,35 @@ function EditProfileInfo({context}) {
   }
   today = yyyy + '-' + mm + '-' + dd;
 
-  const onChange = (e) =>
-    setProfileData({...profileData, [e.target.name]: e.target.value});
+  useEffect(() => {
+    const getProfileDetails = async () => {
+      let res = await context.actions.get_my_profile();
+      console.log(res.profile);
+      setProfileInfo({...res.profile});
+    };
+    getProfileDetails();
+  }, [context]);
+
+  const showSubmit = () => {
+    setSubmitButtonDisplay('show');
+  };
+  const hideSubmit = () => {
+    setSubmitButtonDisplay('hide');
+  };
+
+  const onChange = (e) => {
+    setProfileInfo({...profileInfo, [e.target.name]: e.target.value});
+    showSubmit();
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     //fires login action
     //if errors are returned it takes error object values and adds them to error array
+    console.log(date_of_birth);
 
-    const res = await context.actions.signUp(
+    const res = await context.actions.update_profile_info(
       bio,
       gender,
       date_of_birth,
@@ -56,6 +70,7 @@ function EditProfileInfo({context}) {
     console.log(res);
     if (res === 200) {
       //history.push('/home');
+      hideSubmit();
     } else if (res.errors) {
       setErrors([[], ...res.errors]);
     }
@@ -94,7 +109,7 @@ function EditProfileInfo({context}) {
             <Form.Control
               as='textarea'
               name='bio'
-              value={bio}
+              value={bio || ''}
               placeholder='bio...'
               onChange={(e) => onChange(e)}
             />
@@ -107,7 +122,7 @@ function EditProfileInfo({context}) {
               min='1900-01-01'
               max={today}
               name='date_of_birth'
-              value={date_of_birth}
+              value={date_of_birth || ''}
               onChange={(e) => onChange(e)}
             />
           </Form.Group>
@@ -117,7 +132,7 @@ function EditProfileInfo({context}) {
             <Form.Control
               type='text'
               name='gender'
-              value={gender}
+              value={gender || ''}
               placeholder='gender...'
               onChange={(e) => onChange(e)}
             />
@@ -128,7 +143,7 @@ function EditProfileInfo({context}) {
             <Form.Control
               type='text'
               name='country'
-              value={country}
+              value={country || ''}
               placeholder='country...'
               onChange={(e) => onChange(e)}
             />
@@ -139,7 +154,7 @@ function EditProfileInfo({context}) {
             <Form.Control
               type='text'
               name='languages'
-              value={languages}
+              value={languages || ''}
               placeholder='English, Spanish, etc...'
               onChange={(e) => onChange(e)}
             />
@@ -151,7 +166,7 @@ function EditProfileInfo({context}) {
             <Form.Control
               type='tel'
               name='phone_number'
-              value={phone_number}
+              value={phone_number || ''}
               maxLength='10'
               pattern='[0-9]{3}[0-9]{3}0-9]{4}'
               placeholder='Phone Number...'
@@ -159,8 +174,13 @@ function EditProfileInfo({context}) {
             />
           </Form.Group>
 
-          <Button size='md' variant='secondary' type='submit'>
-            Submit
+          <Button
+            size='md'
+            variant='secondary'
+            type='submit'
+            className={submitButtonDisplay}
+          >
+            Update Details
           </Button>
         </Form>
       </div>

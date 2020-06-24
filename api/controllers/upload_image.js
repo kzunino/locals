@@ -1,5 +1,6 @@
 const cloudinary = require('cloudinary').v2;
 const User = require('../models').users;
+const Profile = require('../models').profile;
 
 const config = require('config');
 const asyncHandler = require('../middleware/asyncHandler');
@@ -44,6 +45,45 @@ exports.upload_profile_photo = asyncHandler(async (req, res) => {
       return res.json({user, result}).status(200);
     }
   );
+});
+
+// POST /upload/cover_photo
+//@desc     uploads a user's profile photo and deletes old one
+//@access   Private
+
+exports.upload_cover_photo = asyncHandler(async (req, res) => {
+  let profile = await Profile.findOne(
+    {
+      where: {
+        fk_user_uid: req.user.user_uid,
+      },
+    },
+    {
+      attributes: {include: ['cover_photo', 'cover_photo_id']},
+    }
+  );
+  if (profile) {
+    if (profile.cover_photo !== null && profile.cover_photo_id !== null) {
+      cloudinary.uploader.destroy(profile.cover_photo_id, (err, result) => {
+        console.log('Error: ', err);
+        //res.json({result});
+        console.log('Result: ', result);
+      });
+    }
+  } else {
+    return res.json({msg: 'Profile not found!'});
+  }
+
+  const file = req.files.photo;
+  cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    console.log('Error: ', err);
+    profile.update({
+      cover_photo: result.url,
+      cover_photo_id: result.public_id,
+    });
+    console.log('Result: ', result);
+    return res.json({result}).status(200);
+  });
 });
 
 //@Route    POST /upload/delete_photo

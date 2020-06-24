@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 //import axios from 'axios';
 //import setAuthToken from '../../utilites/setAuthToken';
-import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
+import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -38,6 +38,7 @@ function EditAvatar({context, context: {avatar}}) {
 
     const res = await context.actions.update_profile_photo(avatarData);
     console.log(res);
+    hideSubmit();
     if (res.status === 200) {
       console.log('I uploaded the file bb');
       //history.push('/home');
@@ -62,7 +63,6 @@ function EditAvatar({context, context: {avatar}}) {
     }
     return errorsDisplay;
   };
-
   return (
     <div className='container-fluid border-bottom pb-4'>
       <div className='edit-profile-form'>
@@ -78,7 +78,7 @@ function EditAvatar({context, context: {avatar}}) {
               </div>
             ) : (
               <img
-                src={StockCoverPhoto}
+                src={PortraitPlaceholder}
                 alt=''
                 className='edit-profile-picture'
               />

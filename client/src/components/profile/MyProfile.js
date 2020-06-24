@@ -11,7 +11,6 @@ function Profile({context}) {
 
   let {
     cover_photo,
-    cover_photo_id,
     bio,
     gender,
     languages,

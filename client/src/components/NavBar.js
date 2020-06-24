@@ -4,7 +4,6 @@ import Nav from 'react-bootstrap/Nav';
 
 const NavBar = ({history, context, context: {userToken, first_name}}) => {
   const onClick = async (e) => {
-    e.preventDefault();
     await context.actions.signOut();
     history.push('/home');
   };
