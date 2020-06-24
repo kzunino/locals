@@ -1,19 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import SampleImg from '../../img/experience-sample.jpg';
-import Portrait from '../../img/portrait.jpg';
 import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import Moment from 'react-moment';
 
 function Profile({context}) {
   const [profileData, setProfileData] = useState({});
-  const [profileName, setProfileName] = useState({});
+  const [userData, setUserData] = useState({});
 
   let {
     cover_photo,
     cover_photo_id,
-    avatar,
     bio,
     gender,
     languages,
@@ -22,7 +20,7 @@ function Profile({context}) {
     phone_number,
   } = profileData;
 
-  let {first_name, last_name} = profileName;
+  let {first_name, last_name, avatar} = userData;
 
   useEffect(() => {
     const getProfile = async () => {
@@ -32,11 +30,11 @@ function Profile({context}) {
         res = await context.actions.create_profile();
         console.log(res);
         setProfileData({...res.profile});
-        setProfileName({...res.profile.user});
+        setUserData({...res.profile.user});
       }
       console.log(res);
       setProfileData({...res.profile});
-      setProfileName({...res.profile.user});
+      setUserData({...res.profile.user});
     };
 
     getProfile();
@@ -50,7 +48,7 @@ function Profile({context}) {
         <img className='profile-bg-img' src={StockCoverPhoto} alt='' />
       )}
       {avatar ? (
-        <img className='profile-picture' src={Portrait} alt='' />
+        <img className='profile-picture' src={avatar} alt='' />
       ) : (
         <img className='profile-picture' src={PortraitPlaceholder} alt='' />
       )}

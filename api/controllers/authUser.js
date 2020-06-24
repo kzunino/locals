@@ -17,7 +17,7 @@ exports.get_user = asyncHandler(async (req, res) => {
     attributes: {exclude: ['password']},
   });
 
-  res.json(user);
+  res.json({user});
 });
 
 //@Route    POST auth

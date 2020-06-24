@@ -27,21 +27,21 @@ exports.upload_profile_photo = asyncHandler(async (req, res) => {
       });
     }
   } else {
-    res.json({msg: 'User not found!'});
+    return res.json({msg: 'User not found!'});
   }
 
   const file = req.files.photo;
   cloudinary.uploader.upload(
     file.tempFilePath,
-    {width: 400, height: 400, crop: 'limit'},
+    {width: 800, height: 800, crop: 'fill'},
     (err, result) => {
       console.log('Error: ', err);
       user.update({
         avatar: result.url,
         avatar_id: result.public_id,
       });
-      res.json({user, result}).status(200);
       console.log('Result: ', result);
+      return res.json({user, result}).status(200);
     }
   );
 });

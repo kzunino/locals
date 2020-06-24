@@ -16,7 +16,7 @@ exports.get_my_profile = asyncHandler(async (req, res) => {
     include: [
       {
         model: User,
-        attributes: ['first_name', 'last_name'],
+        attributes: ['first_name', 'last_name', 'avatar'],
       },
     ],
   });

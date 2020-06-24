@@ -25,10 +25,23 @@
 
 /* Edit Profile */
 
-.edit-profile-picture {
-  border-radius: 100%;
-  width: 40%;
+.edit-profile-picture-circular {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 50%;
   margin-left: 33%;
+}
+
+.edit-profile-picture {
+  /* border-radius: 50%; */
+  width: 100%;
+  height: auto;
+  /* margin-left: 33%; */
+  /* background-size: auto 100%;
+  background-position: center center;
+  background-repeat: no-repeat; */
 }
 
 .edit-cover-photo {

@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
-import axios from 'axios';
+import React, {useState, useEffect} from 'react';
+//import axios from 'axios';
 //import setAuthToken from '../../utilites/setAuthToken';
 import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function EditAvatar({context}) {
+function EditAvatar({context, context: {avatar}}) {
+  //state for avatar form data for POST req
   const [avatarData, setAvatarData] = useState([]);
   const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
 
+  console.log(avatar);
   const showSubmit = () => {
     setSubmitButtonDisplay('show');
   };
@@ -70,11 +72,18 @@ function EditAvatar({context}) {
           <ErrorsDisplay errors={errors} />
 
           <Form.Group controlId='formBasicProfilePicture'>
-            <img
-              src={StockCoverPhoto}
-              alt=''
-              className='edit-profile-picture'
-            />
+            {avatar ? (
+              <div className='edit-profile-picture-circular'>
+                <img src={avatar} alt='' className='edit-profile-picture' />
+              </div>
+            ) : (
+              <img
+                src={StockCoverPhoto}
+                alt=''
+                className='edit-profile-picture'
+              />
+            )}
+
             <Form.Control
               type='file'
               name='avatar'
