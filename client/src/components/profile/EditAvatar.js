@@ -1,17 +1,26 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 //import axios from 'axios';
 //import setAuthToken from '../../utilites/setAuthToken';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function EditAvatar({context, context: {avatar}}) {
+function EditAvatar({context}) {
   //state for avatar form data for POST req
   const [avatarData, setAvatarData] = useState([]);
   const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
+  const [avatar, setAvatar] = useState(null);
 
-  console.log(avatar);
+  useEffect(() => {
+    const get_cover_photo = async () => {
+      let res = await context.actions.get_my_profile();
+      console.log(res.profile);
+      setAvatar(res.profile.user.avatar);
+    };
+    get_cover_photo();
+  }, [context]);
+
   const showSubmit = () => {
     setSubmitButtonDisplay('show');
   };
@@ -80,7 +89,7 @@ function EditAvatar({context, context: {avatar}}) {
               <img
                 src={PortraitPlaceholder}
                 alt=''
-                className='edit-profile-picture'
+                className='placeholder-img'
               />
             )}
 

@@ -15,20 +15,23 @@ export class Provider extends Component {
     userToken: localStorage.getItem('token') || null,
     first_name: localStorage.getItem('first_name') || null,
     avatar: localStorage.getItem('avatar') || null,
+    verified: localStorage.getItem('verified') || null,
   };
 
   render() {
-    const {userToken, first_name, avatar} = this.state;
+    const {userToken, first_name, avatar, verified} = this.state;
 
     const value = {
       userToken,
       first_name,
       avatar,
+      verified,
       //stores any handlers or actions to perform on data passed through context
       actions: {
         signIn: this.signIn,
         signOut: this.signOut,
         signUp: this.signUp,
+        verify_user: this.verify_user,
         get_my_profile: this.get_my_profile,
         create_profile: this.create_profile,
         update_name: this.update_name,
@@ -61,11 +64,13 @@ export class Provider extends Component {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('first_name', res.data.user.first_name);
         localStorage.setItem('avatar', res.data.user.avatar);
+        localStorage.setItem('verified', res.data.user.verified);
         this.setState(() => {
           return {
             userToken: localStorage.getItem('token'),
             first_name: localStorage.getItem('first_name'),
             avatar: localStorage.getItem('avatar'),
+            verified: localStorage.getItem('verified'),
           };
         });
         console.log(res.data);
@@ -104,11 +109,13 @@ export class Provider extends Component {
         userToken: null,
         first_name: null,
         avatar: null,
+        verified: null,
       };
     });
     localStorage.removeItem('token');
     localStorage.removeItem('first_name');
     localStorage.removeItem('avatar');
+    localStorage.removeItem('verified');
   };
 
   signUp = async (first_name, last_name, email, password) => {
@@ -127,14 +134,56 @@ export class Provider extends Component {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('first_name', res.data.user.first_name);
         localStorage.setItem('avatar', res.data.user.avatar);
+        localStorage.setItem('verified', res.data.user.verified);
         this.setState(() => {
           return {
             userToken: localStorage.getItem('token'),
             first_name: localStorage.getItem('first_name'),
             avatar: localStorage.getItem('avatar'),
+            verified: localStorage.getItem('verified'),
           };
         });
         return 201;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  verify_user = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    //const body = JSON.stringify();
+
+    try {
+      const res = await axios.post('http://localhost:5000/auth/verify', config);
+      if (res.status === 200) {
+        localStorage.setItem('verified', true);
+        this.setState(() => {
+          return {
+            verified: localStorage.getItem('verified'),
+          };
+          return 200;
+        });
       }
     } catch (error) {
       // Error 😨

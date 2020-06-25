@@ -90,7 +90,7 @@ exports.verify_user = asyncHandler(async (req, res) => {
   if (user) {
     if (!user.verified) {
       user.update({verified: 'true'});
-      res.json({msg: 'User is now verified'}).status(201);
+      res.json({msg: 'User is now verified'}).status(200);
     } else {
       res.json({msg: 'User is already verified'});
     }

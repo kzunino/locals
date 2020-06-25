@@ -57,7 +57,6 @@ function EditProfileInfo({context}) {
 
     //fires login action
     //if errors are returned it takes error object values and adds them to error array
-    console.log(date_of_birth);
 
     const res = await context.actions.update_profile_info(
       bio,
@@ -168,7 +167,7 @@ function EditProfileInfo({context}) {
               name='phone_number'
               value={phone_number || ''}
               maxLength='10'
-              pattern='[0-9]{3}[0-9]{3}0-9]{4}'
+              pattern='[0-9]{10}'
               placeholder='Phone Number...'
               onChange={(e) => onChange(e)}
             />

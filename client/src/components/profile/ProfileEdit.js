@@ -10,6 +10,7 @@ const EditNameWithContext = withContext(EditName);
 const EditAvatarWithContext = withContext(EditAvatar);
 const EditCoverPhotoWithContext = withContext(EditCoverPhoto);
 const EditProfileInfoWithContext = withContext(EditProfileInfo);
+const VerifyProfileWithContext = withContext(VerifyProfile);
 
 function ProfileEdit() {
   return (
@@ -18,7 +19,7 @@ function ProfileEdit() {
       <EditAvatarWithContext />
       <EditCoverPhotoWithContext />
       <EditProfileInfoWithContext />
-      <VerifyProfile />
+      <VerifyProfileWithContext />
     </div>
   );
 }

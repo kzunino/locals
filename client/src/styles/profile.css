@@ -23,6 +23,16 @@
   margin-left: 37%;
 }
 
+.placeholder-img {
+  width: 300px;
+  margin-left: 33%;
+  border-radius: 100%;
+}
+
+.verified {
+  color: blue;
+}
+
 /* Edit Profile */
 
 .edit-profile-picture-circular {
@@ -31,7 +41,7 @@
   height: 300px;
   overflow: hidden;
   border-radius: 50%;
-  margin-left: 33%;
+  margin: auto;
 }
 
 .edit-profile-picture {
@@ -59,9 +69,18 @@
     margin-top: -40px;
     margin-left: 37%;
   }
+  .edit-profile-picture-circular {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+  }
   .edit-profile-picture {
+    width: 100%;
+    height: auto;
+  }
+  .placeholder-img {
+    width: 200px;
+    margin-left: 33%;
     border-radius: 100%;
-    width: 60%;
-    margin-left: 22%;
   }
 }

@@ -37,11 +37,7 @@ const NavBar = ({history, context, context: {userToken, first_name}}) => {
           </Nav.Item>
 
           <Nav.Item>
-            <Nav.Link
-              href='/home'
-              onClick={(e) => onClick(e)}
-              className='nav-item'
-            >
+            <Nav.Link href='' onClick={(e) => onClick(e)} className='nav-item'>
               Log Out
             </Nav.Link>
           </Nav.Item>

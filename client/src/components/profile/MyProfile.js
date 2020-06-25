@@ -5,7 +5,7 @@ import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import Moment from 'react-moment';
 
-function Profile({context}) {
+function Profile({context, context: {verified}}) {
   const [profileData, setProfileData] = useState({});
   const [userData, setUserData] = useState({});
 
@@ -31,7 +31,6 @@ function Profile({context}) {
         setProfileData({...res.profile});
         setUserData({...res.profile.user});
       }
-      console.log(res);
       setProfileData({...res.profile});
       setUserData({...res.profile.user});
     };
@@ -54,6 +53,7 @@ function Profile({context}) {
 
       <div className='container'>
         <h1 className='text-center border-bottom   mb-0'>
+          {verified ? <i class='fas fa-user-check  fa-xs verified'></i> : null}
           {first_name} {last_name}
           <Link to='/edit/profile' style={{textDecoration: 'none'}}>
             <span className='text-secondary text-small'> Edit Profile</span>
