@@ -12,9 +12,8 @@ const asyncHandler = require('../middleware/asyncHandler');
 exports.create_post = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({errors: errorMessages});
   }
 
   //find user and remove password
@@ -30,7 +29,7 @@ exports.create_post = asyncHandler(async (req, res) => {
     fk_user_uid: user.user_uid,
   });
 
-  res.json(post).status(201);
+  res.json({post}).status(201);
 });
 
 //@Route    GET api/posts
@@ -40,6 +39,10 @@ exports.create_post = asyncHandler(async (req, res) => {
 exports.get_all_posts = asyncHandler(async (req, res) => {
   const posts = await Post.findAll({
     include: [
+      {
+        model: User,
+        attributes: ['avatar'],
+      },
       {
         model: PostLike,
       },
@@ -64,7 +67,7 @@ exports.get_all_posts = asyncHandler(async (req, res) => {
     ],
   });
 
-  res.json(posts);
+  res.json({posts});
 });
 
 //@Route    GET /posts/:id

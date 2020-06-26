@@ -10,6 +10,10 @@
   border: thin solid lightgray;
 }
 
+.post-text {
+  font-size: 12px;
+}
+
 .post > div:first-child {
   text-align: center;
 }

@@ -14,7 +14,7 @@ exports.get_all_adventures = asyncHandler(async (req, res) => {
     include: [
       {
         model: User,
-        attributes: ['first_name', 'last_name'],
+        attributes: ['first_name', 'last_name', 'avatar'],
       },
     ],
     order: [['createdAt', 'DESC']],
@@ -33,7 +33,7 @@ exports.get_adventure_by_uid = asyncHandler(async (req, res) => {
     include: [
       {
         model: User,
-        attributes: ['first_name', 'last_name'],
+        attributes: ['first_name', 'last_name', 'avatar'],
       },
       {
         model: Review,

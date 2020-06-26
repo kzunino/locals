@@ -6,6 +6,8 @@ import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import Moment from 'react-moment';
 
 function Profile({context, context: {verified}}) {
+  verified = JSON.parse(verified);
+
   const [profileData, setProfileData] = useState({});
   const [userData, setUserData] = useState({});
 
@@ -53,7 +55,9 @@ function Profile({context, context: {verified}}) {
 
       <div className='container'>
         <h1 className='text-center border-bottom   mb-0'>
-          {verified ? <i class='fas fa-user-check  fa-xs verified'></i> : null}
+          {verified ? (
+            <i className='fas fa-user-check  fa-xs verified'></i>
+          ) : null}
           {first_name} {last_name}
           <Link to='/edit/profile' style={{textDecoration: 'none'}}>
             <span className='text-secondary text-small'> Edit Profile</span>

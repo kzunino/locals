@@ -12,14 +12,14 @@ const EditCoverPhotoWithContext = withContext(EditCoverPhoto);
 const EditProfileInfoWithContext = withContext(EditProfileInfo);
 const VerifyProfileWithContext = withContext(VerifyProfile);
 
-function ProfileEdit() {
+function ProfileEdit({context: {verified}}) {
   return (
     <div className='container-fluid'>
       <EditNameWithContext />
       <EditAvatarWithContext />
       <EditCoverPhotoWithContext />
       <EditProfileInfoWithContext />
-      <VerifyProfileWithContext />
+      {!verified ? <VerifyProfileWithContext /> : null}
     </div>
   );
 }

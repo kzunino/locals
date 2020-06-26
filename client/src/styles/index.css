@@ -122,6 +122,10 @@ td {
 
 /* xs < 768 */
 @media screen and (max-width: 550px) {
+  .nav-item {
+    font-size: 12px;
+  }
+
   .secondary-nav-item {
     border-right: none;
   }
@@ -130,7 +134,8 @@ td {
     background-color: white;
     box-shadow: 0px 4px 20px 1px grey;
     border-radius: 3px;
-    width: 90%;
+    width: 80%;
+    font-size: 12px;
     margin: auto;
     margin-top: -20px;
   }
@@ -159,7 +164,8 @@ td {
     background-color: white;
     box-shadow: 0px 4px 20px 1px grey;
     border-radius: 3px;
-    width: 70%;
+    width: 55%;
+    font-size: 12px;
     margin: auto;
     margin-top: -20px;
   }
@@ -183,6 +189,9 @@ td {
 
 /* sm */
 @media screen and (min-width: 768px) {
+  .secondary-nav {
+    width: 40%;
+  }
 }
 
 /* md */

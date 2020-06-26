@@ -22,7 +22,7 @@ import MyProfile from './components/profile/MyProfile';
 import ProfileEdit from './components/profile/ProfileEdit';
 
 import Footer from './components/Footer';
-import Classifieds from './components/Classifieds';
+import MessageBoard from './components/MessageBoard';
 
 //Components with context
 const HomeWithContext = withContext(Home);
@@ -30,10 +30,10 @@ const NavBarWithContext = withContext(NavBar);
 const ExperiencesWithContext = withContext(Experiences);
 const ExperiencePageWithContext = withContext(ExperiencePage);
 const CreateExperienceWithContext = withContext(CreateExperience);
-const ClassifiedsWithContext = withContext(Classifieds);
 const ProfileWithContext = withContext(Profile);
 const MyProfileWithContext = withContext(MyProfile);
 const ProfileEditWithContext = withContext(ProfileEdit);
+const MessageBoardWithContext = withContext(MessageBoard);
 const LogInWithContext = withContext(LogIn);
 const SignUpWithContext = withContext(SignUp);
 
@@ -53,7 +53,7 @@ function App({location}) {
       <Switch>
         <Route exact path='/home' component={Featured} />
         <Route path='/home/experiences' component={ExperiencesWithContext} />
-        <Route path='/home/classifieds' component={ClassifiedsWithContext} />
+        <Route path='/home/messageboard' component={MessageBoardWithContext} />
         <Route path='/post' component={Post} />
         <Route path='/profile/me' component={MyProfileWithContext} />
 

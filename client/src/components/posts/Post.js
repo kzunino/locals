@@ -9,7 +9,7 @@ function Post() {
   return (
     <div className='container'>
       <Link
-        to='/home/classifieds'
+        to='/home/messageboard'
         className='primary-color'
         style={{'text-decoration': 'none'}}
       >
