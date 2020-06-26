@@ -55,6 +55,7 @@ function App({location}) {
         <Route path='/home/experiences' component={ExperiencesWithContext} />
         <Route path='/home/messageboard' component={MessageBoardWithContext} />
         <Route path='/post' component={Post} />
+
         <Route path='/profile/me' component={MyProfileWithContext} />
 
         <Route path='/profile/:user_uid' component={ProfileWithContext} />

@@ -13,16 +13,18 @@ const config = {
 export class Provider extends Component {
   state = {
     userToken: localStorage.getItem('token') || null,
+    user_uid: localStorage.getItem('user_uid') || null,
     first_name: localStorage.getItem('first_name') || null,
     avatar: localStorage.getItem('avatar') || null,
     verified: localStorage.getItem('verified') || null,
   };
 
   render() {
-    const {userToken, first_name, avatar, verified} = this.state;
+    const {userToken, user_uid, first_name, avatar, verified} = this.state;
 
     const value = {
       userToken,
+      user_uid,
       first_name,
       avatar,
       verified,
@@ -40,6 +42,7 @@ export class Provider extends Component {
         update_profile_info: this.update_profile_info,
         post: this.post,
         get_posts: this.get_posts,
+        like: this.like,
       },
     };
 
@@ -64,12 +67,14 @@ export class Provider extends Component {
       const res = await axios.post(`http://localhost:5000/auth`, body, config);
       if (res.status === 200) {
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user_uid', res.data.user.user_uid);
         localStorage.setItem('first_name', res.data.user.first_name);
         localStorage.setItem('avatar', res.data.user.avatar);
         localStorage.setItem('verified', res.data.user.verified);
         this.setState(() => {
           return {
             userToken: localStorage.getItem('token'),
+            user_uid: localStorage.getItem('user_uid'),
             first_name: localStorage.getItem('first_name'),
             avatar: localStorage.getItem('avatar'),
             verified: localStorage.getItem('verified'),
@@ -115,6 +120,7 @@ export class Provider extends Component {
       };
     });
     localStorage.removeItem('token');
+    localStorage.removeItem('user_uid');
     localStorage.removeItem('first_name');
     localStorage.removeItem('avatar');
     localStorage.removeItem('verified');
@@ -134,12 +140,14 @@ export class Provider extends Component {
       const res = await axios.post('http://localhost:5000/users', body, config);
       if (res.status === 201) {
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user_uid', res.data.user.user_uid);
         localStorage.setItem('first_name', res.data.user.first_name);
         localStorage.setItem('avatar', res.data.user.avatar);
         localStorage.setItem('verified', res.data.user.verified);
         this.setState(() => {
           return {
             userToken: localStorage.getItem('token'),
+            user_uid: localStorage.getItem('user_uid'),
             first_name: localStorage.getItem('first_name'),
             avatar: localStorage.getItem('avatar'),
             verified: localStorage.getItem('verified'),
@@ -492,6 +500,44 @@ export class Provider extends Component {
       const res = await axios.get('http://localhost:5000/posts', config);
       if (res.status === 200) {
         return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  like = async (post_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    console.log(typeof post_uid);
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/posts/like/${post_uid}`,
+        config
+      );
+      if (res.status === 200) {
+        return 200;
       }
     } catch (error) {
       // Error 😨

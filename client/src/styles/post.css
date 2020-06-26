@@ -22,8 +22,12 @@
 }
 
 .post img {
-  width: 100px;
+  width: 50px;
   border-radius: 100%;
+}
+
+.post h4 {
+  font-size: 15px;
 }
 
 .post .comment-count {
@@ -44,13 +48,16 @@ textarea {
   width: 100%;
 }
 
+.liked {
+  color: blue;
+}
+
 @media screen and (max-width: 550px) {
   .post p {
     font-size: 10px;
   }
   .post img {
-    width: 75px;
-    padding-left: 10px;
+    width: 50px;
   }
   h4 {
     font-size: 12px;

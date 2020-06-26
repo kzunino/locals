@@ -5,6 +5,7 @@ import PostForm from './posts/PostForm';
 import withContext from '../Context';
 
 const PostFormWithContext = withContext(PostForm);
+const PostItemWithContext = withContext(PostItem);
 
 function MessageBoard({context, context: {verified}}) {
   const [posts, setPosts] = useState([]);
@@ -36,7 +37,7 @@ function MessageBoard({context, context: {verified}}) {
         </p>
       )}
       {posts.map((post) => {
-        return <PostItem key={post.uid} postData={post} />;
+        return <PostItemWithContext key={post.uid} postData={post} />;
       })}
     </div>
   );
