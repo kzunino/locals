@@ -135,9 +135,16 @@ exports.like_post = asyncHandler(async (req, res) => {
   //finds post
   const post = await Post.findByPk(req.params.id);
 
+  if (likeExists) {
+    await PostLike.destroy({where: {user_uid: req.user.user_uid}});
+    await post.decrement('likeCounts', {by: 1});
+    return res.status(200).send({
+      message: 'You unliked this post',
+    });
+  }
   //creates like if like doesn't exist
   //if like exists then unlikes the post
-  if (!likeExists && post) {
+  else if (!likeExists && post) {
     await PostLike.create({
       user_uid: req.user.user_uid,
       fk_post_uid: post.post_uid,
@@ -148,12 +155,6 @@ exports.like_post = asyncHandler(async (req, res) => {
     });
   } else if (!post) {
     res.status(400).send({errors: ['There is no post to be liked']});
-  } else {
-    await PostLike.destroy({where: {user_uid: req.user.user_uid}});
-    await post.decrement('likeCounts', {by: 1});
-    res.status(200).send({
-      message: 'You unliked this post',
-    });
   }
 });
 

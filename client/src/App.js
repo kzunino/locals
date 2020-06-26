@@ -24,6 +24,8 @@ import ProfileEdit from './components/profile/ProfileEdit';
 import Footer from './components/Footer';
 import MessageBoard from './components/MessageBoard';
 
+import postItem2 from './components/posts/PostItem2';
+
 //Components with context
 const HomeWithContext = withContext(Home);
 const NavBarWithContext = withContext(NavBar);
@@ -55,6 +57,7 @@ function App({location}) {
         <Route path='/home/experiences' component={ExperiencesWithContext} />
         <Route path='/home/messageboard' component={MessageBoardWithContext} />
         <Route path='/post' component={Post} />
+        <Route path='/post2' component={postItem2} />
 
         <Route path='/profile/me' component={MyProfileWithContext} />
 

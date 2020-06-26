@@ -9,6 +9,13 @@ ul {
 a {
   text-decoration: none;
 }
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
 :root {
   --primary-color: 191, 36, 152;
 }

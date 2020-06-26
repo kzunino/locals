@@ -36,9 +36,11 @@ function MessageBoard({context, context: {verified}}) {
           to share!
         </p>
       )}
-      {posts.map((post) => {
-        return <PostItemWithContext key={post.uid} postData={post} />;
-      })}
+      <div className='container- post-wrapper'>
+        {posts.map((post) => {
+          return <PostItemWithContext key={post.uid} postData={post} />;
+        })}
+      </div>
     </div>
   );
 }
