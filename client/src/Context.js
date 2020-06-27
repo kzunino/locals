@@ -42,6 +42,8 @@ export class Provider extends Component {
         update_profile_info: this.update_profile_info,
         post: this.post,
         get_posts: this.get_posts,
+        get_post_by_uid: this.get_post_by_uid,
+        post_comment: this.post_comment,
         like: this.like,
       },
     };
@@ -497,7 +499,82 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.get('http://localhost:5000/posts', config);
+      const res = await axios.get(`http://localhost:5000/posts/`, config);
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  get_post_by_uid = async (post_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/posts/${post_uid}`,
+        config
+      );
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  post_comment = async (text, post_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+    console.log(post_uid);
+    const body = JSON.stringify(text);
+    console.log(body);
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/posts/comment/${post_uid}`,
+        body,
+        config
+      );
       if (res.status === 200) {
         return res.data;
       }

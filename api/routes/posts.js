@@ -44,7 +44,8 @@ router.put('/like/:id', auth, post_controller.like_post);
 
 router.put(
   '/:id',
-  [auth, [check('text', 'Text is required').notEmpty()]],
+  auth,
+  [check('text', 'Text is required').notEmpty()],
   post_controller.update_post
 );
 
@@ -54,7 +55,8 @@ router.put(
 
 router.post(
   '/comment/:id',
-  [auth, [check('text', 'Text is required').notEmpty()]],
+  auth,
+  [check('comment_text', 'Text is required').notEmpty()],
   post_controller.post_comment
 );
 

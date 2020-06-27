@@ -1,27 +1,43 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Portrait from '../../img/portrait.jpg';
+import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 
-function CommentItem() {
+function CommentItem({commentData}) {
   return (
-    <div class='post bg-white p-1 my-1'>
-      <div>
-        <Link to={``} style={{'text-decoration': 'none'}}>
-          <img class='round-img' src={Portrait} alt='' />
-          <h4>Commenter Name</h4>
-        </Link>
-      </div>
-      <div>
-        <p class='my-1'>This is my comment</p>
-        <p class='post-date'>
-          Posted on ..
-          {/* Posted on <Moment format='DD/MM/YYYY'>{date}</Moment> */}
-        </p>
-        {/* {!auth.loading && user === auth.user._id && ( */}
-        <button onClick={''} type='button' className='btn btn-danger'>
-          <i className='fas fa-times' />
-        </button>
-        {/* )} */}
+    <div className='card-body p-0 pl-3 mb-2'>
+      <div className='d-flex justify-content-between align-items-center'>
+        <div className='d-flex justify-content-between align-items-center'>
+          <div className=''>
+            <img
+              className='rounded-circle commenter-avatar'
+              width='30'
+              src='https://picsum.photos/50/50'
+              alt=''
+            />
+          </div>
+          <div className='ml-2 mr-2'>
+            <p className=' m-0 comment-name'>
+              Commenter{' '}
+              <p className='d-inline text-muted comment-date m-0'>date</p>
+            </p>
+
+            <p className='comment-text m-0'>I am a comment</p>
+
+            <button
+              // onClick={() => {
+              //   onLike(post_uid);
+              //   afterLike();
+              // }}
+              type='button'
+              class='btn m-0 p-0 comment-like'
+            >
+              {/* {count > 0 ? count : null}{' '} */}
+              {/* <i className={`fas fa-thumbs-up ${liked}`} />{' '} */}
+              Like
+            </button>
+          </div>
+        </div>
+        <div></div>
       </div>
     </div>
   );

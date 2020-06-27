@@ -15,7 +15,9 @@ import CreateExperience from './components/experiences/CreateExperience';
 
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
+
 import Post from './components/posts/Post';
+
 import Profile from './components/profile/Profile';
 import MyProfile from './components/profile/MyProfile';
 
@@ -24,13 +26,12 @@ import ProfileEdit from './components/profile/ProfileEdit';
 import Footer from './components/Footer';
 import MessageBoard from './components/MessageBoard';
 
-import postItem2 from './components/posts/PostItem2';
-
 //Components with context
 const HomeWithContext = withContext(Home);
 const NavBarWithContext = withContext(NavBar);
 const ExperiencesWithContext = withContext(Experiences);
 const ExperiencePageWithContext = withContext(ExperiencePage);
+const PostWithContext = withContext(Post);
 const CreateExperienceWithContext = withContext(CreateExperience);
 const ProfileWithContext = withContext(Profile);
 const MyProfileWithContext = withContext(MyProfile);
@@ -56,8 +57,7 @@ function App({location}) {
         <Route exact path='/home' component={Featured} />
         <Route path='/home/experiences' component={ExperiencesWithContext} />
         <Route path='/home/messageboard' component={MessageBoardWithContext} />
-        <Route path='/post' component={Post} />
-        <Route path='/post2' component={postItem2} />
+        <Route path='/post/:post_uid' component={PostWithContext} />
 
         <Route path='/profile/me' component={MyProfileWithContext} />
 

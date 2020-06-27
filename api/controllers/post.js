@@ -78,6 +78,10 @@ exports.get_post_by_pk = asyncHandler(async (req, res) => {
   const post = await Post.findByPk(req.params.id, {
     include: [
       {
+        model: User,
+        attributes: ['avatar'],
+      },
+      {
         model: PostLike,
       },
       {
@@ -90,7 +94,7 @@ exports.get_post_by_pk = asyncHandler(async (req, res) => {
       },
     ],
   });
-  if (post) res.json(post);
+  if (post) return res.json({post});
   else return res.status(400).json({errors: ['Post not found']});
 });
 
@@ -165,9 +169,8 @@ exports.like_post = asyncHandler(async (req, res) => {
 exports.update_post = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({errors: errorMessages});
   }
   const post = await Post.findByPk(req.params.id);
 
@@ -190,9 +193,8 @@ exports.update_post = asyncHandler(async (req, res) => {
 exports.post_comment = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({errors: errorMessages});
   }
 
   //find user and remove password
@@ -204,14 +206,14 @@ exports.post_comment = asyncHandler(async (req, res) => {
 
   //instantiate a new post from request and user
   const comment = await Comment.create({
-    text: req.body.text,
+    comment_text: req.body.comment_text,
     first_name: user.first_name,
     last_name: user.last_name,
     fk_user_uid: user.user_uid,
     fk_post_uid: post.post_uid,
   });
 
-  res.json(comment).status(201);
+  return res.json({comment}).status(200);
 });
 
 //@Route    DELETE posts/comment/:comment_id
@@ -246,9 +248,8 @@ exports.delete_comment = asyncHandler(async (req, res) => {
 exports.update_comment = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({errors: errorMessages});
   }
   const comment = await Comment.findByPk(req.params.comment_id);
 
