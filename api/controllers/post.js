@@ -88,6 +88,10 @@ exports.get_post_by_pk = asyncHandler(async (req, res) => {
         model: Comment,
         include: [
           {
+            model: User,
+            attributes: ['avatar'],
+          },
+          {
             model: CommentLike,
           },
         ],
@@ -205,12 +209,25 @@ exports.post_comment = asyncHandler(async (req, res) => {
   const post = await Post.findByPk(req.params.id);
 
   //instantiate a new post from request and user
-  const comment = await Comment.create({
+  let comment = await Comment.create({
     comment_text: req.body.comment_text,
     first_name: user.first_name,
     last_name: user.last_name,
     fk_user_uid: user.user_uid,
     fk_post_uid: post.post_uid,
+  });
+
+  let comment_uid = comment.comment_uid;
+  comment = await Comment.findByPk(comment_uid, {
+    include: [
+      {
+        model: User,
+        attributes: ['avatar'],
+      },
+      {
+        model: CommentLike,
+      },
+    ],
   });
 
   return res.json({comment}).status(200);
@@ -283,6 +300,14 @@ exports.like_comment = asyncHandler(async (req, res) => {
   //finds post
   const comment = await Comment.findByPk(req.params.comment_id);
 
+  if (likeExists) {
+    await CommentLike.destroy({where: {user_uid: req.user.user_uid}});
+    await comment.decrement('likeCounts', {by: 1});
+    return res.status(200).send({
+      message: 'You unliked this comment',
+    });
+  }
+
   //creates like if like doesn't exist
   //if like exists then unlikes the post
   if (!likeExists && comment) {
@@ -296,11 +321,5 @@ exports.like_comment = asyncHandler(async (req, res) => {
     });
   } else if (!comment) {
     res.status(400).send({errors: ['There is no comment to be liked']});
-  } else {
-    await CommentLike.destroy({where: {user_uid: req.user.user_uid}});
-    await comment.decrement('likeCounts', {by: 1});
-    res.status(200).send({
-      message: 'You unliked this comment',
-    });
   }
 });

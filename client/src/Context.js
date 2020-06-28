@@ -45,6 +45,8 @@ export class Provider extends Component {
         get_post_by_uid: this.get_post_by_uid,
         post_comment: this.post_comment,
         like: this.like,
+        comment_like: this.comment_like,
+        delete_comment: this.delete_comment,
       },
     };
 
@@ -611,6 +613,81 @@ export class Provider extends Component {
     try {
       const res = await axios.put(
         `http://localhost:5000/posts/like/${post_uid}`,
+        config
+      );
+      if (res.status === 200) {
+        return 200;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  comment_like = async (comment_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    console.log(typeof comment_uid);
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/posts/comment/like/${comment_uid}`,
+        config
+      );
+      if (res.status === 200) {
+        return 200;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+  delete_comment = async (comment_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    console.log(typeof comment_uid);
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/posts/comment/${comment_uid}`,
         config
       );
       if (res.status === 200) {

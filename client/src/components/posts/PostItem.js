@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
-import TextareaAutosize from 'react-autosize-textarea';
+//import TextareaAutosize from 'react-autosize-textarea';
 
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 
@@ -24,18 +24,18 @@ function PostItem({
 }) {
   const [liked, setLiked] = useState('');
   const [count, setCount] = useState(likeCounts);
-  const [likedTrue, setLikedTrue] = useState([]);
+  //const [likedTrue, setLikedTrue] = useState([]);
 
   useEffect(() => {
     if (post_likes) {
       for (let like of post_likes) {
         if (like.user_uid === user_uid) {
           setLiked('liked');
-          setLikedTrue(true);
+          //setLikedTrue(true);
         }
       }
     }
-  }, [post_likes]);
+  }, [post_likes, user_uid]);
 
   const onLike = async (post_uid) => {
     const res = await context.actions.like(post_uid);
@@ -47,11 +47,11 @@ function PostItem({
 
   const afterLike = () => {
     if (liked.length) {
-      setLikedTrue(false);
+      //setLikedTrue(false);
       setLiked('');
       setCount(count - 1);
     } else {
-      setLikedTrue(true);
+      // setLikedTrue(true);
       setLiked('liked');
       setCount(count + 1);
     }
@@ -92,7 +92,7 @@ function PostItem({
         </div>
       </div>
       <div className='card-body'>
-        <a className='card-link' href='#'></a>
+        {/* <a className='card-link' href='#' alt=''></a> */}
 
         <p className='card-text'>{text}</p>
       </div>
@@ -118,7 +118,7 @@ function PostItem({
             <i class='far fa-comment'></i>{' '}
           </Link>
           {fk_user_uid === user_uid ? (
-            <button onClick={''} type='button' class='btn'>
+            <button type='button' class='btn'>
               <i className='far fa-trash-alt'></i>{' '}
             </button>
           ) : null}

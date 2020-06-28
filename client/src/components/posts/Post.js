@@ -1,21 +1,24 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom';
+import withContext from '../../Context';
 // import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
 import Moment from 'react-moment';
 import TextareaAutosize from 'react-autosize-textarea';
-
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
+
+const CommentItemWithContext = withContext(CommentItem);
 
 function Post({context, match, context: {user_uid}}) {
   // Gets post by params and loads comment Items
-
+  //let initialState = {comment_text: ''};
   const [postData, setPostData] = useState({});
   const [liked, setLiked] = useState('');
-  const [likedTrue, setLikedTrue] = useState([]);
+  //const [likedTrue, setLikedTrue] = useState([]);
   const [count, setCount] = useState(null);
-  const [comment_text, setComment_Text] = useState();
+  const [comment_text, setComment_Text] = useState('');
   const [comments_array, setComments_Array] = useState([]);
+  const [avatar, setAvatar] = useState(null);
   let {
     first_name,
     last_name,
@@ -24,17 +27,18 @@ function Post({context, match, context: {user_uid}}) {
     fk_user_uid,
     createdAt,
   } = postData;
-  let avatar;
 
   useEffect(() => {
     const getPostByUid = async () => {
       let res = await context.actions.get_post_by_uid(match.params.post_uid);
       console.log(res);
       setPostData({...res.post});
+      setComment_Text('');
       isPostLiked(res.post.post_likes);
       setCount(res.post.likeCounts);
-      avatar = res.post.user.avatar;
+      setAvatar(res.post.user.avatar);
       setComments_Array([...res.post.comments]);
+      setComment_Text({comment_text: ''});
     };
     getPostByUid();
 
@@ -43,26 +47,44 @@ function Post({context, match, context: {user_uid}}) {
         for (let like of post_likes_array) {
           if (like.user_uid === user_uid) {
             setLiked('liked');
-            setLikedTrue(true);
+            //setLikedTrue(true);
           }
         }
       }
     };
-  }, []);
+  }, [context.actions, match.params.post_uid, user_uid]);
+
+  //clears the comment input after submission
+  const ref = useRef(null);
+  const clearInput = () => (ref.current.value = '');
+
+  //rendered as prop to child in order to delete comment from UI
+  const onCommentDelete = (comment_uid) => {
+    let updatedComments = comments_array.filter(
+      (comment) => comment_uid !== comment.comment_uid
+    );
+
+    setComments_Array(updatedComments);
+  };
 
   const onChange = (e) => {
     setComment_Text({...comment_text, [e.target.name]: e.target.value});
   };
 
+  //
   const onClick = async (e) => {
     e.preventDefault();
 
-    if (comment_text.length === 0) return console.log('no blank comments');
+    if (ref.current.value === '') return console.log('No blank messages');
+
     const res = await context.actions.post_comment(comment_text, post_uid);
     console.log(res);
+    setComment_Text('');
     if (res) {
-      //history.push('/home');
       console.log('I left a comment');
+      setComments_Array([...comments_array, res.comment]);
+      setComment_Text({comment_text: ''});
+      clearInput();
     }
   };
 
@@ -75,11 +97,11 @@ function Post({context, match, context: {user_uid}}) {
 
   const afterLike = () => {
     if (liked.length) {
-      setLikedTrue(false);
+      //setLikedTrue(false);
       setLiked('');
       setCount(count - 1);
     } else {
-      setLikedTrue(true);
+      //setLikedTrue(true);
       setLiked('liked');
       setCount(count + 1);
     }
@@ -121,7 +143,7 @@ function Post({context, match, context: {user_uid}}) {
           </div>
         </div>
         <div className='card-body'>
-          <a className='card-link' href='#'></a>
+          {/* <a className='card-link' href='#'></a> */}
 
           <p className='card-text'>{text}</p>
         </div>
@@ -132,21 +154,27 @@ function Post({context, match, context: {user_uid}}) {
               afterLike();
             }}
             type='button'
-            class='btn'
+            className='btn'
           >
             {count > 0 ? count : null}{' '}
             <i className={`fas fa-thumbs-up ${liked}`} />{' '}
           </button>
 
           {fk_user_uid === user_uid ? (
-            <button onClick={''} type='button' class='btn'>
+            <button type='button' className='btn'>
               <i className='far fa-trash-alt'></i>{' '}
             </button>
           ) : null}
         </div>
         {/* Comment */}
         {comments_array.map((comment) => {
-          return <CommentItem key={comment.uid} commentData={comment} />;
+          return (
+            <CommentItemWithContext
+              onCommentDelete={onCommentDelete}
+              key={comment.uid}
+              commentData={comment}
+            />
+          );
         })}
         {/* end of comment */}
         <div className='card-footer pb-0'>
@@ -159,10 +187,13 @@ function Post({context, match, context: {user_uid}}) {
           <TextareaAutosize
             className='comment-textarea ml-2 mr-2 '
             rows={1}
-            onResize={(e) => {}}
+            ref={ref}
             name='comment_text'
+            value={comment_text.value}
             placeholder='Leave a comment...'
-            onChange={(e) => onChange(e)}
+            onChange={(e) => {
+              onChange(e);
+            }}
           />
 
           <button
@@ -174,24 +205,6 @@ function Post({context, match, context: {user_uid}}) {
           </button>
         </div>
       </div>
-
-      {/* <Link
-        to='/home/messageboard'
-        className='primary-color'
-        style={{'text-decoration': 'none'}}
-      >
-        Back to Posts
-      </Link> */}
-      {/* <PostItem postId={match.params} /> */}
-      {/* <CommentForm postId={''} />
-      <CommentItem />
-      <CommentItem />
-      <CommentItem /> */}
-      {/* <div className='comments'>
-        {post.comments.map((comment) => (
-          <CommentItem key={comment._id} comment={comment} postId={post._id} />
-        ))}
-      </div> */}
     </div>
   );
 }

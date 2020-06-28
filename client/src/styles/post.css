@@ -34,6 +34,11 @@ textarea {
   font-size: 14px;
 }
 
+.comment-date {
+  font-weight: lighter;
+  font-size: 10px;
+}
+
 .comment-text {
   font-size: 13px;
 }
