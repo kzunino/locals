@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
 //import TextareaAutosize from 'react-autosize-textarea';
@@ -21,9 +21,11 @@ function PostItem({
     fk_user_uid,
   },
   postData: {post_likes},
+  onPostDelete,
 }) {
   const [liked, setLiked] = useState('');
   const [count, setCount] = useState(likeCounts);
+
   //const [likedTrue, setLikedTrue] = useState([]);
 
   useEffect(() => {
@@ -36,6 +38,15 @@ function PostItem({
       }
     }
   }, [post_likes, user_uid]);
+
+  const onDelete = async (post_uid) => {
+    //passes post uid up to parent to erase from the UI
+    onPostDelete(post_uid);
+    const res = await context.actions.delete_post(post_uid);
+    if (res === 200) {
+      console.log('post deleted');
+    }
+  };
 
   const onLike = async (post_uid) => {
     const res = await context.actions.like(post_uid);
@@ -96,10 +107,6 @@ function PostItem({
 
         <p className='card-text'>{text}</p>
       </div>
-
-      {/* Comment */}
-
-      {/* end of comment */}
       <div className='card-footer pb-0'>
         <div className='card-body p-0'>
           <button
@@ -108,19 +115,28 @@ function PostItem({
               afterLike();
             }}
             type='button'
-            class='btn'
+            className='btn'
           >
             {count > 0 ? count : null}{' '}
             <i className={`fas fa-thumbs-up ${liked}`} />{' '}
           </button>
 
-          <Link to={`/post/${post_uid}`} class='btn '>
-            <i class='far fa-comment'></i>{' '}
+          <Link to={`/post/${post_uid}`} className='btn '>
+            <i className='far fa-comment'></i>{' '}
           </Link>
           {fk_user_uid === user_uid ? (
-            <button type='button' class='btn'>
-              <i className='far fa-trash-alt'></i>{' '}
-            </button>
+            <Fragment>
+              <Link to={`/post/${post_uid}`} className='btn '>
+                <i className='far fa-edit'></i>{' '}
+              </Link>
+              <button
+                type='button'
+                onClick={() => onDelete(post_uid)}
+                className='btn'
+              >
+                <i className='far fa-trash-alt'></i>{' '}
+              </button>
+            </Fragment>
           ) : null}
         </div>
       </div>

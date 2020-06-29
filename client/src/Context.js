@@ -43,10 +43,13 @@ export class Provider extends Component {
         post: this.post,
         get_posts: this.get_posts,
         get_post_by_uid: this.get_post_by_uid,
+        update_post: this.update_post,
         post_comment: this.post_comment,
+        update_comment: this.update_comment,
         like: this.like,
         comment_like: this.comment_like,
         delete_comment: this.delete_comment,
+        delete_post: this.delete_post,
       },
     };
 
@@ -561,6 +564,46 @@ export class Provider extends Component {
     }
   };
 
+  update_post = async (editText, post_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    let text = {text: editText.updatedText};
+
+    const body = JSON.stringify(text);
+    console.log(body);
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/posts/${post_uid}`,
+        body,
+        config
+      );
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
   post_comment = async (text, post_uid) => {
     const config = {
       headers: {
@@ -579,6 +622,84 @@ export class Provider extends Component {
       );
       if (res.status === 200) {
         return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  update_comment = async (editText, comment_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    let text = {text: editText.updatedText};
+
+    const body = JSON.stringify(text);
+    console.log(body);
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/posts/comment/${comment_uid}`,
+        body,
+        config
+      );
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  delete_post = async (post_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    console.log(typeof post_uid);
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/posts/${post_uid}`,
+        config
+      );
+      if (res.status === 200) {
+        return 200;
       }
     } catch (error) {
       // Error 😨

@@ -66,7 +66,8 @@ router.post(
 
 router.put(
   '/comment/:comment_id',
-  [auth, [check('text', 'Text is required').notEmpty()]],
+  auth,
+  [check('text', 'Text is required').notEmpty()],
   post_controller.update_comment
 );
 

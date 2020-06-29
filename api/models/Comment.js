@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       comment_text: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       first_name: {
         allowNull: false,

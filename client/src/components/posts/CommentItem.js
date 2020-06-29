@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment, useRef} from 'react';
 //import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
+import TextareaAutosize from 'react-autosize-textarea';
 
 function CommentItem({
   context,
@@ -24,11 +25,16 @@ function CommentItem({
   const [liked, setLiked] = useState('');
   //const [likedTrue, setLikedTrue] = useState([]);
   const [count, setCount] = useState(null);
-  // const [comments_likes_array, setComments_Likes_Array] = useState([]);
+  const [editText, setEditText] = useState({
+    updatedText: '',
+  });
+  const [editTextField, setEditTextField] = useState(false);
+
+  let {updatedText} = editText;
 
   useEffect(() => {
-    // setComments_Likes_Array(comment_likes);
     setCount(likeCounts);
+    setEditText({updatedText: comment_text});
 
     const isPostLiked = (comment_likes) => {
       if (comment_likes.length) {
@@ -43,7 +49,23 @@ function CommentItem({
     isPostLiked(comment_likes);
   }, [likeCounts, comment_likes, user_uid]);
 
+  const editRef = useRef(null);
+
+  const onEdit = (e) => {
+    setEditText({...editText, [e.target.name]: e.target.value});
+  };
+
+  const handleEdit = async (e, comment_uid) => {
+    e.preventDefault();
+    if (editRef.current.value === '') return console.log('No blank messages');
+
+    const res = await context.actions.update_comment(editText, comment_uid);
+    console.log(res);
+    toggleEditTextField(editTextField);
+  };
+
   const onDelete = async (comment_uid) => {
+    //passes comment_uid up to parent to delete from UI
     onCommentDelete(comment_uid);
     const res = await context.actions.delete_comment(comment_uid);
     if (res === 200) {
@@ -70,11 +92,15 @@ function CommentItem({
     }
   };
 
+  const toggleEditTextField = (editTextField) => {
+    setEditTextField(!editTextField);
+  };
+
   return (
     <div className='card-body p-0 pl-3 mb-2'>
       <div className='d-flex justify-content-between align-items-center'>
         <div className='d-flex justify-content-between align-items-center'>
-          <div className=''>
+          <div className='mr-2'>
             <img
               className='rounded-circle commenter-avatar'
               width='30'
@@ -89,29 +115,60 @@ function CommentItem({
                 <Moment format={'MM/DD/YYYY'}>{createdAt}</Moment>
               </span>
             </p>
+            {!editTextField ? (
+              <p className='comment-text m-0'>{updatedText}</p>
+            ) : (
+              <Fragment>
+                <TextareaAutosize
+                  className='edit-comment-textarea ml-2 mr-2 d-inline '
+                  rows={1}
+                  ref={editRef}
+                  name='updatedText'
+                  value={updatedText}
+                  onChange={(e) => {
+                    onEdit(e);
+                  }}
+                />
 
-            <p className='comment-text m-0'>{comment_text}</p>
-
+                <button
+                  type='submit'
+                  className='btn btn-secondary btn-sm comment-btn '
+                  onClick={(e) => handleEdit(e, comment_uid)}
+                >
+                  Update Comment
+                </button>
+              </Fragment>
+            )}
+            <div></div>
             <button
               onClick={() => {
                 onLike(comment_uid);
                 afterLike();
               }}
-              type='button'
-              className='btn m-0 p-0 comment-like'
+              type='btn'
+              className={`btn m-0 p-0 comment-like ${liked}`}
             >
               {count > 0 ? count : null}{' '}
               {/* <i className={`fas fa-thumbs-up ${liked}`} />{' '} */}
               Like
             </button>
             {fk_user_uid === user_uid ? (
-              <button
-                onClick={() => onDelete(comment_uid)}
-                type='button'
-                className='btn'
-              >
-                <i className='far fa-trash-alt'></i>{' '}
-              </button>
+              <Fragment>
+                <button
+                  type='button'
+                  onClick={() => toggleEditTextField(editTextField)}
+                  className='btn'
+                >
+                  <i className='far fa-edit'></i>{' '}
+                </button>
+                <button
+                  onClick={() => onDelete(comment_uid)}
+                  type='button'
+                  className='btn'
+                >
+                  <i className='far fa-trash-alt'></i>{' '}
+                </button>
+              </Fragment>
             ) : null}
           </div>
         </div>

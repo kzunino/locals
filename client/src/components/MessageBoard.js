@@ -19,6 +19,13 @@ function MessageBoard({context, context: {verified}}) {
     getPosts();
   }, [context]);
 
+  //passes to child component and takes post uid callback
+  const onPostDelete = (post_uid) => {
+    let updatedPosts = posts.filter((post) => post_uid !== post.post_uid);
+
+    setPosts(updatedPosts);
+  };
+
   return (
     <div className='container-fluid'>
       <h1 className='mb-0'>Local Things To Do...</h1>
@@ -38,7 +45,13 @@ function MessageBoard({context, context: {verified}}) {
       )}
       <div className='container- post-wrapper'>
         {posts.map((post) => {
-          return <PostItemWithContext key={post.uid} postData={post} />;
+          return (
+            <PostItemWithContext
+              key={post.uid}
+              postData={post}
+              onPostDelete={onPostDelete}
+            />
+          );
         })}
       </div>
     </div>

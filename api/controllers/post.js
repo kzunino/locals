@@ -272,8 +272,8 @@ exports.update_comment = asyncHandler(async (req, res) => {
 
   if (comment) {
     if (comment.fk_user_uid === req.user.user_uid) {
-      comment.update({text: req.body.text});
-      res.json(comment);
+      comment.update({comment_text: req.body.text});
+      res.json({comment});
     } else {
       return res
         .status(400)

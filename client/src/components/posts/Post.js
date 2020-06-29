@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import withContext from '../../Context';
 // import CommentForm from './CommentForm';
@@ -19,6 +19,10 @@ function Post({context, match, context: {user_uid}}) {
   const [comment_text, setComment_Text] = useState('');
   const [comments_array, setComments_Array] = useState([]);
   const [avatar, setAvatar] = useState(null);
+  const [editText, setEditText] = useState({
+    updatedText: '',
+  });
+  const [editTextField, setEditTextField] = useState(false);
   let {
     first_name,
     last_name,
@@ -27,6 +31,8 @@ function Post({context, match, context: {user_uid}}) {
     fk_user_uid,
     createdAt,
   } = postData;
+
+  let {updatedText} = editText;
 
   useEffect(() => {
     const getPostByUid = async () => {
@@ -39,6 +45,7 @@ function Post({context, match, context: {user_uid}}) {
       setAvatar(res.post.user.avatar);
       setComments_Array([...res.post.comments]);
       setComment_Text({comment_text: ''});
+      setEditText({updatedText: res.post.text});
     };
     getPostByUid();
 
@@ -56,6 +63,7 @@ function Post({context, match, context: {user_uid}}) {
 
   //clears the comment input after submission
   const ref = useRef(null);
+  const editRef = useRef(null);
   const clearInput = () => (ref.current.value = '');
 
   //rendered as prop to child in order to delete comment from UI
@@ -71,7 +79,21 @@ function Post({context, match, context: {user_uid}}) {
     setComment_Text({...comment_text, [e.target.name]: e.target.value});
   };
 
-  //
+  const onEdit = (e) => {
+    setEditText({...editText, [e.target.name]: e.target.value});
+  };
+
+  const handleEdit = async (e, post_uid) => {
+    e.preventDefault();
+    if (editRef.current.value === '') return console.log('No blank messages');
+
+    const res = await context.actions.update_post(editText, post_uid);
+    console.log(res);
+    setPostData({...postData, text: updatedText});
+    toggleEditTextField(editTextField);
+  };
+
+  //submits a comment
   const onClick = async (e) => {
     e.preventDefault();
 
@@ -105,6 +127,10 @@ function Post({context, match, context: {user_uid}}) {
       setLiked('liked');
       setCount(count + 1);
     }
+  };
+
+  const toggleEditTextField = (editTextField) => {
+    setEditTextField(!editTextField);
   };
 
   return (
@@ -143,9 +169,30 @@ function Post({context, match, context: {user_uid}}) {
           </div>
         </div>
         <div className='card-body'>
-          {/* <a className='card-link' href='#'></a> */}
+          {!editTextField ? (
+            <p className='card-text'>{text}</p>
+          ) : (
+            <Fragment>
+              <TextareaAutosize
+                className='post-textarea ml-2 mr-2 '
+                rows={2}
+                ref={editRef}
+                name='updatedText'
+                value={updatedText}
+                onChange={(e) => {
+                  onEdit(e);
+                }}
+              />
 
-          <p className='card-text'>{text}</p>
+              <button
+                type='submit'
+                className='btn btn-secondary btn-sm comment-btn'
+                onClick={(e) => handleEdit(e, post_uid)}
+              >
+                Update Post
+              </button>
+            </Fragment>
+          )}
         </div>
         <div className='card-footer p-0 mb-2'>
           <button
@@ -161,9 +208,18 @@ function Post({context, match, context: {user_uid}}) {
           </button>
 
           {fk_user_uid === user_uid ? (
-            <button type='button' className='btn'>
-              <i className='far fa-trash-alt'></i>{' '}
-            </button>
+            <Fragment>
+              <button
+                type='button'
+                onClick={() => toggleEditTextField(editTextField)}
+                className='btn'
+              >
+                <i className='far fa-edit'></i>{' '}
+              </button>
+              <button type='button' className='btn'>
+                <i className='far fa-trash-alt'></i>{' '}
+              </button>
+            </Fragment>
           ) : null}
         </div>
         {/* Comment */}
