@@ -9,6 +9,7 @@ import setAuthToken from './utilites/setAuthToken';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Featured from './components/Featured';
+import ExperienceDashBoard from './components/experiences/ExperienceDashboard';
 import Experiences from './components/experiences/Experiences';
 import ExperiencePage from './components/experiences/ExperiencePage';
 import CreateExperience from './components/experiences/CreateExperience';
@@ -32,6 +33,7 @@ const NavBarWithContext = withContext(NavBar);
 const ExperiencesWithContext = withContext(Experiences);
 const ExperiencePageWithContext = withContext(ExperiencePage);
 const PostWithContext = withContext(Post);
+const ExperienceDashBoardWithContext = withContext(ExperienceDashBoard);
 const CreateExperienceWithContext = withContext(CreateExperience);
 const ProfileWithContext = withContext(Profile);
 const MyProfileWithContext = withContext(MyProfile);
@@ -63,7 +65,9 @@ function App({location}) {
 
         <Route path='/profile/:user_uid' component={ProfileWithContext} />
         <Route path='/edit/profile' component={ProfileEditWithContext} />
-        <Route path='/experience' component={ExperiencePageWithContext} />
+
+        <Route path='/dashboard' component={ExperienceDashBoardWithContext} />
+        <Route path='/experience/:id' component={ExperiencePageWithContext} />
         <Route
           path='/create/experience'
           component={CreateExperienceWithContext}

@@ -50,6 +50,9 @@ export class Provider extends Component {
         comment_like: this.comment_like,
         delete_comment: this.delete_comment,
         delete_post: this.delete_post,
+        create_experience: this.create_experience,
+        upload_exp_cover_photo: this.upload_exp_cover_photo,
+        get_exp_by_uid: this.get_exp_by_uid,
       },
     };
 
@@ -813,6 +816,123 @@ export class Provider extends Component {
       );
       if (res.status === 200) {
         return 200;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  create_experience = async (experienceData) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'multipart/form-data',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    const body = JSON.stringify(experienceData);
+    console.log(body);
+
+    try {
+      const res = await axios.post(
+        'http://localhost:5000/adventure',
+        body,
+        config
+      );
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  upload_exp_cover_photo = async (photo) => {
+    const config = {
+      headers: {
+        //'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    let formData = new FormData();
+    formData.append('photo', photo);
+    console.log(formData);
+
+    try {
+      const res = await axios.post(
+        'http://localhost:5000/upload/exp_cover_photo',
+        formData,
+        config
+      );
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return 400;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+  get_exp_by_uid = async (experience_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/adventure/${experience_uid}`,
+        config
+      );
+      if (res.status === 200) {
+        return res.data;
       }
     } catch (error) {
       // Error 😨

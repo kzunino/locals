@@ -55,10 +55,10 @@ function Profile({context, context: {verified}}) {
 
       <div className='container'>
         <h1 className='text-center border-bottom   mb-0'>
+          {first_name} {last_name}{' '}
           {verified ? (
             <i className='fas fa-user-check  fa-xs verified'></i>
           ) : null}
-          {first_name} {last_name}
           <Link to='/edit/profile' style={{textDecoration: 'none'}}>
             <span className='text-secondary text-small'> Edit Profile</span>
           </Link>
@@ -80,6 +80,7 @@ function Profile({context, context: {verified}}) {
             <div className='col-sm-4'>Phone Number {phone_number}</div>
           </div>
         </div>
+
         <h4 className='mt-4'>Reviews:</h4>
       </div>
     </div>

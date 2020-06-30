@@ -13,13 +13,17 @@ const EditProfileInfoWithContext = withContext(EditProfileInfo);
 const VerifyProfileWithContext = withContext(VerifyProfile);
 
 function ProfileEdit({context: {verified}}) {
+  let verifiedString;
+  if (verified === 'false') {
+    verifiedString = false;
+  } else verifiedString = true;
   return (
     <div className='container-fluid'>
       <EditNameWithContext />
       <EditAvatarWithContext />
       <EditCoverPhotoWithContext />
       <EditProfileInfoWithContext />
-      {!verified ? <VerifyProfileWithContext /> : null}
+      {!verifiedString ? <VerifyProfileWithContext /> : null}
     </div>
   );
 }

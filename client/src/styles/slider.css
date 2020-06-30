@@ -9,11 +9,12 @@
 
 .cards-slider-wrapper {
   margin-top: 25px;
-  height: 285px;
+  height: 350px;
   display: flex;
 
   flex-wrap: nowrap;
   overflow-x: scroll;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 
@@ -59,6 +60,7 @@ div.cards-slider-wrapper:last-child {
   .cards-slider {
     position: relative;
     width: 100%;
+    height: 300px;
     padding-left: 5px;
     padding-right: 5px;
   }

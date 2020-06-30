@@ -11,27 +11,6 @@ function Experiences() {
             <div className='col-auto experience'>
               <ExperienceCard />
             </div>
-            <div className='col-auto  experience'>
-              <ExperienceCard />
-            </div>
-            <div className='col-auto experience'>
-              <ExperienceCard />
-            </div>
-            <div className='col-auto experience'>
-              <ExperienceCard />
-            </div>
-            <div className='col-auto  experience'>
-              <ExperienceCard />
-            </div>
-            <div className='col-auto experience'>
-              <ExperienceCard />
-            </div>
-            <div className='col-auto experience'>
-              <ExperienceCard />
-            </div>
-            <div className='col-auto  experience'>
-              <ExperienceCard />
-            </div>
             <div className='col-auto experience'>
               <ExperienceCard />
             </div>

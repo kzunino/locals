@@ -49,11 +49,11 @@ module.exports = {
         allowNull: false,
       },
       duration: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       start: {
-        type: Sequelize.TIME,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       included: {
@@ -65,6 +65,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null,
+      },
+      activity_type: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       cover_photo: {
         type: Sequelize.STRING,

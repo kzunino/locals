@@ -1,6 +1,7 @@
 const cloudinary = require('cloudinary').v2;
 const User = require('../models').users;
 const Profile = require('../models').profile;
+const Adventure = require('../models').adventure;
 
 const config = require('config');
 const asyncHandler = require('../middleware/asyncHandler');
@@ -78,6 +79,45 @@ exports.upload_cover_photo = asyncHandler(async (req, res) => {
   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
     console.log('Error: ', err);
     profile.update({
+      cover_photo: result.url,
+      cover_photo_id: result.public_id,
+    });
+    console.log('Result: ', result);
+    return res.json({result}).status(200);
+  });
+});
+
+// POST /upload/exp_cover_photo
+//@desc     uploads a experience photo & deletes the old one
+//@access   Private
+
+exports.upload_exp_cover_photo = asyncHandler(async (req, res) => {
+  let adventure = await Adventure.findOne(
+    {
+      where: {
+        fk_user_uid: req.user.user_uid,
+      },
+    },
+    {
+      attributes: {include: ['cover_photo', 'cover_photo_id']},
+    }
+  );
+  if (adventure) {
+    if (adventure.cover_photo !== null && adventure.cover_photo_id !== null) {
+      cloudinary.uploader.destroy(adventure.cover_photo_id, (err, result) => {
+        console.log('Error: ', err);
+        //res.json({result});
+        console.log('Result: ', result);
+      });
+    }
+  } else {
+    return res.json({msg: 'Profile not found!'});
+  }
+
+  const file = req.files.photo;
+  cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    console.log('Error: ', err);
+    adventure.update({
       cover_photo: result.url,
       cover_photo_id: result.public_id,
     });

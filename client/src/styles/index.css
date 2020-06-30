@@ -16,6 +16,10 @@ select:focus {
   outline: none;
 }
 
+.bg-color {
+  background-color: whitesmoke;
+}
+
 :root {
   --primary-color: 191, 36, 152;
 }
@@ -83,11 +87,10 @@ select:focus {
 
 /* Experience Cards */
 
-.experience-card {
+/* .experience-card {
   width: 200px;
   height: 270px;
   box-shadow: 0px 4px 5px 0px grey;
-  /* flex: 1; */
   margin-right: 20px;
 
   flex: 0 0 auto;
@@ -112,10 +115,40 @@ select:focus {
 }
 .card-title {
   font-weight: bold;
-}
+} */
 
 .experience {
   margin-bottom: 15px;
+}
+
+/* Experience Card Large */
+
+.experience-card {
+  width: 350px;
+  height: auto;
+  box-shadow: 0px 4px 5px 0px grey;
+  /* flex: 1; */
+  margin-right: 20px;
+
+  flex: 0 0 auto;
+}
+
+.experience-user-avatar {
+  border-radius: 50%;
+  width: 25%;
+  border: white solid;
+  margin-top: -40px;
+  margin-left: 15px;
+}
+
+.experience-subheading {
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: small;
+}
+.experience-card span {
+  color: rgb(var(--primary-color));
 }
 
 /* Footer */
@@ -129,6 +162,34 @@ td {
 
 /* xs < 768 */
 @media screen and (max-width: 550px) {
+  .experience-card {
+    width: 200px;
+    height: 270px;
+    box-shadow: 0px 4px 5px 0px grey;
+    /* flex: 1; */
+    margin-right: 20px;
+
+    flex: 0 0 auto;
+  }
+
+  .experience-user-avatar {
+    border-radius: 50%;
+    width: 25%;
+    border: white solid;
+    margin-top: -40px;
+    margin-left: 15px;
+  }
+
+  .experience-subheading {
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: small;
+  }
+  .experience-card span {
+    color: rgb(var(--primary-color));
+  }
+
   .nav-item {
     font-size: 12px;
   }
@@ -163,6 +224,16 @@ td {
 
 /* xs < 768 */
 @media screen and (min-width: 551px) {
+  .experience-card {
+    width: 300px;
+    height: 320px;
+    box-shadow: 0px 4px 5px 0px grey;
+    /* flex: 1; */
+    margin-right: 20px;
+
+    flex: 0 0 auto;
+  }
+
   .secondary-nav-item {
     border-right: none;
   }
@@ -180,6 +251,16 @@ td {
 
 /* xs < 768 */
 @media screen and (min-width: 767px) {
+  .experience-card {
+    width: 300px;
+    height: 320px;
+    box-shadow: 0px 4px 5px 0px grey;
+    /* flex: 1; */
+    margin-right: 20px;
+
+    flex: 0 0 auto;
+  }
+
   .secondary-nav {
     background-color: white;
     box-shadow: 0px 4px 20px 1px grey;

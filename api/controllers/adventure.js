@@ -29,19 +29,20 @@ exports.get_all_adventures = asyncHandler(async (req, res) => {
 //@access   Public
 
 exports.get_adventure_by_uid = asyncHandler(async (req, res) => {
-  const adventure = await Adventure.findByPk(req.params.adventure_uid, {
+  const adventure = await Adventure.findOne({
+    where: {adventure_uid: req.params.adventure_uid},
     include: [
       {
         model: User,
         attributes: ['first_name', 'last_name', 'avatar'],
       },
-      {
-        model: Review,
-        attributes: ['first_name', 'review', 'rating'],
-      },
+      // {
+      //   model: Review,
+      //   attributes: ['first_name', 'review', 'rating'],
+      // },
     ],
   });
-  if (adventure) res.json(adventure);
+  if (adventure) res.json({adventure});
   else res.json({errors: ['No adventures found']}).status(400);
 });
 
@@ -52,9 +53,8 @@ exports.get_adventure_by_uid = asyncHandler(async (req, res) => {
 exports.post_adventure = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({errors: errorMessages});
   }
 
   const {
@@ -62,6 +62,7 @@ exports.post_adventure = asyncHandler(async (req, res) => {
     description,
     languages,
     group_size,
+    cost,
     phone_number,
     street,
     city,
@@ -69,15 +70,18 @@ exports.post_adventure = asyncHandler(async (req, res) => {
     zip_code,
     duration,
     start,
+    activity_type,
     included,
     recommended,
   } = req.body;
+
   const fk_user_uid = req.user.user_uid;
 
-  const adventure = await Adventure.create({
+  let adventure = await Adventure.create({
     title,
     description,
     languages,
+    cost,
     group_size,
     phone_number,
     street,
@@ -86,12 +90,13 @@ exports.post_adventure = asyncHandler(async (req, res) => {
     zip_code,
     duration,
     start,
+    activity_type,
     included,
     recommended,
     fk_user_uid,
   });
 
-  res.json(adventure).status(201);
+  res.json({adventure}).status(200);
 });
 
 //@Route    PUT /adventure/:adventure_uid

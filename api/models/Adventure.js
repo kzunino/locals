@@ -50,11 +50,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       duration: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       start: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       included: {
@@ -66,6 +66,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: null,
+      },
+      activity_type: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       cover_photo: {
         type: DataTypes.STRING,
