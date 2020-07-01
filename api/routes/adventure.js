@@ -11,6 +11,12 @@ const verifiedUser = require('../middleware/verifiedUser');
 
 router.get('/', adventure_controller.get_all_adventures);
 
+//@Route    GET /adventure
+//@desc     Get all user adventures
+//@access   Public
+
+router.get('/user/adventures', auth, adventure_controller.get_user_adventures);
+
 //@Route    GET /adventure/:adventure_uid
 //@desc     Get adventure
 //@access   Public

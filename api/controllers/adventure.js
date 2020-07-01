@@ -24,6 +24,26 @@ exports.get_all_adventures = asyncHandler(async (req, res) => {
   else res.json({errors: ['No adventures found']}).status(400);
 });
 
+//@Route    GET /adventure
+//@desc     Get all user adventures
+//@access   Public
+
+exports.get_user_adventures = asyncHandler(async (req, res) => {
+  const adventures = await Adventure.findAll({
+    where: {fk_user_uid: req.user.user_uid},
+    include: [
+      {
+        model: User,
+        attributes: ['first_name', 'last_name', 'avatar'],
+      },
+    ],
+    order: [['createdAt', 'DESC']],
+    exclude: ['updatedAt'],
+  });
+  if (adventures) res.json(adventures);
+  else res.json({errors: ['No adventures found']}).status(400);
+});
+
 //@Route    GET /adventure/:adventure_uid
 //@desc     Get adventure
 //@access   Public

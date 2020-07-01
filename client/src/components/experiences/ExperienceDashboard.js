@@ -1,9 +1,20 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Slider from '../Slider';
 
-function ExperienceDashboard({context: {verified}}) {
+function ExperienceDashboard({context, context: {verified}}) {
   verified = JSON.parse(verified);
+  const [userExperiences, setUserExperiences] = useState([]);
+
+  useEffect(() => {
+    const getUserExperiences = async () => {
+      let res = await context.actions.get_user_experiences();
+      console.log(res);
+      setUserExperiences(res);
+    };
+
+    getUserExperiences();
+  }, []);
 
   return (
     <Fragment>
@@ -26,6 +37,10 @@ function ExperienceDashboard({context: {verified}}) {
         <div className='m-3'>
           <h3>Hosting an experience</h3>
           <p>
+            {' '}
+            Do you have ideas on how to be a local host in your area? Well, look
+            no further! Follow the link to craft your own unique experience for
+            people visiting your neck of the woods.{' '}
             <Link
               to='/create/experience'
               className='primary-color'
@@ -43,7 +58,7 @@ function ExperienceDashboard({context: {verified}}) {
       {verified ? (
         <Fragment>
           (<h3 className='mt-4 pl-3'>Hosted Experiences</h3>
-          <Slider />){' '}
+          <Slider experiences={userExperiences} />){' '}
         </Fragment>
       ) : null}
     </Fragment>

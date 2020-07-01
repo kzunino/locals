@@ -53,6 +53,7 @@ export class Provider extends Component {
         create_experience: this.create_experience,
         upload_exp_cover_photo: this.upload_exp_cover_photo,
         get_exp_by_uid: this.get_exp_by_uid,
+        get_user_experiences: this.get_user_experiences,
       },
     };
 
@@ -927,6 +928,43 @@ export class Provider extends Component {
     try {
       const res = await axios.get(
         `http://localhost:5000/adventure/${experience_uid}`,
+        config
+      );
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  get_user_experiences = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    // const body = JSON.stringify();
+    // console.log(body);
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/adventure/user/adventures`,
         config
       );
       if (res.status === 200) {
