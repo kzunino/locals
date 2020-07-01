@@ -90,8 +90,6 @@ export class Provider extends Component {
             verified: localStorage.getItem('verified'),
           };
         });
-        console.log(res.data);
-        console.log(res.data.user.first_name);
         return 200;
       }
     } catch (error) {

@@ -3,6 +3,10 @@ code {
     monospace;
 }
 
+.name-font {
+  font-family: 'Dancing Script', cursive;
+}
+
 ul {
   list-style-type: none;
 }

@@ -25,7 +25,7 @@ function ExperiencePage({context, match}) {
     cover_photo,
   } = experienceData;
 
-  let {first_name, last_name} = userData;
+  let {first_name} = userData;
 
   useState(() => {
     const getExperience = async () => {
@@ -42,6 +42,16 @@ function ExperiencePage({context, match}) {
     getExperience();
   }, [match.params.id]);
 
+  function formatPhoneNumber(phoneNumberString) {
+    var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+  }
+  if (phone_number) phone_number = formatPhoneNumber(phone_number);
+
   return (
     <div className='experience-wrapper'>
       <img className='profile-bg-img' src={StockCoverPhoto} alt='' />
@@ -49,9 +59,8 @@ function ExperiencePage({context, match}) {
       <div className='container'>
         <h1 className='text-center mb-0 mt-3'>{title}</h1>
         <h3 className='text-center border-bottom mb-0'>
-          With{' '}
-          <span className='primary-color'>
-            {first_name} {last_name}
+          <span className='primary-color text-bold name-font'>
+            With {first_name}
           </span>
         </h3>
         <h3 className=' border-bottom pt-4 pb-4'>
@@ -59,24 +68,55 @@ function ExperiencePage({context, match}) {
           <br></br>
           <p className='text-small mt-2'>{description}</p>
         </h3>
-        <div className='pt-4'>Languages {languages}</div>
-        <div className=''>Group Size {group_size}</div>
-        <div className=''>$ {cost}</div>
-        <div className=''>Phone Number {phone_number}</div>
-        <div className=''>
-          Address: <br></br>
-          {street} <br></br>
-          {city},{state} {zip_code}{' '}
+
+        <div className='container border-bottom pt-4 pb-4'>
+          <div className='row'>
+            <div className='col-sm-4 '>
+              <i className='fas fa-globe'></i> {languages}
+            </div>
+            <div className='col-sm-4'>
+              <i className='fas fa-users'></i> Groups up to {group_size}
+            </div>
+            <div className='col-sm-4'>
+              <i className='fas fa-dollar-sign'></i> {cost}
+            </div>
+
+            <div className='col-sm-4'>
+              <i className='far fa-clock'></i> Start Time {start}
+            </div>
+            <div className='col-sm-4'>
+              <i className='fas fa-hourglass-half'></i> {duration} hours
+            </div>
+            <div className='col-sm-4'>
+              <i className='fas fa-phone'></i> {phone_number}
+            </div>
+          </div>
         </div>
 
-        <div className=''>Start Time: {start}</div>
-        <div className='border-bottom pb-4'>Duration: {duration}</div>
+        <div className='border-bottom pb-4'>
+          <h3 className='pt-4 pb-2'>
+            Good <span className='text-secondary'> to know...</span>
+          </h3>
+          <p className='text-small'>
+            <i className='fas fa-map-marker-alt'></i>{' '}
+            <strong>Meeting Point</strong>
+          </p>{' '}
+          <div className='text-small mt-2'>
+            {street} <br></br>
+            {city}, {state} {zip_code}{' '}
+          </div>
+        </div>
+
         <h3 className='border-bottom pt-4 pb-4'>
-          Included:
+          What's included in{' '}
+          <span className='text-secondary'> this experience...</span>
           <p className='text-small mt-2'>{included}</p>{' '}
         </h3>
 
-        <h3 className='border-bottom pt-4 pb-4'>Recommended: {recommended}</h3>
+        <h3 className='border-bottom pt-4 pb-4'>
+          What is recommended{' '}
+          <span className='text-secondary'> to bring...</span> {recommended}
+        </h3>
 
         <h3 className='mt-4'>Reviews:</h3>
       </div>
