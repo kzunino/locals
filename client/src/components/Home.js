@@ -13,7 +13,7 @@ const Home = () => {
       <Jumbotron fluid className='jumbotron pt-0 pb-sm-1 md-pb-5 mb-0'>
         {/* <NavBarWithContext /> */}
         <div className='container'>
-          <h1 className='text-center text-white '>
+          <h1 className='text-center text-white mt-0'>
             Explore New Places With{' '}
             <span className='primary-color'>Locals</span>
           </h1>

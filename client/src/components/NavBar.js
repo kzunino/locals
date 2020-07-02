@@ -9,7 +9,7 @@ const NavBar = ({history, context, context: {userToken, first_name}}) => {
   };
 
   return (
-    <Nav className='justify-content-end nav'>
+    <Nav className='justify-content-end nav sticky-top'>
       <Nav.Item className='mr-auto'>
         <Nav.Link href='/home' className='nav-item'>
           Locals

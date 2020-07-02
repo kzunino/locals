@@ -55,7 +55,7 @@ select:focus {
   background-position: center;
   height: 50vh;
   width: 100%;
-  margin-top: -62px;
+  /* margin-top: -25px; */
 }
 
 .jumbotron h1 {
@@ -65,7 +65,7 @@ select:focus {
 /* NavBar */
 .nav {
   z-index: 2;
-  background: transparent;
+  background-color: white;
 }
 
 .nav-item {

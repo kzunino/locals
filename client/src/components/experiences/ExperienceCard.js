@@ -23,6 +23,7 @@ function ExperienceCard({
   const [isExpSaved, setIsExpSavedData] = useState(null);
 
   useEffect(() => {
+    //gets all the saved experiences
     const getSavedExperiencesByUserUid = async () => {
       const res = await context.actions.get_saved_experiences();
       console.log(res);

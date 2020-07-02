@@ -43,7 +43,7 @@ function Profile({context, context: {verified}}) {
   return (
     <div className='profile-wrapper'>
       {cover_photo ? (
-        <img className='profile-bg-img' src={SampleImg} alt='' />
+        <img className='profile-bg-img' src={cover_photo} alt='' />
       ) : (
         <img className='profile-bg-img' src={StockCoverPhoto} alt='' />
       )}
@@ -68,16 +68,24 @@ function Profile({context, context: {verified}}) {
         </h6>
         <div className='container border-bottom pt-4 pb-4'>
           <div className='row'>
-            <div className='col-sm-4 '>Gender {gender}</div>
             <div className='col-sm-4'>
-              Age
+              <i class='far fa-calendar-alt'></i> Age:{' '}
               {date_of_birth ? (
                 <Moment diff={date_of_birth} unit='years'></Moment>
               ) : null}
             </div>
-            <div className='col-sm-4'>Country {country}</div>
-            <div className='col-sm-4'>Languages {languages}</div>
-            <div className='col-sm-4'>Phone Number {phone_number}</div>
+            <div className='col-sm-4 '>
+              <i class='far fa-user'></i> {gender}
+            </div>
+            <div className='col-sm-4'>
+              <i class='fas fa-globe-americas'></i> {country}
+            </div>
+            <div className='col-sm-4'>
+              <i class='fas fa-globe'></i> {languages}
+            </div>
+            <div className='col-sm-4'>
+              <i class='fas fa-phone'></i> {phone_number}
+            </div>
           </div>
         </div>
 

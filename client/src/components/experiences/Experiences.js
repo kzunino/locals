@@ -1,6 +1,10 @@
 import React, {Fragment} from 'react';
 import ExperienceCard from './ExperienceCard';
+import withContext from '../../Context';
 
+const ExperienceCardWithContext = withContext(ExperienceCard);
+
+//make a call to the api and req experiences and render them with offset of 10 at a time
 function Experiences() {
   return (
     <Fragment>
@@ -8,12 +12,9 @@ function Experiences() {
         <h3 className='mt-4 pl-3'>Experiences</h3>
         <div className='container-lg'>
           <div className='row justify-content-center'>
-            <div className='col-auto experience'>
+            {/* <div className='col-auto experience'>
               <ExperienceCard />
-            </div>
-            <div className='col-auto experience'>
-              <ExperienceCard />
-            </div>
+            </div> */}
           </div>
         </div>
       </Fragment>
