@@ -1,18 +1,23 @@
-import React, {useState} from 'react';
-import CoverPhoto from '../../img/experience-sample.jpg';
+import React, {useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import EditExpCoverPhoto from './EditExpCoverPhoto';
+import withContext from '../../Context';
+
+const EditExpCoverPhotoWithContext = withContext(EditExpCoverPhoto);
 
 // change 'photo' to cover photo in DB
 
-function EditExperience({context}) {
+function EditExperience({history, context, context: verified, match}) {
   const [experienceData, setExperienceData] = useState({
     title: '',
     description: '',
+    activity_type: '',
     languages: '',
     group_size: '',
     cost: '',
     phone_number: '',
+    location: '',
     street: '',
     city: '',
     zip_code: '',
@@ -22,18 +27,23 @@ function EditExperience({context}) {
     recommended: '',
     cover_photo: '',
   });
+  const [userData, setUserData] = useState({});
 
+  const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
 
   const {
     title,
     description,
+    activity_type,
     languages,
     group_size,
     cost,
     phone_number,
+    location,
     street,
     city,
+    state,
     zip_code,
     duration,
     start,
@@ -42,34 +52,61 @@ function EditExperience({context}) {
     cover_photo,
   } = experienceData;
 
-  const onChange = (e) =>
+  useState(() => {
+    const getExperience = async () => {
+      console.log(match);
+      let res = await context.actions.get_exp_by_uid(match.params.uid);
+      if (res) {
+        console.log(res);
+        setExperienceData({...res.adventure});
+        setUserData({...res.adventure.user});
+      } else {
+        //create a not found route
+      }
+    };
+
+    getExperience();
+  }, [match.params.id]);
+
+  const onDelete = async () => {
+    const res = await context.actions.delete_experience(match.params.uid);
+    if (res === 200) {
+      history.push('/dashboard');
+    }
+  };
+
+  const showSubmit = () => {
+    setSubmitButtonDisplay('show');
+  };
+
+  const onChange = (e) => {
     setExperienceData({...experienceData, [e.target.name]: e.target.value});
+    showSubmit();
+  };
+
+  // const onCoverPhotoChange = (e) => {
+  //   setExperienceData({
+  //     ...experienceData,
+  //     cover_photo: [e.target.files[0]] || [],
+  //   });
+  // };
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    //fires login action
-    //if errors are returned it takes error object values and adds them to error array
-
-    const res = await context.actions.signUp(
-      title,
-      description,
-      languages,
-      group_size,
-      cost,
-      phone_number,
-      street,
-      city,
-      zip_code,
-      duration,
-      start,
-      included,
-      recommended,
-      cover_photo
+    const res = await context.actions.edit_experience(
+      experienceData,
+      match.params.uid
     );
-    console.log(res);
+    // if (cover_photo !== '') {
+    //   const uploadCoverPhotoRes = await context.actions.upload_exp_cover_photo(
+    //     cover_photo[0]
+    //   );
+    //   console.log(uploadCoverPhotoRes);
+    // }
     if (res === 200) {
-      //history.push('/home');
+      //redirect to exp page
+      history.push(`/experience/${match.params.uid}`);
     } else if (res.errors) {
       setErrors([[], ...res.errors]);
     }
@@ -80,9 +117,6 @@ function EditExperience({context}) {
     if (errors.length) {
       errorsDisplay = (
         <div>
-          <h4 className='validation--errors--label text-center secondary'>
-            Validation errors:
-          </h4>
           <div className='validation-errors text-center primary-color'>
             <ul>
               {errors.map((error, i) => (
@@ -98,23 +132,24 @@ function EditExperience({context}) {
   return (
     <div className='container-fluid border-bottom pb-4'>
       <div className='edit-profile-form'>
-        <Form className='container' onSubmit={(e) => onSubmit(e)}>
-          <h1 className='primary-color'>Create an Experience</h1>
+        <h1 className='primary-color'>Edit Experience</h1>
+        <Button
+          size='md'
+          variant='secondary'
+          type='submit'
+          onClick={() => onDelete()}
+          className='mb-3'
+        >
+          Delete Experience
+        </Button>
 
+        <EditExpCoverPhotoWithContext coverPhoto={cover_photo} />
+
+        <Form className='container' onSubmit={(e) => onSubmit(e)}>
           <ErrorsDisplay errors={errors} />
 
-          <Form.Group controlId='formBasicCoverPhoto'>
-            <Form.Label>Cover Photo</Form.Label>
-            <img src={CoverPhoto} alt='' className='edit-cover-photo' />
-            <Form.Control
-              type='file'
-              name='coverPhoto'
-              onChange={(e) => onChange(e)}
-            />
-          </Form.Group>
-
           <Form.Group controlId='formBasicTitle'>
-            <Form.Label>Title</Form.Label>
+            <Form.Label>Title*</Form.Label>
             <Form.Control
               type='text'
               name='title'
@@ -125,9 +160,9 @@ function EditExperience({context}) {
           </Form.Group>
 
           <Form.Group controlId='formBasicDescription'>
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type='textarea'
+            <Form.Label>Description*</Form.Label>
+            <textarea
+              type='text'
               name='description'
               value={description}
               placeholder='Experience description...'
@@ -135,8 +170,42 @@ function EditExperience({context}) {
             />
           </Form.Group>
 
+          <Form.Group controlId='formBasicActivityType'>
+            <Form.Label>One word description*</Form.Label>
+            <Form.Control
+              type='text'
+              name='activity_type'
+              value={activity_type}
+              placeholder='Hiking, Dancing, Languages...'
+              onChange={(e) => onChange(e)}
+            />
+          </Form.Group>
+
+          <Form.Group controlId='formBasicLocation'>
+            <Form.Label>Location</Form.Label>
+
+            <Form.Control
+              type='text'
+              name='location'
+              value={location}
+              placeholder='Lake Tahoe...'
+              onChange={(e) => onChange(e)}
+            />
+          </Form.Group>
+
+          <Form.Group controlId='formBasicDuration'>
+            <Form.Label>Duration in hours*</Form.Label>
+            <Form.Control
+              type='text'
+              name='duration'
+              value={duration}
+              placeholder='3, 2 ,10...'
+              onChange={(e) => onChange(e)}
+            />
+          </Form.Group>
+
           <Form.Group controlId='formBasicLanguages'>
-            <Form.Label>Languages</Form.Label>
+            <Form.Label>Languages*</Form.Label>
             <Form.Control
               type='text'
               name='languages'
@@ -147,7 +216,7 @@ function EditExperience({context}) {
           </Form.Group>
 
           <Form.Group controlId='formBasicGroupSize'>
-            <Form.Label>Group Size</Form.Label>
+            <Form.Label>Group Size*</Form.Label>
             <Form.Control
               type='text'
               name='group_size'
@@ -158,7 +227,7 @@ function EditExperience({context}) {
           </Form.Group>
 
           <Form.Group controlId='formBasicCost'>
-            <Form.Label>$Cost</Form.Label>
+            <Form.Label>Cost*</Form.Label>
             <Form.Control
               type='text'
               name='cost'
@@ -168,65 +237,72 @@ function EditExperience({context}) {
             />
           </Form.Group>
 
-          <Form.Group controlId='formBasicLanguages'>
-            <Form.Label>Languages</Form.Label>
-            <Form.Control
-              type='text'
-              name='languages'
-              value={languages}
-              placeholder='English, Spanish, etc...'
-              onChange={(e) => onChange(e)}
-            />
-          </Form.Group>
-
           <Form.Group controlId='formBasicPhoneNumber'>
-            <Form.Label>Phone Number</Form.Label>
+            <Form.Label>Phone Number*</Form.Label>
 
             <Form.Control
               type='tel'
               name='phone_number'
               value={phone_number}
               maxLength='10'
-              pattern='[0-9]{3}[0-9]{3}0-9]{4}'
+              pattern='[0-9]{10}'
               placeholder='Phone Number...'
               onChange={(e) => onChange(e)}
             />
           </Form.Group>
 
           <Form.Group controlId='formGridAddress1'>
-            <Form.Label>Address</Form.Label>
-            <Form.Control type='text' placeholder='1234 Main St' />
+            <Form.Label>Street*</Form.Label>
+            <Form.Control
+              type='text'
+              value={street}
+              name='street'
+              placeholder='1234 Main St'
+              onChange={(e) => onChange(e)}
+            />
           </Form.Group>
 
           <Form.Row>
             <Form.Group controlId='formGridCity'>
-              <Form.Label>City</Form.Label>
-              <Form.Control type='text' placeholder='City' />
+              <Form.Label>City*</Form.Label>
+              <Form.Control
+                type='text'
+                value={city}
+                name='city'
+                onChange={(e) => onChange(e)}
+                placeholder='City'
+              />
             </Form.Group>
 
             <Form.Group controlId='formGridState'>
-              <Form.Label>State</Form.Label>
+              <Form.Label>State*</Form.Label>
               <Form.Control
                 type='text'
                 maxLength='2'
+                value={state}
+                name='state'
+                onChange={(e) => onChange(e)}
                 placeholder='CA'
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId='formGridZip'>
-              <Form.Label>Zip</Form.Label>
+              <Form.Label>Zip*</Form.Label>
               <Form.Control
                 type='text'
                 maxLength='5'
                 pattern='[0-9]+'
                 title='please enter number only'
+                value={zip_code}
+                name='zip_code'
+                onChange={(e) => onChange(e)}
                 placeholder='Zip Code...'
               />
             </Form.Group>
           </Form.Row>
 
           <Form.Group controlId='formBasicStart'>
-            <Form.Label>Start Time</Form.Label>
+            <Form.Label>Start Time*</Form.Label>
             <Form.Control
               type='text'
               name='start'
@@ -258,7 +334,12 @@ function EditExperience({context}) {
             />
           </Form.Group>
 
-          <Button size='md' variant='secondary' type='submit'>
+          <Button
+            size='md'
+            variant='secondary'
+            type='submit'
+            className={submitButtonDisplay}
+          >
             Submit
           </Button>
         </Form>

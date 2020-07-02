@@ -84,6 +84,7 @@ exports.post_adventure = asyncHandler(async (req, res) => {
     group_size,
     cost,
     phone_number,
+    location,
     street,
     city,
     state,
@@ -104,6 +105,7 @@ exports.post_adventure = asyncHandler(async (req, res) => {
     cost,
     group_size,
     phone_number,
+    location,
     street,
     city,
     state,
@@ -124,6 +126,11 @@ exports.post_adventure = asyncHandler(async (req, res) => {
 //@access   Private & Verified
 
 exports.update_adventure = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({errors: errorMessages});
+  }
   const adventure = await Adventure.findByPk(req.params.adventure_uid);
   const {
     title,

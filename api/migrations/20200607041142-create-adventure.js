@@ -32,6 +32,10 @@ module.exports = {
         type: Sequelize.BIGINT,
         allowNull: false,
       },
+      location: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       street: {
         type: Sequelize.STRING,
         allowNull: false,

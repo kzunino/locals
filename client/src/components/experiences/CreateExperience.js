@@ -14,6 +14,7 @@ function CreateExperience({history, context, context: verified}) {
     group_size: '',
     cost: '',
     phone_number: '',
+    location: '',
     street: '',
     city: '',
     zip_code: '',
@@ -35,6 +36,7 @@ function CreateExperience({history, context, context: verified}) {
     group_size,
     cost,
     phone_number,
+    location,
     street,
     city,
     state,
@@ -73,7 +75,6 @@ function CreateExperience({history, context, context: verified}) {
       );
       console.log(uploadCoverPhotoRes);
     }
-    console.log(res);
 
     if (res) {
       //redirect to exp page
@@ -136,8 +137,8 @@ function CreateExperience({history, context, context: verified}) {
 
           <Form.Group controlId='formBasicDescription'>
             <Form.Label>Description*</Form.Label>
-            <Form.Control
-              type='textarea'
+            <textarea
+              type='text'
               name='description'
               value={description}
               placeholder='Experience description...'
@@ -156,13 +157,25 @@ function CreateExperience({history, context, context: verified}) {
             />
           </Form.Group>
 
+          <Form.Group controlId='formBasicLocation'>
+            <Form.Label>Location</Form.Label>
+
+            <Form.Control
+              type='text'
+              name='location'
+              value={location}
+              placeholder='Lake Tahoe...'
+              onChange={(e) => onChange(e)}
+            />
+          </Form.Group>
+
           <Form.Group controlId='formBasicDuration'>
-            <Form.Label>Duration*</Form.Label>
+            <Form.Label>Duration in hours*</Form.Label>
             <Form.Control
               type='text'
               name='duration'
               value={duration}
-              placeholder='3 hours...'
+              placeholder='3, 2 ,10...'
               onChange={(e) => onChange(e)}
             />
           </Form.Group>

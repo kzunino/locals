@@ -54,6 +54,8 @@ export class Provider extends Component {
         upload_exp_cover_photo: this.upload_exp_cover_photo,
         get_exp_by_uid: this.get_exp_by_uid,
         get_user_experiences: this.get_user_experiences,
+        edit_experience: this.edit_experience,
+        delete_experience: this.delete_experience,
       },
     };
 
@@ -915,7 +917,49 @@ export class Provider extends Component {
       console.log(error);
     }
   };
-  get_exp_by_uid = async (experience_uid) => {
+
+  edit_experience = async (experienceData, uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'multipart/form-data',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    const body = JSON.stringify(experienceData);
+    console.log(body);
+
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/adventure/${uid}`,
+        body,
+        config
+      );
+      if (res.status === 200) {
+        console.log(res.data);
+        return 200;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  get_exp_by_uid = async (adventure_uid) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -927,10 +971,11 @@ export class Provider extends Component {
     //console.log(body);
     try {
       const res = await axios.get(
-        `http://localhost:5000/adventure/${experience_uid}`,
+        `http://localhost:5000/adventure/${adventure_uid}`,
         config
       );
       if (res.status === 200) {
+        console.log(res.data);
         return res.data;
       }
     } catch (error) {
@@ -969,6 +1014,43 @@ export class Provider extends Component {
       );
       if (res.status === 200) {
         return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  delete_experience = async (experience_uid) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/adventure/delete/${experience_uid}`,
+        config
+      );
+      if (res.status === 200) {
+        return 200;
       }
     } catch (error) {
       // Error 😨

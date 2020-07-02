@@ -18,17 +18,23 @@ function ExperienceCard({
   },
 }) {
   return (
-    <Link
-      to={`/experience/${adventure_uid}`}
-      style={{color: 'inherit', textDecoration: 'inherit'}}
-    >
-      <Card className='experience-card bg-color'>
-        <Card.Img variant='top' src={cover_photo || SampleImg} />
+    <Card className='experience-card bg-color'>
+      <i className='far fa-heart fa-lg heart'></i>
+      <Link
+        to={`/experience/${adventure_uid}`}
+        style={{color: 'inherit', textDecoration: 'inherit'}}
+      >
+        <Card.Img
+          variant='top'
+          src={cover_photo || SampleImg}
+          className='relative'
+        />
         <img
           src={avatar || Portrait}
           alt=''
           className='experience-user-avatar'
         />
+
         <Card.Body className='pt-0 pb-0'>
           <p className='experience-subheading'>
             Enjoy {activity_type} with{' '}
@@ -36,11 +42,11 @@ function ExperienceCard({
           </p>
           <Card.Title className='card-title'>{title}</Card.Title>
           <p>
-            ${cost} &#8226; {duration} &#8226; {activity_type}
+            ${cost} &#8226; {duration} Hours &#8226; {activity_type}
           </p>
         </Card.Body>
-      </Card>
-    </Link>
+      </Link>
+    </Card>
   );
 }
 

@@ -57,6 +57,24 @@ router.put(
   '/:adventure_uid',
   auth,
   verifiedUser,
+  [
+    check('title', 'Please enter a title for your adventure').not().isEmpty(),
+    check('description', 'Please enter a description').not().isEmpty(),
+    check('languages', 'Please enter the languages you speak').not().isEmpty(),
+    check('group_size', 'Please enter a maximum group size')
+      .not()
+      .isEmpty()
+      .isInt(),
+    check('street', 'Please enter a street name').not().isEmpty(),
+    check('city', 'Please enter a city').not().isEmpty(),
+    check('state', 'Please enter a state').not().isEmpty(),
+    check('zip_code', 'Please enter a zip code').not().isEmpty().isInt(),
+    check('duration', 'Please enter number of hours as numeral')
+      .not()
+      .isEmpty()
+      .isInt(),
+    check('start', 'Please enter a start time').not().isEmpty(),
+  ],
   adventure_controller.update_adventure
 );
 

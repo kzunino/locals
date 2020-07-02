@@ -137,6 +137,13 @@ select:focus {
   flex: 0 0 auto;
 }
 
+.heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
 .experience-user-avatar {
   border-radius: 50%;
   width: 25%;

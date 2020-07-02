@@ -3,12 +3,12 @@ import StockExperiencePhoto from '../../img/empty-cover-photo.jpg';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function EditExpCoverPhoto({context}) {
+function EditExpCoverPhoto({context, coverPhoto}) {
   //state for avatar form data for POST req
   const [coverPhotoData, setCoverPhotoData] = useState([]);
   const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
-  const [cover_photo, set_cover_photo] = useState(null);
+  const [cover_photo, set_cover_photo] = useState(coverPhoto);
 
   //console.log(cover_photo);
   const showSubmit = () => {
@@ -35,9 +35,7 @@ function EditExpCoverPhoto({context}) {
       return setErrors(['Please choose a photo to upload before updating']);
     }
 
-    const res = await context.actions.update_profile_cover_photo(
-      coverPhotoData
-    );
+    const res = await context.actions.upload_exp_cover_photo(coverPhotoData);
     console.log(res);
     if (res) {
       set_cover_photo(res.result.url);
@@ -72,7 +70,7 @@ function EditExpCoverPhoto({context}) {
 
         <Form.Group controlId='formBasicCoverPhoto'>
           <img
-            src={StockExperiencePhoto}
+            src={cover_photo || StockExperiencePhoto}
             alt=''
             className='edit-experience-photo'
           />

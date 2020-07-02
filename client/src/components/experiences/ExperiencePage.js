@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 
@@ -8,6 +9,7 @@ function ExperiencePage({context, match}) {
 
   let {
     title,
+    adventure_uid,
     description,
     activity_type,
     languages,
@@ -25,11 +27,11 @@ function ExperiencePage({context, match}) {
     cover_photo,
   } = experienceData;
 
-  let {first_name} = userData;
+  let {first_name, avatar} = userData;
 
   useState(() => {
     const getExperience = async () => {
-      let res = await context.actions.get_exp_by_uid(match.params.id);
+      let res = await context.actions.get_exp_by_uid(match.params.uid);
       if (res) {
         console.log(res);
         setExperienceData({...res.adventure});
@@ -54,14 +56,28 @@ function ExperiencePage({context, match}) {
 
   return (
     <div className='experience-wrapper'>
-      <img className='profile-bg-img' src={StockCoverPhoto} alt='' />
-      <img className='experience-avatar' src={PortraitPlaceholder} alt='' />
+      <img
+        className='profile-bg-img'
+        src={cover_photo || StockCoverPhoto}
+        alt=''
+      />
+      <img
+        className='experience-avatar'
+        src={avatar || PortraitPlaceholder}
+        alt=''
+      />
       <div className='container'>
         <h1 className='text-center mb-0 mt-3'>{title}</h1>
         <h3 className='text-center border-bottom mb-0'>
           <span className='primary-color text-bold name-font'>
             With {first_name}
           </span>
+          <Link
+            to={`/edit/experience/${adventure_uid}`}
+            style={{textDecoration: 'none'}}
+          >
+            <span className='text-small text-muted'> edit</span>
+          </Link>
         </h3>
         <h3 className=' border-bottom pt-4 pb-4'>
           What we are going<span className='text-secondary'> to do...</span>
@@ -110,12 +126,12 @@ function ExperiencePage({context, match}) {
         <h3 className='border-bottom pt-4 pb-4'>
           What's included in{' '}
           <span className='text-secondary'> this experience...</span>
-          <p className='text-small mt-2'>{included}</p>{' '}
         </h3>
 
         <h3 className='border-bottom pt-4 pb-4'>
           What is recommended{' '}
-          <span className='text-secondary'> to bring...</span> {recommended}
+          <span className='text-secondary'> to bring...</span>{' '}
+          <p className='text-small mt-2'>{recommended}</p>{' '}
         </h3>
 
         <h3 className='mt-4'>Reviews:</h3>

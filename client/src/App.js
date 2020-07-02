@@ -13,6 +13,7 @@ import ExperienceDashBoard from './components/experiences/ExperienceDashboard';
 import Experiences from './components/experiences/Experiences';
 import ExperiencePage from './components/experiences/ExperiencePage';
 import CreateExperience from './components/experiences/CreateExperience';
+import EditExperience from './components/experiences/EditExperience';
 
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
@@ -35,6 +36,7 @@ const ExperiencePageWithContext = withContext(ExperiencePage);
 const PostWithContext = withContext(Post);
 const ExperienceDashBoardWithContext = withContext(ExperienceDashBoard);
 const CreateExperienceWithContext = withContext(CreateExperience);
+const EditExperienceWithContext = withContext(EditExperience);
 const ProfileWithContext = withContext(Profile);
 const MyProfileWithContext = withContext(MyProfile);
 const ProfileEditWithContext = withContext(ProfileEdit);
@@ -67,10 +69,14 @@ function App({location}) {
         <Route path='/edit/profile' component={ProfileEditWithContext} />
 
         <Route path='/dashboard' component={ExperienceDashBoardWithContext} />
-        <Route path='/experience/:id' component={ExperiencePageWithContext} />
+        <Route path='/experience/:uid' component={ExperiencePageWithContext} />
         <Route
           path='/create/experience'
           component={CreateExperienceWithContext}
+        />
+        <Route
+          path='/edit/experience/:uid'
+          component={EditExperienceWithContext}
         />
 
         <Route path='/login' component={LogInWithContext} />
