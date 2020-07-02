@@ -11,7 +11,7 @@ exports.get_favorites = asyncHandler(async (req, res) => {
   const favorites = await Favorites.findAll({
     where: {fk_user_uid: req.user.user_uid},
   });
-  if (favorites) res.json(favorites).status(200);
+  if (favorites) res.json({favorites}).status(200);
   //else res.json({errors: ['No favorites yet!']}).status(400);
 });
 
@@ -39,14 +39,21 @@ exports.add_to_favorites = asyncHandler(async (req, res) => {
       fk_adventure_uid: adventure.adventure_uid,
     });
 
-    res.status(200).send({
-      msg: 'Adventure added to favorites',
+    let favorite = await Favorites.findOne({
+      where: {fk_adventure_uid: req.params.adventure_uid},
     });
+
+    if (favorite) res.json({favorite}).status(200);
+    else {
+      res.status(200).send({
+        msg: 'Adventure added to favorites',
+      });
+    }
   } else if (!adventure) {
     res.status(400).send({errors: ['There is no adventure to be liked']});
   } else {
     await Favorites.destroy({where: {fk_user_uid: req.user.user_uid}});
-    res.status(200).send({
+    res.status(202).send({
       message: 'Adventure removed from favorites',
     });
   }

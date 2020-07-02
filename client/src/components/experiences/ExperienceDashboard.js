@@ -57,7 +57,7 @@ function ExperienceDashboard({context, context: {verified}}) {
 
       {verified ? (
         <Fragment>
-          (<h3 className='mt-4 pl-3'>Hosted Experiences</h3>
+          <h3 className='mt-4 pl-3'>Hosted Experiences</h3>
           <Slider experiences={userExperiences} />){' '}
         </Fragment>
       ) : null}

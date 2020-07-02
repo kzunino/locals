@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import SampleImg from '../../img/experience-sample.jpg';
@@ -16,10 +16,55 @@ function ExperienceCard({
     duration,
     adventure_uid,
   },
+  context,
+  context: {user_uid},
 }) {
+  const [savedExperiences, setSavedExperiences] = useState([]);
+  const [isExpSaved, setIsExpSavedData] = useState(null);
+
+  useEffect(() => {
+    const getSavedExperiencesByUserUid = async () => {
+      const res = await context.actions.get_saved_experiences();
+      console.log(res);
+      setSavedExperiences([...res.favorites]);
+      isExperienceSaved(res.favorites);
+    };
+
+    //checks to see if post is already liked and renders them liked
+    const isExperienceSaved = (savedExperiences) => {
+      if (savedExperiences) {
+        for (let experience of savedExperiences) {
+          if (experience.fk_user_uid === user_uid) {
+            setIsExpSavedData('saved');
+          }
+        }
+      }
+    };
+
+    getSavedExperiencesByUserUid();
+  }, []);
+
+  //saves experience or destroys experience depending if exists and then toggles heart color
+  const saveExp = async (adventure_uid) => {
+    const res = await context.actions.save_experience(adventure_uid);
+    console.log(res);
+    if (res === 202) setIsExpSavedData(null);
+    else setIsExpSavedData('saved');
+  };
+
   return (
     <Card className='experience-card bg-color'>
-      <i className='far fa-heart fa-lg heart'></i>
+      <button
+        type='submit'
+        className={`heart-btn heart ${isExpSaved}`}
+        onClick={() => saveExp(adventure_uid)}
+      >
+        {isExpSaved ? (
+          <i className='fas fa-heart fa-lg'></i>
+        ) : (
+          <i className='far fa-heart fa-lg'></i>
+        )}
+      </button>
       <Link
         to={`/experience/${adventure_uid}`}
         style={{color: 'inherit', textDecoration: 'inherit'}}

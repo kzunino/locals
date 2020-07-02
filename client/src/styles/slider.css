@@ -28,7 +28,7 @@ div.cards-slider-wrapper:last-child {
   display: none;
 }
 
-.cards-slider button {
+.cards-slider .slider-button {
   width: 35px;
   height: 35px;
   border-radius: 100%;

@@ -49,6 +49,7 @@ function Post({context, match, context: {user_uid}}) {
     };
     getPostByUid();
 
+    //checks to see if post is already liked and renders them liked
     const isPostLiked = (post_likes_array) => {
       if (post_likes_array) {
         for (let like of post_likes_array) {

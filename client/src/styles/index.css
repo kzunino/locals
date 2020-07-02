@@ -144,6 +144,18 @@ select:focus {
   z-index: 3;
 }
 
+.saved {
+  color: red;
+}
+
+.heart-btn {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
 .experience-user-avatar {
   border-radius: 50%;
   width: 25%;
