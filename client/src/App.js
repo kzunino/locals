@@ -31,6 +31,7 @@ import MessageBoard from './components/MessageBoard';
 //Components with context
 const HomeWithContext = withContext(Home);
 const NavBarWithContext = withContext(NavBar);
+const FeaturedWithContext = withContext(Featured);
 const ExperiencesWithContext = withContext(Experiences);
 const ExperiencePageWithContext = withContext(ExperiencePage);
 const PostWithContext = withContext(Post);
@@ -58,7 +59,7 @@ function App({location}) {
         <Route component={HomeWithContext} />
       ) : null}
       <Switch>
-        <Route exact path='/home' component={Featured} />
+        <Route exact path='/home' component={FeaturedWithContext} />
         <Route path='/home/experiences' component={ExperiencesWithContext} />
         <Route path='/home/messageboard' component={MessageBoardWithContext} />
         <Route path='/post/:post_uid' component={PostWithContext} />

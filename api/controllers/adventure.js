@@ -40,7 +40,7 @@ exports.get_user_adventures = asyncHandler(async (req, res) => {
     order: [['createdAt', 'DESC']],
     exclude: ['updatedAt'],
   });
-  if (adventures) res.json(adventures);
+  if (adventures) res.json({adventures});
   else res.json({errors: ['No adventures found']}).status(400);
 });
 
@@ -48,7 +48,15 @@ exports.get_user_adventures = asyncHandler(async (req, res) => {
 //@desc     Get five featured experiences
 //@access   Public
 
-exports.get_featured_adventures = asyncHandler(async (req, res) => {});
+exports.get_featured_adventures = asyncHandler(async (req, res) => {
+  let featured = await Adventure.findAll({
+    limit: 5,
+    include: [{model: User, attributes: ['first_name', 'last_name', 'avatar']}],
+  });
+
+  if (featured) res.json({featured}).status(200);
+  else res.json({msg: 'Something went wrong!'}).status(500);
+});
 
 //@Route    GET /adventure/:adventure_uid
 //@desc     Get adventure

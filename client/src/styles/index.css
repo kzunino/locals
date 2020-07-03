@@ -90,6 +90,15 @@ select:focus {
   color: rgb(var(--primary-color));
 }
 
+.a-heart {
+  text-decoration: none;
+  color: black;
+}
+
+.a-heart:hover {
+  color: black;
+}
+
 /* Experience Cards */
 
 /* .experience-card {

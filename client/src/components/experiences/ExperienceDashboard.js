@@ -10,12 +10,13 @@ function ExperienceDashboard({context, context: {verified}}) {
     const getUserExperiences = async () => {
       let res = await context.actions.get_user_experiences();
       console.log(res);
-      setUserExperiences(res);
+      setUserExperiences(res.adventures);
     };
 
     getUserExperiences();
   }, []);
 
+  console.log(userExperiences);
   return (
     <Fragment>
       {!verified ? (

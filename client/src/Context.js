@@ -58,6 +58,7 @@ export class Provider extends Component {
         delete_experience: this.delete_experience,
         save_experience: this.save_experience,
         get_saved_experiences: this.get_saved_experiences,
+        get_featured_experiences: this.get_featured_experiences,
       },
     };
 
@@ -1125,6 +1126,40 @@ export class Provider extends Component {
     //console.log(body);
     try {
       const res = await axios.get(`http://localhost:5000/favorites`, config);
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  get_featured_experiences = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.get(`http://localhost:5000/adventure/featured`);
       if (res.status === 200) {
         return res.data;
       }

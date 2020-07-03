@@ -21,10 +21,7 @@ router.get('/user/adventures', auth, adventure_controller.get_user_adventures);
 //@desc     Get all user adventures
 //@access   Public
 
-router.get(
-  '/adventures/featured',
-  adventure_controller.get_featured_adventures
-);
+router.get('/featured', adventure_controller.get_featured_adventures);
 
 //@Route    GET /adventure/:adventure_uid
 //@desc     Get adventure

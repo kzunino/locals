@@ -4,12 +4,23 @@ import withContext from '../Context';
 
 const SliderWithContext = withContext(Slider);
 
-const Featured = () => {
-  useEffect(() => {});
+const Featured = ({context}) => {
+  const [featuredData, setFeaturedData] = useState([]);
+  useEffect(() => {
+    const getFeatured = async () => {
+      let res = await context.actions.get_featured_experiences();
+      if (res) {
+        console.log(res.featured);
+        setFeaturedData(res.featured);
+      }
+    };
+
+    getFeatured();
+  }, []);
   return (
     <Fragment>
       <h3 className='mt-4 pl-3'>Featured Experiences</h3>
-      <SliderWithContext />
+      <SliderWithContext experiences={featuredData} />
     </Fragment>
   );
 };
