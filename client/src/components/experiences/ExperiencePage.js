@@ -126,6 +126,7 @@ function ExperiencePage({context, match}) {
         <h3 className='border-bottom pt-4 pb-4'>
           What's included in{' '}
           <span className='text-secondary'> this experience...</span>
+          <p className='text-small mt-2'>{included}</p>{' '}
         </h3>
 
         <h3 className='border-bottom pt-4 pb-4'>

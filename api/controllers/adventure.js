@@ -44,6 +44,12 @@ exports.get_user_adventures = asyncHandler(async (req, res) => {
   else res.json({errors: ['No adventures found']}).status(400);
 });
 
+//@Route    GET /adventure/featured
+//@desc     Get five featured experiences
+//@access   Public
+
+exports.get_featured_adventures = asyncHandler(async (req, res) => {});
+
 //@Route    GET /adventure/:adventure_uid
 //@desc     Get adventure
 //@access   Public

@@ -22,9 +22,6 @@ function VerifyProfile({context, history}) {
 
     const res = await context.actions.verify_user();
     console.log(res);
-    if (res === 200) {
-      history.push('/profile/me');
-    }
   };
   return (
     <div className='container-fluid border-bottom pb-4'>

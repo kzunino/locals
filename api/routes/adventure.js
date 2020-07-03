@@ -13,9 +13,18 @@ router.get('/', adventure_controller.get_all_adventures);
 
 //@Route    GET /adventure
 //@desc     Get all user adventures
-//@access   Public
+//@access   Private
 
 router.get('/user/adventures', auth, adventure_controller.get_user_adventures);
+
+//@Route    GET /adventure/featured
+//@desc     Get all user adventures
+//@access   Public
+
+router.get(
+  '/adventures/featured',
+  adventure_controller.get_featured_adventures
+);
 
 //@Route    GET /adventure/:adventure_uid
 //@desc     Get adventure
@@ -43,7 +52,7 @@ router.post(
     check('city', 'Please enter a city').not().isEmpty(),
     check('state', 'Please enter a state').not().isEmpty(),
     check('zip_code', 'Please enter a zip code').not().isEmpty().isInt(),
-    check('duration', 'Please enter number of hours').not().isEmpty().isInt(),
+    check('duration', 'Please enter number of hours').not().isEmpty(),
     check('start', 'Please enter a start time').not().isEmpty(),
   ],
   adventure_controller.post_adventure

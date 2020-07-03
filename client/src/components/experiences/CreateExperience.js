@@ -76,7 +76,7 @@ function CreateExperience({history, context, context: verified}) {
       console.log(uploadCoverPhotoRes);
     }
 
-    if (res) {
+    if (res.adventure) {
       //redirect to exp page
       history.push(`/experience/${res.adventure.adventure_uid}`);
     } else if (res.errors) {
