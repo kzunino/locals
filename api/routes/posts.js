@@ -16,9 +16,9 @@ router.post(
 
 //@Route    GET /posts
 //@desc     Get all posts
-//@access   Private
+//@access   public
 
-router.get('/', auth, post_controller.get_all_posts);
+router.get('/', post_controller.get_all_posts);
 
 //@Route    GET /posts/:id
 //@desc     Get post by ID

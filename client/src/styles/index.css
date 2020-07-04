@@ -92,7 +92,8 @@ select:focus {
 
 .a-heart {
   text-decoration: none;
-  color: black;
+  /* color: black; */
+  color: whitesmoke;
 }
 
 .a-heart:hover {
@@ -148,6 +149,7 @@ select:focus {
 }
 
 .heart {
+  color: whitesmoke;
   position: absolute;
   top: 10px;
   right: 10px;
@@ -182,6 +184,10 @@ select:focus {
 }
 .experience-card span {
   color: rgb(var(--primary-color));
+}
+
+.card-img-top {
+  height: 165px;
 }
 
 /* Footer */
@@ -252,6 +258,14 @@ td {
   td {
     font-size: 8px;
     padding: 0;
+  }
+
+  .card-img-top {
+    height: 120px;
+  }
+
+  .card-details {
+    font-size: 12px;
   }
 }
 

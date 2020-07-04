@@ -47,7 +47,7 @@ function CommentItem({
       }
     };
     isPostLiked(comment_likes);
-  }, [likeCounts, comment_likes, user_uid]);
+  }, [likeCounts, comment_likes, user_uid, comment_text]);
 
   const editRef = useRef(null);
 

@@ -46,7 +46,7 @@ function ExperienceCard({
 
       getSavedExperiencesByUserUid();
     }
-  }, []);
+  }, [context.actions, user_uid]);
 
   //saves experience or destroys experience depending if exists and then toggles heart color
   const saveExp = async (adventure_uid) => {
@@ -97,7 +97,7 @@ function ExperienceCard({
             <span className='primary-color'>{first_name}</span>
           </p>
           <Card.Title className='card-title'>{title}</Card.Title>
-          <p>
+          <p className='card-details'>
             ${cost} &#8226; {duration} Hours &#8226; {activity_type}
           </p>
         </Card.Body>

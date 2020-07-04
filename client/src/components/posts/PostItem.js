@@ -74,7 +74,10 @@ function PostItem({
         <div className='d-flex justify-content-between align-items-center'>
           <div className='d-flex justify-content-between align-items-center'>
             <div className='mr-2'>
-              <Link to='/' style={{textDecoration: 'none'}}>
+              <Link
+                to={`/profile/${fk_user_uid}`}
+                style={{textDecoration: 'none'}}
+              >
                 <img
                   className='rounded-circle'
                   width='45'
@@ -85,7 +88,7 @@ function PostItem({
             </div>
             <div className='ml-2'>
               <Link
-                to='/'
+                to={`/profile/${fk_user_uid}`}
                 className='primary-color'
                 style={{textDecoration: 'none'}}
               >

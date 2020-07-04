@@ -131,7 +131,7 @@ exports.get_user = asyncHandler(async (req, res) => {
     include: [
       {
         model: User,
-        attributes: ['first_name', 'last_name'],
+        attributes: ['first_name', 'last_name', 'verified', 'avatar'],
       },
     ],
   });

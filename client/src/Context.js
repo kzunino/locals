@@ -35,6 +35,7 @@ export class Provider extends Component {
         signUp: this.signUp,
         verify_user: this.verify_user,
         get_my_profile: this.get_my_profile,
+        get_profile_by_uid: this.get_profile_by_uid,
         create_profile: this.create_profile,
         update_name: this.update_name,
         update_profile_photo: this.update_profile_photo,
@@ -237,6 +238,39 @@ export class Provider extends Component {
     };
     try {
       const res = await axios.get('http://localhost:5000/profile/me', config);
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return 400;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  get_profile_by_uid = async (user_uid) => {
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     // 'Access-Control-Allow-Origin': '*',
+    //   },
+    // };
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/profile/user/${user_uid}`
+      );
       if (res.status === 200) {
         return res.data;
       }
@@ -1149,13 +1183,6 @@ export class Provider extends Component {
   };
 
   get_featured_experiences = async () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Access-Control-Allow-Origin': '*',
-      },
-    };
-
     //const body = JSON.stringify({});
     //console.log(body);
     try {

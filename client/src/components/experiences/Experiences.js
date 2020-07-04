@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
-import ExperienceCard from './ExperienceCard';
-import withContext from '../../Context';
+// import ExperienceCard from './ExperienceCard';
+// import withContext from '../../Context';
 
-const ExperienceCardWithContext = withContext(ExperienceCard);
+//const ExperienceCardWithContext = withContext(ExperienceCard);
 
 //make a call to the api and req experiences and render them with offset of 10 at a time
 function Experiences() {

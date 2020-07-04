@@ -14,7 +14,7 @@ function ExperienceDashboard({context, context: {verified}}) {
     };
 
     getUserExperiences();
-  }, []);
+  }, [context.actions]);
 
   console.log(userExperiences);
   return (

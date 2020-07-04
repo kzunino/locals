@@ -37,7 +37,11 @@ function MessageBoard({context, context: {verified}}) {
       ) : (
         <p>
           Know of something happening?{' '}
-          <Link className='primary-color' style={{textDecoration: 'none'}}>
+          <Link
+            to='/signin'
+            className='primary-color'
+            style={{textDecoration: 'none'}}
+          >
             Sign in{' '}
           </Link>
           to share!
@@ -47,7 +51,7 @@ function MessageBoard({context, context: {verified}}) {
         {posts.map((post) => {
           return (
             <PostItemWithContext
-              key={post.uid}
+              key={post.post_uid}
               postData={post}
               onPostDelete={onPostDelete}
             />

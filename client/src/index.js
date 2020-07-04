@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/normalize.css';
 import './styles/post.css';
 import './styles/slider.css';
-import './styles/index.css';
 import './styles/profile.css';
 import './styles/experiencePage.css';
+import './styles/index.css';
 
 import App from './App';
 import {Provider} from './Context';

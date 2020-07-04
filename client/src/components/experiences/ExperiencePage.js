@@ -11,7 +11,7 @@ function ExperiencePage({context, match}) {
     title,
     adventure_uid,
     description,
-    activity_type,
+    // activity_type,
     languages,
     group_size,
     cost,
