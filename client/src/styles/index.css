@@ -132,11 +132,7 @@ select:focus {
   font-weight: bold;
 } */
 
-.experience {
-  margin-bottom: 15px;
-}
-
-/* Experience Card Large */
+/* Experience Card */
 
 .experience-card {
   width: 350px;
@@ -145,6 +141,62 @@ select:focus {
   /* flex: 1; */
   margin-right: 20px;
 
+  flex: 0 0 auto;
+}
+
+.heart {
+  color: whitesmoke;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
+.saved {
+  color: red;
+}
+
+.heart-btn {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.experience-user-avatar {
+  border-radius: 50%;
+  width: 25%;
+  border: white solid;
+  margin-top: -40px;
+  margin-left: 15px;
+}
+
+.experience-subheading {
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: small;
+}
+.experience-card span {
+  color: rgb(var(--primary-color));
+}
+
+.card-img-top {
+  height: 165px;
+}
+
+/* Large Exp Card */
+
+/* Experience Card */
+
+.experience-card-lrg {
+  width: 350px;
+  height: auto;
+  box-shadow: 0px 4px 5px 0px grey;
+  /* flex: 1; */
+  margin-right: 20px;
+  margin-bottom: 20px;
   flex: 0 0 auto;
 }
 
@@ -267,11 +319,28 @@ td {
   .card-details {
     font-size: 12px;
   }
+  .experience-card-lrg {
+    margin: auto;
+    margin-bottom: 20px;
+  }
+  .card-img-top-lrg {
+    height: 200px;
+  }
 }
 
 /* xs < 768 */
 @media screen and (min-width: 551px) {
   .experience-card {
+    width: 300px;
+    height: 320px;
+    box-shadow: 0px 4px 5px 0px grey;
+    /* flex: 1; */
+    margin-right: 20px;
+
+    flex: 0 0 auto;
+  }
+
+  .experience-card-lrg {
     width: 300px;
     height: 320px;
     box-shadow: 0px 4px 5px 0px grey;
@@ -293,6 +362,13 @@ td {
     font-size: 12px;
     margin: auto;
     margin-top: -20px;
+  }
+  .experience-card-lrg {
+    margin: auto;
+    margin-bottom: 20px;
+  }
+  .card-img-top-lrg {
+    height: 200px;
   }
 }
 
@@ -319,6 +395,10 @@ td {
 
   .secondary-nav-item {
     border-right: 1px solid lightgrey;
+  }
+  .experience-card-lrg {
+    margin: auto;
+    margin-bottom: 20px;
   }
 }
 

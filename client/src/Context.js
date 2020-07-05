@@ -60,6 +60,7 @@ export class Provider extends Component {
         save_experience: this.save_experience,
         get_saved_experiences: this.get_saved_experiences,
         get_featured_experiences: this.get_featured_experiences,
+        get_experiences: this.get_experiences,
       },
     };
 
@@ -1187,6 +1188,34 @@ export class Provider extends Component {
     //console.log(body);
     try {
       const res = await axios.get(`http://localhost:5000/adventure/featured`);
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  //potentially make route with offset and limit for pagination or infinite scroll
+  get_experiences = async () => {
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.get(`http://localhost:5000/adventure`);
       if (res.status === 200) {
         return res.data;
       }
