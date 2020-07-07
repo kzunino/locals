@@ -28,7 +28,7 @@ function ExperienceCardLrg({
     if (user_uid) {
       const getSavedExperiencesByUserUid = async () => {
         const res = await context.actions.get_saved_experiences();
-        console.log(res);
+
         setSavedExperiences([...res.favorites]);
         isExperienceSaved(res.favorites);
       };
@@ -71,7 +71,7 @@ function ExperienceCardLrg({
           )}
         </button>
       ) : (
-        <a role='button' href='/signup' className={`heart-btn heart a-heart`}>
+        <a role='button' href='/login' className={`heart-btn heart a-heart`}>
           <i className='far fa-heart fa-lg'></i>
         </a>
       )}

@@ -8,6 +8,7 @@ import Moment from 'react-moment';
 function Profile({context, match, context: {user_uid}}) {
   const [profileData, setProfileData] = useState({});
   const [userData, setUserData] = useState({});
+  const [redirect, setRedirect] = useState(false);
 
   let {
     cover_photo,
@@ -25,21 +26,17 @@ function Profile({context, match, context: {user_uid}}) {
     const getProfile = async () => {
       let res = await context.actions.get_profile_by_uid(match.params.user_uid);
       console.log(res);
-      // if (res === 400) {
-      //   res = await context.actions.create_profile();//
-      //   console.log(res);
-      //   setProfileData({...res.profile});
-      //   setUserData({...res.profile.user});
-      // }
       setProfileData({...res});
       setUserData({...res.user});
+      //redirects if user clicks on own page
+
+      if (user_uid === res.fk_user_uid) setRedirect(true);
     };
 
     getProfile();
   }, [context.actions, match.params.user_uid]);
 
-  //redirects if user clicks on own page
-  if (user_uid === match.params.user_uid) return <Redirect to='/profile/me' />;
+  if (redirect) return <Redirect to='/profile/me' />;
 
   return (
     <div className='profile-wrapper'>

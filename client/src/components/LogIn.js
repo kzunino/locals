@@ -1,22 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function LogIn({context, history, context: {userToken}}) {
+function LogIn({context, history, location, context: {userToken}}) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
   const [errors, setErrors] = useState([]);
+  const [redirect, setRedirect] = useState(false);
 
   const {email, password} = formData;
 
-  // Redirect if already logged in
-  if (userToken) {
-    return <Redirect to='/home' />;
-  }
+  useEffect(() => {
+    // Redirect if already logged in
+    if (userToken) {
+      setRedirect(true);
+    }
+  }, []);
+
+  if (redirect) return <Redirect to='/home' />;
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -30,8 +35,10 @@ function LogIn({context, history, context: {userToken}}) {
     const res = await context.actions.signIn(email, password);
     console.log(res);
     if (res === 200) {
-      history.push('/home');
       console.log(`SUCCESS! ${email} is logged in`);
+
+      if (location.state !== undefined) history.push(location.state.from);
+      else history.goBack();
     } else if (res.errors) {
       setErrors([[], ...res.errors]);
     }

@@ -70,22 +70,22 @@ function MyProfile({context, context: {verified}}) {
           <div className='container border-bottom pt-4 pb-4'>
             <div className='row'>
               <div className='col-sm-4'>
-                <i class='far fa-calendar-alt'></i> Age:{' '}
+                <i className='far fa-calendar-alt'></i> Age:{' '}
                 {date_of_birth ? (
                   <Moment diff={date_of_birth} unit='years'></Moment>
                 ) : null}
               </div>
               <div className='col-sm-4 '>
-                <i class='far fa-user'></i> {gender}
+                <i className='far fa-user'></i> {gender}
               </div>
               <div className='col-sm-4'>
-                <i class='fas fa-globe-americas'></i> {country}
+                <i className='fas fa-globe-americas'></i> {country}
               </div>
               <div className='col-sm-4'>
-                <i class='fas fa-globe'></i> {languages}
+                <i className='fas fa-globe'></i> {languages}
               </div>
               <div className='col-sm-4'>
-                <i class='fas fa-phone'></i> {phone_number}
+                <i className='fas fa-phone'></i> {phone_number}
               </div>
             </div>
           </div>

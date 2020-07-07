@@ -100,48 +100,20 @@ select:focus {
   color: black;
 }
 
-/* Experience Cards */
-
-/* .experience-card {
-  width: 200px;
-  height: 270px;
-  box-shadow: 0px 4px 5px 0px grey;
-  margin-right: 20px;
-
-  flex: 0 0 auto;
-}
-
-.experience-user-avatar {
-  border-radius: 50%;
-  width: 25%;
-  border: white solid;
-  margin-top: -40px;
-  margin-left: 15px;
-}
-
-.experience-subheading {
-  font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: small;
-}
-.experience-card span {
-  color: rgb(var(--primary-color));
-}
-.card-title {
-  font-weight: bold;
-} */
-
 /* Experience Card */
 
 .experience-card {
   width: 350px;
   height: auto;
-  box-shadow: 0px 4px 5px 0px grey;
+  box-shadow: 0px 2px 3px 0px grey;
   /* flex: 1; */
   margin-right: 20px;
 
   flex: 0 0 auto;
+}
+
+.experience-card:hover {
+  box-shadow: 0px 4px 4px 0px grey;
 }
 
 .heart {
@@ -193,11 +165,14 @@ select:focus {
 .experience-card-lrg {
   width: 350px;
   height: auto;
-  box-shadow: 0px 4px 5px 0px grey;
+  box-shadow: 0px 2px 3px 0px grey;
   /* flex: 1; */
   margin-right: 20px;
   margin-bottom: 20px;
   flex: 0 0 auto;
+}
+.experience-card-lrg:hover {
+  box-shadow: 0px 4px 4px 0px grey;
 }
 
 .heart {
@@ -253,10 +228,12 @@ td {
 
 /* xs < 768 */
 @media screen and (max-width: 550px) {
+  .form-size {
+    width: 90%;
+  }
   .experience-card {
     width: 200px;
     height: 270px;
-    box-shadow: 0px 4px 5px 0px grey;
     /* flex: 1; */
     margin-right: 20px;
 
@@ -330,10 +307,12 @@ td {
 
 /* xs < 768 */
 @media screen and (min-width: 551px) {
+  .form-size {
+    width: 90%;
+  }
   .experience-card {
     width: 300px;
     height: 320px;
-    box-shadow: 0px 4px 5px 0px grey;
     /* flex: 1; */
     margin-right: 20px;
 
@@ -341,13 +320,17 @@ td {
   }
 
   .experience-card-lrg {
-    width: 300px;
-    height: 320px;
-    box-shadow: 0px 4px 5px 0px grey;
+    width: 350px;
+    height: auto;
     /* flex: 1; */
     margin-right: 20px;
-
+    margin: auto;
+    margin-bottom: 20px;
     flex: 0 0 auto;
+  }
+
+  .card-img-top-lrg {
+    height: 200px;
   }
 
   .secondary-nav-item {
@@ -363,13 +346,6 @@ td {
     margin: auto;
     margin-top: -20px;
   }
-  .experience-card-lrg {
-    margin: auto;
-    margin-bottom: 20px;
-  }
-  .card-img-top-lrg {
-    height: 200px;
-  }
 }
 
 /* xs < 768 */
@@ -377,7 +353,6 @@ td {
   .experience-card {
     width: 300px;
     height: 320px;
-    box-shadow: 0px 4px 5px 0px grey;
     /* flex: 1; */
     margin-right: 20px;
 
@@ -404,6 +379,9 @@ td {
 
 /* sm */
 @media screen and (min-width: 768px) {
+  .form-size {
+    width: 60%;
+  }
   .secondary-nav {
     width: 40%;
   }
@@ -411,6 +389,13 @@ td {
 
 /* md */
 @media screen and (min-width: 992px) {
+  .form-size {
+    width: 60%;
+  }
+  .experience-card-lrg {
+    width: 300px;
+    height: auto;
+  }
 }
 
 /* lg */

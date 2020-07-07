@@ -11,9 +11,11 @@ function SignUp({context, history, context: {userToken}}) {
     password: '',
   });
 
+  const [confirmPass, setConfirmPass] = useState('');
+
   const [errors, setErrors] = useState([]);
 
-  const {first_name, last_name, email, password} = formData;
+  let {first_name, last_name, email, password} = formData;
 
   if (userToken) {
     return <Redirect to='/home' />;
@@ -25,21 +27,24 @@ function SignUp({context, history, context: {userToken}}) {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmPass) return setErrors(['Passwords do not match']);
+
     //fires login action
     //if errors are returned it takes error object values and adds them to error array
-
-    const res = await context.actions.signUp(
-      first_name,
-      last_name,
-      email,
-      password
-    );
-    console.log(res);
-    if (res === 201) {
-      history.push('/home');
-      console.log(`SUCCESS! ${email}'s account was created`);
-    } else if (res.errors) {
-      setErrors([[], ...res.errors]);
+    if (!errors.length) {
+      const res = await context.actions.signUp(
+        first_name,
+        last_name,
+        email,
+        password
+      );
+      console.log(res);
+      if (res === 201) {
+        history.push('/home');
+        console.log(`SUCCESS! ${email}'s account was created`);
+      } else if (res.errors) {
+        setErrors([[], ...res.errors]);
+      }
     }
   };
 
@@ -64,7 +69,7 @@ function SignUp({context, history, context: {userToken}}) {
     return errorsDisplay;
   };
   return (
-    <div className='container pt-5'>
+    <div className='container pt-1 mb-3'>
       <div className='form-size'>
         <Form className='container' onSubmit={(e) => onSubmit(e)}>
           <h1 className='text-center primary-color'>Sign Up</h1>
@@ -111,6 +116,17 @@ function SignUp({context, history, context: {userToken}}) {
               name='password'
               placeholder='Password'
               value={password}
+              onChange={(e) => onChange(e)}
+            />
+          </Form.Group>
+
+          <Form.Group controlId='formBasicConfirmPass'>
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type='password'
+              name='confirmPass'
+              placeholder='Confirm Password'
+              value={confirmPass.value}
               onChange={(e) => onChange(e)}
             />
           </Form.Group>

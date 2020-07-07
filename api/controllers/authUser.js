@@ -68,7 +68,7 @@ exports.sign_in = asyncHandler(async (req, res) => {
     payload,
     config.get('jwtSecret'),
     {
-      expiresIn: 36000,
+      expiresIn: '1 days',
     },
     (err, token) => {
       if (err) throw err;

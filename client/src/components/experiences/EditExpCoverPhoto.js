@@ -8,7 +8,7 @@ function EditExpCoverPhoto({context, coverPhoto}) {
   const [coverPhotoData, setCoverPhotoData] = useState([]);
   const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
-  const [cover_photo, set_cover_photo] = useState(coverPhoto);
+  const [cover_photo, set_cover_photo] = useState(null);
 
   //console.log(cover_photo);
   const showSubmit = () => {
@@ -72,7 +72,7 @@ function EditExpCoverPhoto({context, coverPhoto}) {
 
         <Form.Group controlId='formBasicCoverPhoto'>
           <img
-            src={cover_photo || StockExperiencePhoto}
+            src={cover_photo || coverPhoto || StockExperiencePhoto}
             alt=''
             className='edit-experience-photo'
           />

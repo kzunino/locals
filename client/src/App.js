@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import withContext from './Context';
+import PrivateRoute from './PrivateRoute';
 import setAuthToken from './utilites/setAuthToken';
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -62,11 +63,14 @@ function App({location}) {
         <Route exact path='/home' component={FeaturedWithContext} />
         <Route path='/home/experiences' component={ExperiencesWithContext} />
         <Route path='/home/messageboard' component={MessageBoardWithContext} />
-        <Route path='/post/:post_uid' component={PostWithContext} />
+        <PrivateRoute path='/post/:post_uid' component={PostWithContext} />
 
-        <Route path='/profile/me' component={MyProfileWithContext} />
+        <PrivateRoute path='/profile/me' component={MyProfileWithContext} />
 
-        <Route path='/profile/:user_uid' component={ProfileWithContext} />
+        <PrivateRoute
+          path='/profile/:user_uid'
+          component={ProfileWithContext}
+        />
         <Route path='/edit/profile' component={ProfileEditWithContext} />
 
         <Route path='/dashboard' component={ExperienceDashBoardWithContext} />

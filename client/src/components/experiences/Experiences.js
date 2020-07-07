@@ -21,11 +21,8 @@ function Experiences({context}) {
   if (experienceData) {
     experience = experienceData.map((experience) => {
       return (
-        <div className='col-md-6 col-lg-4'>
-          <ExperienceCardLrgWithContext
-            key={experience.adventure_uid}
-            experienceData={experience}
-          />
+        <div className='col-md-6 col-lg-4' key={experience.adventure_uid}>
+          <ExperienceCardLrgWithContext experienceData={experience} />
         </div>
       );
     });

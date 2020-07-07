@@ -28,14 +28,14 @@ function Slider({experiences}) {
   return (
     <div className='cards-slider'>
       <div className='cards-slider-wrapper' ref={ref}>
+        {/* <ExperienceCards /> */}
         {eachExperience}
-
-        {/* <ExperienceCard /> */}
       </div>
       <button
         className='scroll-left slider-button'
         type='button'
         onClick={() => scroll(-200)}
+        style={{textDecoration: 'none'}}
       >
         &lang;
       </button>

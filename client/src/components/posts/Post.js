@@ -228,7 +228,7 @@ function Post({context, match, context: {user_uid}}) {
           return (
             <CommentItemWithContext
               onCommentDelete={onCommentDelete}
-              key={comment.uid}
+              key={comment.comment_uid}
               commentData={comment}
             />
           );

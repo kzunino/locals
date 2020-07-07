@@ -69,78 +69,78 @@ function PostItem({
   };
 
   return (
-    <div className='card gedf-card mt-3'>
-      <div className='card-header'>
-        <div className='d-flex justify-content-between align-items-center'>
+    <div className='container-md'>
+      <div className='card gedf-card mt-3'>
+        <div className='card-header'>
           <div className='d-flex justify-content-between align-items-center'>
-            <div className='mr-2'>
-              <Link
-                to={`/profile/${fk_user_uid}`}
-                style={{textDecoration: 'none'}}
-              >
-                <img
-                  className='rounded-circle'
-                  width='45'
-                  src={avatar || PortraitPlaceholder}
-                  alt=''
-                />
-              </Link>
-            </div>
-            <div className='ml-2'>
-              <Link
-                to={`/profile/${fk_user_uid}`}
-                className='primary-color'
-                style={{textDecoration: 'none'}}
-              >
-                <div className='h5 m-0'>
-                  {first_name} {last_name}
-                </div>
-              </Link>
+            <div className='d-flex justify-content-between align-items-center'>
+              <div className='mr-2'>
+                <Link
+                  to={`/profile/${fk_user_uid}`}
+                  style={{textDecoration: 'none'}}
+                >
+                  <img
+                    className='rounded-circle'
+                    width='45'
+                    src={avatar || PortraitPlaceholder}
+                    alt=''
+                  />
+                </Link>
+              </div>
+              <div className='ml-2'>
+                <Link
+                  to={`/profile/${fk_user_uid}`}
+                  className='primary-color'
+                  style={{textDecoration: 'none'}}
+                >
+                  <div className='h5 m-0'>
+                    {first_name} {last_name}
+                  </div>
+                </Link>
 
-              <div className='h7 text-muted'>
-                <Moment format={'MM/DD/YYYY'}>{createdAt}</Moment>
+                <div className='h7 text-muted'>
+                  <Moment format={'MM/DD/YYYY'}>{createdAt}</Moment>
+                </div>
               </div>
             </div>
+            <div></div>
           </div>
-          <div></div>
         </div>
-      </div>
-      <div className='card-body'>
-        {/* <a className='card-link' href='#' alt=''></a> */}
+        <div className='card-body'>
+          <p className='card-text'>{text}</p>
+        </div>
+        <div className='card-footer pb-0'>
+          <div className='card-body p-0'>
+            <button
+              onClick={() => {
+                onLike(post_uid);
+                afterLike();
+              }}
+              type='button'
+              className='btn'
+            >
+              {count > 0 ? count : null}{' '}
+              <i className={`fas fa-thumbs-up ${liked}`} />{' '}
+            </button>
 
-        <p className='card-text'>{text}</p>
-      </div>
-      <div className='card-footer pb-0'>
-        <div className='card-body p-0'>
-          <button
-            onClick={() => {
-              onLike(post_uid);
-              afterLike();
-            }}
-            type='button'
-            className='btn'
-          >
-            {count > 0 ? count : null}{' '}
-            <i className={`fas fa-thumbs-up ${liked}`} />{' '}
-          </button>
-
-          <Link to={`/post/${post_uid}`} className='btn '>
-            <i className='far fa-comment'></i>{' '}
-          </Link>
-          {fk_user_uid === user_uid ? (
-            <Fragment>
-              <Link to={`/post/${post_uid}`} className='btn '>
-                <i className='far fa-edit'></i>{' '}
-              </Link>
-              <button
-                type='button'
-                onClick={() => onDelete(post_uid)}
-                className='btn'
-              >
-                <i className='far fa-trash-alt'></i>{' '}
-              </button>
-            </Fragment>
-          ) : null}
+            <Link to={`/post/${post_uid}`} className='btn '>
+              <i className='far fa-comment'></i>{' '}
+            </Link>
+            {fk_user_uid === user_uid ? (
+              <Fragment>
+                <Link to={`/post/${post_uid}`} className='btn '>
+                  <i className='far fa-edit'></i>{' '}
+                </Link>
+                <button
+                  type='button'
+                  onClick={() => onDelete(post_uid)}
+                  className='btn'
+                >
+                  <i className='far fa-trash-alt'></i>{' '}
+                </button>
+              </Fragment>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

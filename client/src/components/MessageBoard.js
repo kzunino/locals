@@ -38,7 +38,7 @@ function MessageBoard({context, context: {verified}}) {
         <p>
           Know of something happening?{' '}
           <Link
-            to='/signin'
+            to='/login'
             className='primary-color'
             style={{textDecoration: 'none'}}
           >

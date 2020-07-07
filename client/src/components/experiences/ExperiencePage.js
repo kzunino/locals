@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 
-function ExperiencePage({context, match}) {
+function ExperiencePage({context, context: {user_uid}, match}) {
   const [experienceData, setExperienceData] = useState({});
   const [userData, setUserData] = useState({});
 
@@ -25,6 +25,7 @@ function ExperiencePage({context, match}) {
     included,
     recommended,
     cover_photo,
+    fk_user_uid,
   } = experienceData;
 
   let {first_name, avatar} = userData;
@@ -44,6 +45,7 @@ function ExperiencePage({context, match}) {
     getExperience();
   }, [match.params.id]);
 
+  //formats the phone number on the profile page
   function formatPhoneNumber(phoneNumberString) {
     var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
     var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
@@ -53,6 +55,10 @@ function ExperiencePage({context, match}) {
     return null;
   }
   if (phone_number) phone_number = formatPhoneNumber(phone_number);
+
+  //checks to see if current user matches fk_user_uid and if so shows edit button
+  let userExperience = false;
+  if (user_uid === fk_user_uid) userExperience = true;
 
   return (
     <div className='experience-wrapper'>
@@ -76,7 +82,9 @@ function ExperiencePage({context, match}) {
             to={`/edit/experience/${adventure_uid}`}
             style={{textDecoration: 'none'}}
           >
-            <span className='text-small text-muted'> edit</span>
+            {userExperience ? (
+              <span className='text-small text-muted'> edit</span>
+            ) : null}
           </Link>
         </h3>
         <h3 className=' border-bottom pt-4 pb-4'>
@@ -123,17 +131,21 @@ function ExperiencePage({context, match}) {
           </div>
         </div>
 
-        <h3 className='border-bottom pt-4 pb-4'>
-          What's included in{' '}
-          <span className='text-secondary'> this experience...</span>
-          <p className='text-small mt-2'>{included}</p>{' '}
-        </h3>
+        {included ? (
+          <h3 className='border-bottom pt-4 pb-4'>
+            What's included in{' '}
+            <span className='text-secondary'> this experience...</span>
+            <p className='text-small mt-2'>{included}</p>{' '}
+          </h3>
+        ) : null}
 
-        <h3 className='border-bottom pt-4 pb-4'>
-          What is recommended{' '}
-          <span className='text-secondary'> to bring...</span>{' '}
-          <p className='text-small mt-2'>{recommended}</p>{' '}
-        </h3>
+        {recommended ? (
+          <h3 className='border-bottom pt-4 pb-4'>
+            What is recommended{' '}
+            <span className='text-secondary'> to bring...</span>{' '}
+            <p className='text-small mt-2'>{recommended}</p>{' '}
+          </h3>
+        ) : null}
 
         <h3 className='mt-4'>Reviews:</h3>
       </div>
