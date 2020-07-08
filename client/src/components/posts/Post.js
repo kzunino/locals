@@ -11,10 +11,8 @@ const CommentItemWithContext = withContext(CommentItem);
 
 function Post({context, match, context: {user_uid}}) {
   // Gets post by params and loads comment Items
-  //let initialState = {comment_text: ''};
   const [postData, setPostData] = useState({});
   const [liked, setLiked] = useState('');
-  //const [likedTrue, setLikedTrue] = useState([]);
   const [count, setCount] = useState(null);
   const [comment_text, setComment_Text] = useState('');
   const [comments_array, setComments_Array] = useState([]);
@@ -137,9 +135,9 @@ function Post({context, match, context: {user_uid}}) {
   return (
     <div className='container'>
       <div className='card gedf-card mt-3'>
-        <div className='card-header'>
+        <div className='card-header '>
           <div className='d-flex justify-content-between align-items-center'>
-            <div className='d-flex justify-content-between align-items-center'>
+            <div className='d-flex justify-content-between align-items-center '>
               <div className='mr-2'>
                 <Link to='/' style={{textDecoration: 'none'}}>
                   <img
@@ -150,7 +148,7 @@ function Post({context, match, context: {user_uid}}) {
                   />
                 </Link>
               </div>
-              <div className='ml-2'>
+              <div className='ml-2 '>
                 <Link
                   to='/'
                   className='primary-color'
@@ -161,7 +159,7 @@ function Post({context, match, context: {user_uid}}) {
                   </div>
                 </Link>
 
-                <div className='h7 text-muted'>
+                <div className='h7 text-muted '>
                   <Moment format={'MM/DD/YYYY'}>{createdAt}</Moment>
                 </div>
               </div>

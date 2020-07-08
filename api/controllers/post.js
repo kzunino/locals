@@ -32,12 +32,22 @@ exports.create_post = asyncHandler(async (req, res) => {
   res.json({post}).status(201);
 });
 
-//@Route    GET api/posts
+//@Route    GET api/posts/getall
 //@desc     Get all posts ORDER DESC from createdAt
 //@access   Private
 
 exports.get_all_posts = asyncHandler(async (req, res) => {
+  //takes a page number to offset the next batch of posts for infinite scroll
+  console.log('I am working');
+  console.log(req.body);
+  let {page} = req.body;
+  console.log(page);
+  const limit = 5;
+  const offset = page * limit;
+
   const posts = await Post.findAll({
+    limit,
+    offset,
     include: [
       {
         model: User,
@@ -67,7 +77,7 @@ exports.get_all_posts = asyncHandler(async (req, res) => {
     ],
   });
 
-  res.json({posts});
+  res.json(posts);
 });
 
 //@Route    GET /posts/:id

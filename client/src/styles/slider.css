@@ -43,7 +43,8 @@ div.cards-slider-wrapper:last-child {
   outline: 0;
 }
 .cards-slider .slider-button:hover {
-  transform: scale(1.02) perspective(1px);
+  transition: background-color 1s ease;
+  background-color: whitesmoke;
 }
 
 .scroll-left {

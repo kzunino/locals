@@ -3,18 +3,20 @@ import {Link} from 'react-router-dom';
 import PostItem from './posts/PostItem';
 import PostForm from './posts/PostForm';
 import withContext from '../Context';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const PostFormWithContext = withContext(PostForm);
 const PostItemWithContext = withContext(PostItem);
 
 function MessageBoard({context, context: {verified}}) {
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     const getPosts = async () => {
-      let res = await context.actions.get_posts();
-      console.log(res.posts);
-      setPosts([...res.posts]);
+      let res = await context.actions.get_posts(0);
+      console.log(res);
+      setPosts([...res]);
     };
     getPosts();
   }, [context]);
@@ -47,7 +49,12 @@ function MessageBoard({context, context: {verified}}) {
           to share!
         </p>
       )}
-      <div className='container- post-wrapper'>
+      <InfiniteScroll
+        className='container- post-wrapper'
+        // next={}
+        hasMore={true}
+        dataLength={posts.length}
+      >
         {posts.map((post) => {
           return (
             <PostItemWithContext
@@ -57,7 +64,7 @@ function MessageBoard({context, context: {verified}}) {
             />
           );
         })}
-      </div>
+      </InfiniteScroll>
     </div>
   );
 }

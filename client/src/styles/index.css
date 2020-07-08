@@ -77,6 +77,18 @@ select:focus {
   color: rgb(var(--primary-color));
 }
 
+/* Secondary NavBar */
+
+.secondary-nav {
+  background-color: whitesmoke;
+  box-shadow: 0px 1px 10px 0px grey;
+  border-radius: 3px;
+  width: 300px;
+  font-size: 12px;
+  margin: auto;
+  margin-top: -20px;
+}
+
 /* Form */
 .form-size {
   width: 70%;
@@ -159,8 +171,6 @@ select:focus {
 }
 
 /* Large Exp Card */
-
-/* Experience Card */
 
 .experience-card-lrg {
   width: 350px;
@@ -267,10 +277,8 @@ td {
   }
 
   .secondary-nav {
-    background-color: white;
-    box-shadow: 0px 4px 20px 1px grey;
     border-radius: 3px;
-    width: 80%;
+    width: 300px;
     font-size: 12px;
     margin: auto;
     margin-top: -20px;
@@ -337,15 +345,14 @@ td {
     border-right: none;
   }
 
-  .secondary-nav {
-    background-color: white;
-    box-shadow: 0px 4px 20px 1px grey;
+  /* .secondary-nav {
+    
     border-radius: 3px;
-    width: 55%;
+    width: 300px;
     font-size: 12px;
     margin: auto;
     margin-top: -20px;
-  }
+  } */
 }
 
 /* xs < 768 */
@@ -360,10 +367,8 @@ td {
   }
 
   .secondary-nav {
-    background-color: white;
-    box-shadow: 0px 4px 20px 1px grey;
     border-radius: 3px;
-    width: 50%;
+    width: 350px;
     margin: auto;
     margin-top: -20px;
   }
@@ -381,9 +386,6 @@ td {
 @media screen and (min-width: 768px) {
   .form-size {
     width: 60%;
-  }
-  .secondary-nav {
-    width: 40%;
   }
 }
 

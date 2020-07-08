@@ -10,15 +10,16 @@ const auth = require('../middleware/auth');
 
 router.post(
   '/',
-  [auth, [check('text', 'Text is required').not().isEmpty()]],
+  auth,
+  [check('text', 'Text is required').not().isEmpty()],
   post_controller.create_post
 );
 
-//@Route    GET /posts
+//@Route    GET /posts/getall
 //@desc     Get all posts
 //@access   public
 
-router.get('/', post_controller.get_all_posts);
+router.post('/getall', post_controller.get_all_posts);
 
 //@Route    GET /posts/:id
 //@desc     Get post by ID

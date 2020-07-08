@@ -6,6 +6,10 @@
   display: block;
 }
 
+.card-header-bg {
+  background-color: blue;
+}
+
 textarea {
   width: 100%;
   border-radius: 10px;

@@ -535,7 +535,7 @@ export class Provider extends Component {
     }
   };
 
-  get_posts = async () => {
+  get_posts = async (page) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -543,11 +543,16 @@ export class Provider extends Component {
       },
     };
 
-    //const body = JSON.stringify({});
-    //console.log(body);
+    const body = JSON.stringify({page});
+    console.log(body);
     try {
-      const res = await axios.get(`http://localhost:5000/posts/`, config);
+      const res = await axios.post(
+        `http://localhost:5000/posts/getall`,
+        body,
+        config
+      );
       if (res.status === 200) {
+        console.log(res.data);
         return res.data;
       }
     } catch (error) {
