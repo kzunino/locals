@@ -21,6 +21,15 @@ function MessageBoard({context, context: {verified}}) {
     getPosts();
   }, [context]);
 
+  //fires when user gets to bottom of post page on order to retrieve more posts
+  //closure prevents setPage to decrement by one so the pages line up with offset
+  const getMorePosts = async () => {
+    let res = await context.actions.get_posts(page + 1);
+    if (res === []) setPage(page - 1);
+    else setPosts([...posts, ...res]);
+    console.log(posts);
+  };
+
   //passes to child component and takes post uid callback
   const onPostDelete = (post_uid) => {
     let updatedPosts = posts.filter((post) => post_uid !== post.post_uid);
@@ -51,7 +60,10 @@ function MessageBoard({context, context: {verified}}) {
       )}
       <InfiniteScroll
         className='container- post-wrapper'
-        // next={}
+        next={() => {
+          setPage(page + 1);
+          getMorePosts();
+        }}
         hasMore={true}
         dataLength={posts.length}
       >
