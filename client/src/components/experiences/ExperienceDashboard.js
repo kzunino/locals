@@ -1,10 +1,13 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Slider from '../Slider';
+import withContext from '../../Context';
+const SliderWithContext = withContext(Slider);
 
 function ExperienceDashboard({context, context: {verified}}) {
   verified = JSON.parse(verified);
   const [userExperiences, setUserExperiences] = useState([]);
+  const [savedExperiences, setSavedExperience] = useState([]);
 
   useEffect(() => {
     const getUserExperiences = async () => {
@@ -13,10 +16,26 @@ function ExperienceDashboard({context, context: {verified}}) {
       setUserExperiences(res.adventures);
     };
 
+    const getSavedExperiences = async () => {
+      let res = await context.actions.get_saved_experiences();
+      console.log(res);
+      setSavedExperience(res.favorites);
+    };
+
     getUserExperiences();
+    getSavedExperiences();
   }, [context.actions]);
 
   console.log(userExperiences);
+  console.log(savedExperiences);
+
+  //takes experience data from favorites query and sends it to saved component
+  let experienceData = [];
+  for (let favoriteExp of savedExperiences) {
+    experienceData = [...experienceData, favoriteExp.adventure];
+  }
+  console.log(experienceData);
+
   return (
     <Fragment>
       {!verified ? (
@@ -53,15 +72,21 @@ function ExperienceDashboard({context, context: {verified}}) {
         </div>
       )}
 
-      <h3 className='mt-4 pl-3'>Saved Experiences</h3>
-      <Slider />
-
       {verified ? (
         <Fragment>
           <h3 className='mt-4 pl-3'>Hosted Experiences</h3>
-          <Slider experiences={userExperiences} />){' '}
+          <SliderWithContext experiences={userExperiences} />{' '}
         </Fragment>
       ) : null}
+
+      <h3 className='mt-4 pl-3'>Saved Experiences</h3>
+      {savedExperiences.length ? (
+        <SliderWithContext experiences={experienceData} />
+      ) : (
+        <div className='m-3'>
+          <p>No experiences saved yet!</p>
+        </div>
+      )}
     </Fragment>
   );
 }

@@ -39,7 +39,7 @@ function Profile({context, match, context: {user_uid}}) {
   if (redirect) return <Redirect to='/profile/me' />;
 
   return (
-    <div className='profile-wrapper'>
+    <div className='container-md mt-2'>
       {cover_photo ? (
         <img className='profile-bg-img' src={cover_photo} alt='' />
       ) : (

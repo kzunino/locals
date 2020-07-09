@@ -34,10 +34,11 @@ function ExperienceCard({
       };
 
       //checks to see if post is already liked and renders them liked
+      //takes in experience, and checks liked table for matching adventure uid
       const isExperienceSaved = (savedExperiences) => {
         if (savedExperiences) {
           for (let experience of savedExperiences) {
-            if (experience.fk_user_uid === user_uid) {
+            if (experience.fk_adventure_uid === adventure_uid) {
               setIsExpSavedData('saved');
             }
           }

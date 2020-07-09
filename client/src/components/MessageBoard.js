@@ -16,18 +16,18 @@ function MessageBoard({context, context: {verified}}) {
     const getPosts = async () => {
       let res = await context.actions.get_posts(0);
       console.log(res);
-      setPosts([...res]);
+      setPosts([...posts, ...res]);
     };
     getPosts();
-  }, [context]);
+  }, [context.actions]);
 
   //fires when user gets to bottom of post page on order to retrieve more posts
   //closure prevents setPage to decrement by one so the pages line up with offset
   const getMorePosts = async () => {
     let res = await context.actions.get_posts(page + 1);
+    console.log(res);
     if (res === []) setPage(page - 1);
     else setPosts([...posts, ...res]);
-    console.log(posts);
   };
 
   //passes to child component and takes post uid callback
@@ -58,25 +58,30 @@ function MessageBoard({context, context: {verified}}) {
           to share!
         </p>
       )}
-      <InfiniteScroll
-        className='container- post-wrapper'
-        next={() => {
-          setPage(page + 1);
-          getMorePosts();
-        }}
-        hasMore={true}
-        dataLength={posts.length}
-      >
-        {posts.map((post) => {
-          return (
-            <PostItemWithContext
-              key={post.post_uid}
-              postData={post}
-              onPostDelete={onPostDelete}
-            />
-          );
-        })}
-      </InfiniteScroll>
+      {/* Bug issue, if !posts.length and user navigates away from posts and then goes back
+      the infinite scroll fires simultaneously as useEffect and doesnt render the posts correctly
+      if at all */}
+      {posts.length ? (
+        <InfiniteScroll
+          className='container- post-wrapper'
+          next={() => {
+            setPage(page + 1);
+            getMorePosts();
+          }}
+          hasMore={true}
+          dataLength={posts.length}
+        >
+          {posts.map((post) => {
+            return (
+              <PostItemWithContext
+                key={post.post_uid}
+                postData={post}
+                onPostDelete={onPostDelete}
+              />
+            );
+          })}
+        </InfiniteScroll>
+      ) : null}
     </div>
   );
 }

@@ -1121,7 +1121,7 @@ export class Provider extends Component {
         // 'Access-Control-Allow-Origin': '*',
       },
     };
-
+    console.log(adventure_uid);
     //const body = JSON.stringify({});
     //console.log(body);
     try {

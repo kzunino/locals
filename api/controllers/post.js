@@ -38,7 +38,6 @@ exports.create_post = asyncHandler(async (req, res) => {
 
 exports.get_all_posts = asyncHandler(async (req, res) => {
   //takes a page number to offset the next batch of posts for infinite scroll
-  console.log('I am working');
   console.log(req.body);
   let {page} = req.body;
   console.log(page);

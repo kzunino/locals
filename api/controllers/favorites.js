@@ -10,6 +10,19 @@ const asyncHandler = require('../middleware/asyncHandler');
 exports.get_favorites = asyncHandler(async (req, res) => {
   const favorites = await Favorites.findAll({
     where: {fk_user_uid: req.user.user_uid},
+    include: [
+      {
+        model: Adventure,
+        include: [
+          {
+            model: User,
+            attributes: ['first_name', 'last_name', 'avatar'],
+          },
+        ],
+      },
+    ],
+    order: [['createdAt', 'DESC']],
+    exclude: ['updatedAt'],
   });
   if (favorites) res.json({favorites}).status(200);
   //else res.json({errors: ['No favorites yet!']}).status(400);
@@ -52,7 +65,9 @@ exports.add_to_favorites = asyncHandler(async (req, res) => {
   } else if (!adventure) {
     res.status(400).send({errors: ['There is no adventure to be liked']});
   } else {
-    await Favorites.destroy({where: {fk_user_uid: req.user.user_uid}});
+    await Favorites.destroy({
+      where: {fk_adventure_uid: req.params.adventure_uid},
+    });
     res.status(202).send({
       message: 'Adventure removed from favorites',
     });
