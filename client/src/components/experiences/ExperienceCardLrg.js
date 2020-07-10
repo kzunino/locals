@@ -37,7 +37,7 @@ function ExperienceCardLrg({
       const isExperienceSaved = (savedExperiences) => {
         if (savedExperiences) {
           for (let experience of savedExperiences) {
-            if (experience.fk_user_uid === user_uid) {
+            if (experience.fk_adventure_uid === adventure_uid) {
               setIsExpSavedData('saved');
             }
           }

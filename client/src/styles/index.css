@@ -91,6 +91,10 @@ select:focus {
   margin-top: -20px;
 }
 
+.secondary-nav-item a {
+  padding: 5px;
+}
+
 /* Form */
 .form-size {
   width: 70%;
@@ -375,7 +379,7 @@ td {
     margin-top: -20px;
   }
 
-  .secondary-nav-item {
+  .secondary-nav-item:not(:last-child) {
     border-right: 1px solid lightgrey;
   }
   .experience-card-lrg {

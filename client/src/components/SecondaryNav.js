@@ -17,12 +17,12 @@ const SecondaryNav = () => {
         <Nav.Link
           href='/home/messageboard'
           eventKey='one'
-          className=' secondary hover'
+          className='secondary hover'
         >
           Message Board
         </Nav.Link>
       </Nav.Item>
-      <Nav.Item>
+      <Nav.Item className='secondary-nav-item'>
         <Nav.Link
           href='/home/search'
           eventKey='two'
