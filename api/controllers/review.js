@@ -32,12 +32,13 @@ exports.get_all_adventure_reviews = asyncHandler(async (req, res) => {
     where: {
       fk_adventure_uid: req.params.adventure_uid,
     },
+    include: [{model: User, attributes: ['avatar']}],
   });
 
   if (reviews) {
     res.json(reviews).status(200);
   } else {
-    res.json({errors: ['No reviews found']}).status(400);
+    res.json({msg: ['No reviews found']}).status(404);
   }
 });
 

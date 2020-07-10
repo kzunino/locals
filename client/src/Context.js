@@ -61,6 +61,7 @@ export class Provider extends Component {
         get_saved_experiences: this.get_saved_experiences,
         get_featured_experiences: this.get_featured_experiences,
         get_experiences: this.get_experiences,
+        get_experience_reviews: this.get_experience_reviews,
       },
     };
 
@@ -1223,6 +1224,37 @@ export class Provider extends Component {
       const res = await axios.get(`http://localhost:5000/adventure`);
       if (res.status === 200) {
         return res.data;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+  get_experience_reviews = async (adventure_uid) => {
+    //const body = JSON.stringify({});
+    //console.log(body);
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/review/adventure/${adventure_uid}`
+      );
+      if (res.status === 200) {
+        return res.data;
+      }
+      if (res.status === 404) {
+        return 404;
       }
     } catch (error) {
       // Error 😨

@@ -2,10 +2,12 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
+import Review from './Review';
 
 function ExperiencePage({context, context: {user_uid}, match}) {
   const [experienceData, setExperienceData] = useState({});
   const [userData, setUserData] = useState({});
+  const [reviews, setReviews] = useState([]);
 
   let {
     title,
@@ -42,7 +44,16 @@ function ExperiencePage({context, context: {user_uid}, match}) {
       }
     };
 
+    const getReviews = async () => {
+      let res = await context.actions.get_experience_reviews(match.params.uid);
+      if (res) {
+        console.log(res);
+        setReviews([...res]);
+      }
+    };
+
     getExperience();
+    getReviews();
   }, [match.params.id]);
 
   //formats the phone number on the profile page
@@ -148,6 +159,13 @@ function ExperiencePage({context, context: {user_uid}, match}) {
         ) : null}
 
         <h3 className='mt-4'>Reviews:</h3>
+
+        {/* review component */}
+        {reviews.length
+          ? reviews.map((review) => {
+              return <Review reviewData={review} key={review.review_uid} />;
+            })
+          : null}
       </div>
     </div>
   );
