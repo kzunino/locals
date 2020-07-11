@@ -62,6 +62,7 @@ export class Provider extends Component {
         get_featured_experiences: this.get_featured_experiences,
         get_experiences: this.get_experiences,
         get_experience_reviews: this.get_experience_reviews,
+        search_experiences: this.search_experiences,
       },
     };
 
@@ -1255,6 +1256,46 @@ export class Provider extends Component {
       }
       if (res.status === 404) {
         return 404;
+      }
+    } catch (error) {
+      // Error 😨
+
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        if (error.response.status === 400) return error.response.data;
+        if (error.response.status === 500) return 500;
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  search_experiences = async (query) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
+    const body = JSON.stringify(query);
+    console.log(body);
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/adventure/search`,
+        body,
+        config
+      );
+      if (res.data.length === 0) {
+        return 404;
+      }
+      if (res.status === 200) {
+        return res.data;
       }
     } catch (error) {
       // Error 😨

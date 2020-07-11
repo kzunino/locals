@@ -35,6 +35,7 @@ const HomeWithContext = withContext(Home);
 const NavBarWithContext = withContext(NavBar);
 const FeaturedWithContext = withContext(Featured);
 const ExperiencesWithContext = withContext(Experiences);
+const SearchWithContext = withContext(Search);
 const ExperiencePageWithContext = withContext(ExperiencePage);
 const PostWithContext = withContext(Post);
 const ExperienceDashBoardWithContext = withContext(ExperienceDashBoard);
@@ -64,7 +65,7 @@ function App({location}) {
         <Route exact path='/home' component={FeaturedWithContext} />
         <Route path='/home/experiences' component={ExperiencesWithContext} />
         <Route path='/home/messageboard' component={MessageBoardWithContext} />
-        <Route path='/home/search' component={Search} />
+        <Route path='/home/search' component={SearchWithContext} />
         <PrivateRoute path='/post/:post_uid' component={PostWithContext} />
 
         <PrivateRoute path='/profile/me' component={MyProfileWithContext} />

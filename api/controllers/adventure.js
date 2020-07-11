@@ -31,6 +31,7 @@ exports.get_all_adventures = asyncHandler(async (req, res) => {
 //@access   Public
 
 exports.search_all_adventures = asyncHandler(async (req, res) => {
+  console.log(req.body.query);
   let adventures = await Adventure.findAll({
     limit: 10,
     where: {
@@ -77,7 +78,7 @@ exports.search_all_adventures = asyncHandler(async (req, res) => {
         exclude: ['updatedAt'],
       });
       //will return as empty array if none exists
-      if (adventure) return res.json(adventures);
+      if (adventures) return res.json(adventures);
     }
   }
 
