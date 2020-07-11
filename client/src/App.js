@@ -28,6 +28,7 @@ import ProfileEdit from './components/profile/ProfileEdit';
 
 import Footer from './components/Footer';
 import MessageBoard from './components/MessageBoard';
+import Search from './components/Search';
 
 //Components with context
 const HomeWithContext = withContext(Home);
@@ -63,6 +64,7 @@ function App({location}) {
         <Route exact path='/home' component={FeaturedWithContext} />
         <Route path='/home/experiences' component={ExperiencesWithContext} />
         <Route path='/home/messageboard' component={MessageBoardWithContext} />
+        <Route path='/home/search' component={Search} />
         <PrivateRoute path='/post/:post_uid' component={PostWithContext} />
 
         <PrivateRoute path='/profile/me' component={MyProfileWithContext} />

@@ -11,6 +11,12 @@ const verifiedUser = require('../middleware/verifiedUser');
 
 router.get('/', adventure_controller.get_all_adventures);
 
+//@Route    Post /adventure/search
+//@desc     Search adventure by query
+//@access   Public
+
+router.post('/search', adventure_controller.search_all_adventures);
+
 //@Route    GET /adventure
 //@desc     Get all user adventures
 //@access   Private

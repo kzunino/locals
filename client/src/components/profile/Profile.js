@@ -84,7 +84,7 @@ function Profile({context, match, context: {user_uid}}) {
           </div>
         </div>
 
-        <h4 className='mt-4'>Reviews:</h4>
+        {/* <h4 className='mt-4'>Reviews:</h4> */}
       </div>
     </div>
   );

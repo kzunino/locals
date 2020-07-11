@@ -233,6 +233,12 @@ select:focus {
   height: 165px;
 }
 
+/* Search */
+
+.search-input {
+  width: 75%;
+}
+
 /* Footer */
 table {
   width: 100%;

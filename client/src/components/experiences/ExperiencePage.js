@@ -161,11 +161,15 @@ function ExperiencePage({context, context: {user_uid}, match}) {
         <h3 className='mt-4'>Reviews:</h3>
 
         {/* review component */}
-        {reviews.length
-          ? reviews.map((review) => {
-              return <Review reviewData={review} key={review.review_uid} />;
-            })
-          : null}
+        {reviews.length ? (
+          reviews.map((review) => {
+            return <Review reviewData={review} key={review.review_uid} />;
+          })
+        ) : (
+          <p className='text-small mt-2'>
+            This experience hasn't been reviewed yet!
+          </p>
+        )}
       </div>
     </div>
   );

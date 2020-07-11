@@ -75,4 +75,7 @@ div.cards-slider-wrapper:last-child {
   .cards-slider button {
     visibility: hidden;
   }
+  .cards-slider-wrapper {
+    height: 300px;
+  }
 }

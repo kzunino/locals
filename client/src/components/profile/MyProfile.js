@@ -90,7 +90,7 @@ function MyProfile({context, context: {verified}}) {
             </div>
           </div>
 
-          <h4 className='mt-4'>Reviews:</h4>
+          {/* <h4 className='mt-4'>Reviews:</h4> */}
         </div>
       </div>
     </div>

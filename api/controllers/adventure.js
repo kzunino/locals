@@ -1,6 +1,8 @@
 const User = require('../models').users;
 const Review = require('../models').Review;
 const Adventure = require('../models').adventure;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const {validationResult} = require('express-validator');
 const asyncHandler = require('../middleware/asyncHandler');
@@ -20,6 +22,65 @@ exports.get_all_adventures = asyncHandler(async (req, res) => {
     order: [['createdAt', 'DESC']],
     exclude: ['updatedAt'],
   });
+  if (adventures) res.json(adventures);
+  else res.json({errors: ['No adventures found']}).status(400);
+});
+
+//@Route    Post /adventure/search
+//@desc     Search adventure by query
+//@access   Public
+
+exports.search_all_adventures = asyncHandler(async (req, res) => {
+  let adventures = await Adventure.findAll({
+    limit: 10,
+    where: {
+      title: {
+        [Op.iLike]: `%${req.body.query}%`,
+      },
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['first_name', 'last_name', 'avatar'],
+      },
+    ],
+    order: [['createdAt', 'DESC']],
+    exclude: ['updatedAt'],
+  });
+
+  //if adventure isn't found with search query, then it searches for names
+  if (!adventures.length) {
+    const user = await User.findOne({
+      where: {
+        [Op.or]: {
+          first_name: {
+            [Op.iLike]: `%${req.body.query}%`,
+          },
+          last_name: {
+            [Op.iLike]: `%${req.body.query}%`,
+          },
+        },
+      },
+    });
+    if (user) {
+      adventures = await Adventure.findAll({
+        where: {
+          fk_user_uid: user.user_uid,
+        },
+        include: [
+          {
+            model: User,
+            attributes: ['first_name', 'last_name', 'avatar'],
+          },
+        ],
+        order: [['createdAt', 'DESC']],
+        exclude: ['updatedAt'],
+      });
+      //will return as empty array if none exists
+      if (adventure) return res.json(adventures);
+    }
+  }
+
   if (adventures) res.json(adventures);
   else res.json({errors: ['No adventures found']}).status(400);
 });
