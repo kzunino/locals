@@ -34,7 +34,7 @@ function Profile({context, match, context: {user_uid}}) {
     };
 
     getProfile();
-  }, [context.actions, match.params.user_uid]);
+  }, [context.actions, match.params.user_uid, user_uid]);
 
   if (redirect) return <Redirect to='/profile/me' />;
 

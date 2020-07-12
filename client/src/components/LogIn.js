@@ -19,7 +19,7 @@ function LogIn({context, history, location, context: {userToken}}) {
     if (userToken) {
       setRedirect(true);
     }
-  }, []);
+  }, [userToken]);
 
   if (redirect) return <Redirect to='/home' />;
 

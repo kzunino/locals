@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import Moment from 'react-moment';
 

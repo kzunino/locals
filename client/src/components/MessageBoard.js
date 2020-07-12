@@ -16,7 +16,8 @@ function MessageBoard({context, context: {verified}}) {
     const getPosts = async () => {
       let res = await context.actions.get_posts(0);
       console.log(res);
-      setPosts([...posts, ...res]);
+      setPosts([...res]);
+      //setPosts([...posts, ...res]);
     };
     getPosts();
   }, [context.actions]);

@@ -20,7 +20,8 @@ function ExperienceCardLrg({
   context: {user_uid},
   history,
 }) {
-  const [savedExperiences, setSavedExperiences] = useState([]);
+  //if page fails un comment the savedExperiences State
+  //const [savedExperiences, setSavedExperiences] = useState([]);
   const [isExpSaved, setIsExpSavedData] = useState(null);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function ExperienceCardLrg({
       const getSavedExperiencesByUserUid = async () => {
         const res = await context.actions.get_saved_experiences();
 
-        setSavedExperiences([...res.favorites]);
+        //setSavedExperiences([...res.favorites]);
         isExperienceSaved(res.favorites);
       };
 
@@ -46,7 +47,7 @@ function ExperienceCardLrg({
 
       getSavedExperiencesByUserUid();
     }
-  }, [context.actions, user_uid]);
+  }, [context.actions, user_uid, adventure_uid]);
 
   //saves experience or destroys experience depending if exists and then toggles heart color
   const saveExp = async (adventure_uid) => {

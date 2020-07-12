@@ -16,6 +16,7 @@ function CreateExperience({history, context, context: verified}) {
     phone_number: '',
     location: '',
     street: '',
+    state: '',
     city: '',
     zip_code: '',
     duration: '',

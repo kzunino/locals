@@ -20,6 +20,7 @@ function EditExperience({history, context, context: verified, match}) {
     location: '',
     street: '',
     city: '',
+    state: '',
     zip_code: '',
     duration: '',
     start: '',
@@ -27,7 +28,7 @@ function EditExperience({history, context, context: verified, match}) {
     recommended: '',
     cover_photo: '',
   });
-  const [userData, setUserData] = useState({});
+  //const [userData, setUserData] = useState({});
 
   const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
@@ -52,21 +53,20 @@ function EditExperience({history, context, context: verified, match}) {
     cover_photo,
   } = experienceData;
 
-  useState(() => {
+  useEffect(() => {
     const getExperience = async () => {
-      console.log(match);
       let res = await context.actions.get_exp_by_uid(match.params.uid);
       if (res) {
         console.log(res);
         setExperienceData({...res.adventure});
-        setUserData({...res.adventure.user});
+        //setUserData({...res.adventure.user});
       } else {
         //create a not found route
       }
     };
 
     getExperience();
-  }, [match.params.id]);
+  }, [context.actions, match.params.uid]);
 
   const onDelete = async () => {
     const res = await context.actions.delete_experience(match.params.uid);
