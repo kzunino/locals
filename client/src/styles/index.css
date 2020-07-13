@@ -115,7 +115,7 @@ select:focus {
 }
 
 .a-heart:hover {
-  color: black;
+  color: whitesmoke;
 }
 
 /* Experience Card */
@@ -152,6 +152,10 @@ select:focus {
   margin: 0;
   padding: 0;
   cursor: pointer;
+}
+
+.heart-btn:hover {
+  transform: scale(1.1);
 }
 
 .experience-user-avatar {

@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import withContext from './Context';
 import PrivateRoute from './PrivateRoute';
 import setAuthToken from './utilites/setAuthToken';
+import Cookies from 'js-cookie';
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -50,8 +51,8 @@ const SignUpWithContext = withContext(SignUp);
 
 function App({location}) {
   //if token exists then sets api header with token
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
+  if (Cookies.get('token')) {
+    setAuthToken(Cookies.get('token'));
   }
 
   return (

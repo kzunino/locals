@@ -1,22 +1,17 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 //import config from './config';
-const Context = React.createContext();
+import Cookies from 'js-cookie';
 
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    // 'Access-Control-Allow-Origin': '*',
-  },
-};
+const Context = React.createContext();
 
 export class Provider extends Component {
   state = {
-    userToken: localStorage.getItem('token') || null,
-    user_uid: localStorage.getItem('user_uid') || null,
-    first_name: localStorage.getItem('first_name') || null,
-    avatar: localStorage.getItem('avatar') || null,
-    verified: localStorage.getItem('verified') || null,
+    userToken: Cookies.getJSON('token') || null,
+    user_uid: Cookies.getJSON('user_uid') || null,
+    first_name: Cookies.getJSON('first_name') || null,
+    avatar: Cookies.getJSON('avatar') || null,
+    verified: Cookies.getJSON('verified') || null,
   };
 
   render() {
@@ -74,30 +69,31 @@ export class Provider extends Component {
   }
 
   signIn = async (email, password) => {
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     // 'Access-Control-Allow-Origin': '*',
-    //   },
-    // };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin': '*',
+      },
+    };
 
     const body = JSON.stringify({email, password});
     console.log(body);
     try {
       const res = await axios.post(`http://localhost:5000/auth`, body, config);
       if (res.status === 200) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user_uid', res.data.user.user_uid);
-        localStorage.setItem('first_name', res.data.user.first_name);
-        localStorage.setItem('avatar', res.data.user.avatar);
-        localStorage.setItem('verified', res.data.user.verified);
+        Cookies.set('token', res.data.token, {expires: 1});
+        Cookies.set('user_uid', res.data.user.user_uid, {expires: 1});
+        Cookies.set('first_name', res.data.user.first_name, {expires: 1});
+        Cookies.set('avatar', res.data.user.avatar, {expires: 1});
+        Cookies.set('verified', res.data.user.verified, {expires: 1});
+
         this.setState(() => {
           return {
-            userToken: localStorage.getItem('token'),
-            user_uid: localStorage.getItem('user_uid'),
-            first_name: localStorage.getItem('first_name'),
-            avatar: localStorage.getItem('avatar'),
-            verified: localStorage.getItem('verified'),
+            userToken: Cookies.get('token'),
+            user_uid: Cookies.get('user_uid'),
+            first_name: Cookies.get('first_name'),
+            avatar: Cookies.get('avatar'),
+            verified: Cookies.get('verified'),
           };
         });
         return 200;
@@ -135,13 +131,14 @@ export class Provider extends Component {
         first_name: null,
         avatar: null,
         verified: null,
+        user_uid: null,
       };
     });
-    localStorage.removeItem('token');
-    localStorage.removeItem('user_uid');
-    localStorage.removeItem('first_name');
-    localStorage.removeItem('avatar');
-    localStorage.removeItem('verified');
+    Cookies.remove('token');
+    Cookies.remove('user_uid');
+    Cookies.remove('first_name');
+    Cookies.remove('avatar');
+    Cookies.remove('verified');
   };
 
   signUp = async (first_name, last_name, email, password) => {
@@ -157,18 +154,18 @@ export class Provider extends Component {
     try {
       const res = await axios.post('http://localhost:5000/users', body, config);
       if (res.status === 201) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user_uid', res.data.user.user_uid);
-        localStorage.setItem('first_name', res.data.user.first_name);
-        localStorage.setItem('avatar', res.data.user.avatar);
-        localStorage.setItem('verified', res.data.user.verified);
+        Cookies.set('token', res.data.token, {expires: 1});
+        Cookies.set('user_uid', res.data.user.user_uid, {expires: 1});
+        Cookies.set('first_name', res.data.user.first_name, {expires: 1});
+        Cookies.set('avatar', res.data.user.avatar, {expires: 1});
+        Cookies.set('verified', res.data.user.verified, {expires: 1});
         this.setState(() => {
           return {
-            userToken: localStorage.getItem('token'),
-            user_uid: localStorage.getItem('user_uid'),
-            first_name: localStorage.getItem('first_name'),
-            avatar: localStorage.getItem('avatar'),
-            verified: localStorage.getItem('verified'),
+            userToken: Cookies.get('token'),
+            user_uid: Cookies.get('user_uid'),
+            first_name: Cookies.get('first_name'),
+            avatar: Cookies.get('avatar'),
+            verified: Cookies.get('verified'),
           };
         });
         return 201;
@@ -205,10 +202,10 @@ export class Provider extends Component {
     try {
       const res = await axios.post('http://localhost:5000/auth/verify', config);
       if (res.status === 200) {
-        localStorage.setItem('verified', true);
+        Cookies.set('verified', true, {expires: 1});
         this.setState(() => {
           return {
-            verified: localStorage.getItem('verified'),
+            verified: Cookies.get('verified'),
           };
         });
         return 200;
@@ -384,10 +381,10 @@ export class Provider extends Component {
       );
       if (res.status === 200) {
         console.log(res.data);
-        localStorage.setItem('avatar', res.data.user.avatar);
+        Cookies.set('avatar', res.data.user.avatar, {expires: 1});
         this.setState(() => {
           return {
-            avatar: localStorage.getItem('avatar'),
+            avatar: Cookies.get('avatar'),
           };
         });
         return res.data;
