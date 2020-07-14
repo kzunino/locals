@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 function EditCoverPhoto({context}) {
   //state for avatar form data for POST req
@@ -9,6 +10,7 @@ function EditCoverPhoto({context}) {
   const [submitButtonDisplay, setSubmitButtonDisplay] = useState('hide');
   const [errors, setErrors] = useState([]);
   const [cover_photo, set_cover_photo] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const get_cover_photo = async () => {
@@ -54,6 +56,7 @@ function EditCoverPhoto({context}) {
       //history.push('/home');
     } else if (res.errors) {
     }
+    setLoading(false);
   };
 
   const ErrorsDisplay = () => {
@@ -77,7 +80,13 @@ function EditCoverPhoto({context}) {
   return (
     <div className='container-fluid border-bottom pb-4'>
       <div className='edit-profile-form'>
-        <Form className='container' onSubmit={(e) => onSubmit(e)}>
+        <Form
+          className='container'
+          onSubmit={(e) => {
+            setLoading(true);
+            onSubmit(e);
+          }}
+        >
           <h1 className='primary-color'>Change Cover Photo</h1>
 
           <ErrorsDisplay errors={errors} />
@@ -95,14 +104,20 @@ function EditCoverPhoto({context}) {
             />
           </Form.Group>
 
-          <Button
-            size='md'
-            variant='secondary'
-            type='submit'
-            className={submitButtonDisplay}
-          >
-            Update Cover Photo
-          </Button>
+          {loading ? (
+            <Spinner animation='border' role='status'>
+              <span className='sr-only'>Loading...</span>
+            </Spinner>
+          ) : (
+            <Button
+              size='md'
+              variant='secondary'
+              type='submit'
+              className={submitButtonDisplay}
+            >
+              Update Cover Photo
+            </Button>
+          )}
         </Form>
       </div>
     </div>
