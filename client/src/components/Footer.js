@@ -4,7 +4,7 @@ function Footer() {
   let date = new Date();
 
   return (
-    <div className='container-fluid'>
+    <div className='container-fluid '>
       <h3 className='primary-color border-bottom mt-5'>Locals</h3>
       <table className='table-borderless text-center'>
         <thead>

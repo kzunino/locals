@@ -30,6 +30,7 @@ import ProfileEdit from './components/profile/ProfileEdit';
 import Footer from './components/Footer';
 import MessageBoard from './components/MessageBoard';
 import Search from './components/Search';
+import NotFound from './components/NotFound';
 
 //Components with context
 const HomeWithContext = withContext(Home);
@@ -90,7 +91,10 @@ function App({location}) {
 
         <Route path='/login' component={LogInWithContext} />
         <Route path='/signup' component={SignUpWithContext} />
+
+        <Route component={NotFound} />
       </Switch>
+
       {location.pathname.includes('/home') ? (
         <Route component={Footer} />
       ) : null}

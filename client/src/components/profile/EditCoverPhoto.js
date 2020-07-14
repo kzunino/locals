@@ -21,7 +21,6 @@ function EditCoverPhoto({context}) {
     get_cover_photo();
   }, [context]);
 
-  //console.log(cover_photo);
   const showSubmit = () => {
     setSubmitButtonDisplay('show');
   };
