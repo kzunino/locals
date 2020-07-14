@@ -9,7 +9,7 @@ import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 
 const CommentItemWithContext = withContext(CommentItem);
 
-function Post({context, match, context: {user_uid}}) {
+function Post({context, match, context: {user_uid}, history}) {
   // Gets post by params and loads comment Items
   const [postData, setPostData] = useState({});
   const [liked, setLiked] = useState('');
@@ -134,8 +134,15 @@ function Post({context, match, context: {user_uid}}) {
 
   return (
     <div className='container'>
+      <Link
+        to='/home/messageboard'
+        className='primary-color'
+        style={{textDecoration: 'none'}}
+      >
+        <h6 className='mt-3 m'>Back to Messages</h6>
+      </Link>
       <div className='card gedf-card mt-3'>
-        <div className='card-header '>
+        <div className='card-body pb-0'>
           <div className='d-flex justify-content-between align-items-center'>
             <div className='d-flex justify-content-between align-items-center '>
               <div className='mr-2'>
