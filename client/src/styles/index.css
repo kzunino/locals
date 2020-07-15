@@ -16,7 +16,8 @@ a {
 
 input:focus,
 textarea:focus,
-select:focus {
+select:focus,
+button:focus {
   outline: none;
 }
 
@@ -250,6 +251,31 @@ table {
 
 td {
   width: 33%;
+}
+
+/* not found */
+
+.not-found {
+  background-image: url('../img/404.jpg');
+  background-repeat: no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  width: 100%;
+}
+
+.not-found-btn {
+  border-radius: 20px;
+  background-color: whitesmoke;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  width: 120px;
+  height: 30px;
+  outline: none;
 }
 
 /* xs < 768 */

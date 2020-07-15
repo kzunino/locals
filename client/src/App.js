@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 import withContext from './Context';
 import PrivateRoute from './PrivateRoute';
 import setAuthToken from './utilites/setAuthToken';
@@ -92,7 +92,8 @@ function App({location}) {
         <Route path='/login' component={LogInWithContext} />
         <Route path='/signup' component={SignUpWithContext} />
 
-        <Route component={NotFound} />
+        <Route path='/notfound' component={NotFound} />
+        <Redirect to='/notfound' />
       </Switch>
 
       {location.pathname.includes('/home') ? (
