@@ -51,7 +51,7 @@ const LogInWithContext = withContext(LogIn);
 const SignUpWithContext = withContext(SignUp);
 
 function App({location}) {
-  //if token exists then sets api header with token
+  //if token exists then sets api header with token for authetication
   if (Cookies.get('token')) {
     setAuthToken(Cookies.get('token'));
   }
@@ -71,7 +71,6 @@ function App({location}) {
         <PrivateRoute path='/post/:post_uid' component={PostWithContext} />
 
         <PrivateRoute path='/profile/me' component={MyProfileWithContext} />
-
         <PrivateRoute
           path='/profile/:user_uid'
           component={ProfileWithContext}

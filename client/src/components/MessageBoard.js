@@ -8,10 +8,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const PostFormWithContext = withContext(PostForm);
 const PostItemWithContext = withContext(PostItem);
 
-function MessageBoard({context, context: {verified}}) {
+function MessageBoard({context, context: {user_uid}}) {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(0);
 
+  //gets first five posts...offset is 5 posts in order to show infinite scroll functions
   useEffect(() => {
     const getPosts = async () => {
       let res = await context.actions.get_posts(0);
@@ -41,7 +42,7 @@ function MessageBoard({context, context: {verified}}) {
   return (
     <div className='container-fluid'>
       <h1 className='mb-0'>Local Things To Do...</h1>
-      {verified ? (
+      {user_uid ? (
         <Fragment>
           <p>Know of something happening? Share it here!</p>
           <PostFormWithContext />
@@ -60,7 +61,7 @@ function MessageBoard({context, context: {verified}}) {
         </p>
       )}
       {/* Bug issue, if !posts.length and user navigates away from posts and then goes back
-      the infinite scroll fires simultaneously as useEffect and doesnt render the posts correctly
+      the infinite scroll fires simultaneously as useEffect and doesn't render the posts correctly
       if at all */}
       {posts.length ? (
         <InfiniteScroll
