@@ -81,7 +81,7 @@ app.use((err, req, res, next) => {
 
 //Sets Port and Listens
 return models.sequelize.sync().then((result) => {
-  app.listen(PORT, () => {
-    console.log(`App running on port ${PORT}.`);
+  app.listen(process.env.PORT || 5000, () => {
+    console.log(`App running on port ${process.env.PORT || 5000}.`);
   });
 });
