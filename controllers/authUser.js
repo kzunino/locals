@@ -1,7 +1,8 @@
 const User = require('../models').users;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+//const config = require('config');
+require('dotenv').config();
 const {validationResult} = require('express-validator');
 
 const asyncHandler = require('../middleware/asyncHandler');
@@ -66,7 +67,7 @@ exports.sign_in = asyncHandler(async (req, res) => {
   //put secret in config then get secret
   jwt.sign(
     payload,
-    config.get('jwtSecret'),
+    process.env.jwtSecret,
     {
       expiresIn: '1 days',
     },

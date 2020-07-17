@@ -51,7 +51,7 @@ const LogInWithContext = withContext(LogIn);
 const SignUpWithContext = withContext(SignUp);
 
 function App({location}) {
-  //if token exists then sets api header with token for authetication
+  //if token exists then sets api header with token for authentication
   if (Cookies.get('token')) {
     setAuthToken(Cookies.get('token'));
   }
@@ -64,6 +64,7 @@ function App({location}) {
         <Route component={HomeWithContext} />
       ) : null}
       <Switch>
+        {location.pathname === '/' ? <Redirect to='/home' /> : null}
         <Route exact path='/home' component={FeaturedWithContext} />
         <Route path='/home/experiences' component={ExperiencesWithContext} />
         <Route path='/home/messageboard' component={MessageBoardWithContext} />

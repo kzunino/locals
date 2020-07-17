@@ -2,14 +2,15 @@ const cloudinary = require('cloudinary').v2;
 const User = require('../models').users;
 const Profile = require('../models').profile;
 const Adventure = require('../models').adventure;
+require('dotenv').config();
 
-const config = require('config');
+//const config = require('config');
 const asyncHandler = require('../middleware/asyncHandler');
 
 cloudinary.config({
-  cloud_name: config.get('cloud_name'),
-  api_key: config.get('api_key'),
-  api_secret: config.get('api_secret'),
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret,
 });
 
 // POST /upload/profile_photo

@@ -1,5 +1,4 @@
 import React, {useState, useEffect, Fragment, useRef} from 'react';
-//import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import TextareaAutosize from 'react-autosize-textarea';

@@ -1,7 +1,8 @@
 const User = require('../models').users;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+//const config = require('config');
+require('dotenv').config();
 
 const asyncHandler = require('../middleware/asyncHandler');
 
@@ -64,7 +65,7 @@ exports.create_user = asyncHandler(async (req, res) => {
   //put secret in config then get secret
   jwt.sign(
     payload,
-    config.get('jwtSecret'),
+    process.env.jwtSecret,
     {
       expiresIn: 36000,
     },

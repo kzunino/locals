@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-//import axios from 'axios';
-//import setAuthToken from '../../utilites/setAuthToken';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';

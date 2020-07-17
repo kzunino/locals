@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 const upload = require('express-fileupload');
 app.use(upload({useTempFiles: true}));
 
 const cors = require('cors');
-
 const path = require('path');
 const models = require('./models');
 
@@ -25,8 +25,16 @@ app.use(
   })
 );
 
+//app.use(express.static('client/build'));
+
+//if running in production mode then it serves static files from build in client
+if (process.env.NODE_ENV === 'production') {
+  //points to index.js in client
+  app.use(express.static(path.join(__dirname, 'client/build')));
+}
+
 //Friendly Start Message
-app.get('/', (req, res) => res.send('API Running'));
+//app.get('/', (req, res) => res.send('API Running'));
 
 //Routes
 app.use('/users', require('./routes/users'));
@@ -37,6 +45,11 @@ app.use('/adventure', require('./routes/adventure'));
 app.use('/review', require('./routes/review'));
 app.use('/favorites', require('./routes/favorites'));
 app.use('/upload', require('./routes/uploadImage'));
+
+//catch all method redirects to build folder
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));
+});
 
 // send 404 if no other route matched
 app.use((req, res) => {
@@ -67,7 +80,6 @@ app.use((err, req, res, next) => {
 });
 
 //Sets Port and Listens
-const PORT = process.env.PORT || 5000;
 return models.sequelize.sync().then((result) => {
   app.listen(PORT, () => {
     console.log(`App running on port ${PORT}.`);

@@ -78,7 +78,7 @@ export class Provider extends Component {
     const body = JSON.stringify({email, password});
     console.log(body);
     try {
-      const res = await axios.post(`http://localhost:5000/auth`, body, config);
+      const res = await axios.post(`/auth`, body, config);
       if (res.status === 200) {
         Cookies.set('token', res.data.token, {expires: 1});
         Cookies.set('user_uid', res.data.user.user_uid, {expires: 1});
@@ -151,7 +151,7 @@ export class Provider extends Component {
     const body = JSON.stringify({first_name, last_name, email, password});
     console.log(body);
     try {
-      const res = await axios.post('http://localhost:5000/users', body, config);
+      const res = await axios.post('/users', body, config);
       if (res.status === 201) {
         Cookies.set('token', res.data.token, {expires: 1});
         Cookies.set('user_uid', res.data.user.user_uid, {expires: 1});
@@ -199,7 +199,7 @@ export class Provider extends Component {
     //const body = JSON.stringify();
 
     try {
-      const res = await axios.post('http://localhost:5000/auth/verify', config);
+      const res = await axios.post('/auth/verify', config);
       if (res.status === 200) {
         Cookies.set('verified', true, {expires: 1});
         this.setState(() => {
@@ -236,7 +236,7 @@ export class Provider extends Component {
       },
     };
     try {
-      const res = await axios.get('http://localhost:5000/profile/me', config);
+      const res = await axios.get('/profile/me', config);
       if (res.status === 200) {
         return res.data;
       }
@@ -267,9 +267,7 @@ export class Provider extends Component {
     //   },
     // };
     try {
-      const res = await axios.get(
-        `http://localhost:5000/profile/user/${user_uid}`
-      );
+      const res = await axios.get(`/profile/user/${user_uid}`);
       if (res.status === 200) {
         return res.data;
       }
@@ -300,7 +298,7 @@ export class Provider extends Component {
       },
     };
     try {
-      const res = await axios.post('http://localhost:5000/profile/me', config);
+      const res = await axios.post('/profile/me', config);
       if (res.status === 200) {
         return res.data;
       }
@@ -333,11 +331,7 @@ export class Provider extends Component {
 
     const body = JSON.stringify({first_name, last_name});
     try {
-      const res = await axios.put(
-        'http://localhost:5000/auth/update',
-        body,
-        config
-      );
+      const res = await axios.put('/auth/update', body, config);
       if (res.status === 200) {
         return 200;
       }
@@ -373,11 +367,7 @@ export class Provider extends Component {
 
     //const body = JSON.stringify({first_name, last_name});
     try {
-      const res = await axios.post(
-        'http://localhost:5000/upload/profile_photo',
-        formData,
-        config
-      );
+      const res = await axios.post('/upload/profile_photo', formData, config);
       if (res.status === 200) {
         console.log(res.data);
         Cookies.set('avatar', res.data.user.avatar, {expires: 1});
@@ -421,7 +411,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({first_name, last_name});
     try {
       const res = await axios.post(
-        'http://localhost:5000/upload/profile_cover_photo',
+        '/upload/profile_cover_photo',
         formData,
         config
       );
@@ -472,11 +462,7 @@ export class Provider extends Component {
       phone_number,
     });
     try {
-      const res = await axios.post(
-        'http://localhost:5000/profile/me',
-        body,
-        config
-      );
+      const res = await axios.post('/profile/me', body, config);
       if (res.status === 200) {
         return 200;
       }
@@ -510,7 +496,7 @@ export class Provider extends Component {
     const body = JSON.stringify({text});
     console.log(body);
     try {
-      const res = await axios.post('http://localhost:5000/posts', body, config);
+      const res = await axios.post('/posts', body, config);
       if (res.status === 200) {
         return 200;
       }
@@ -544,11 +530,7 @@ export class Provider extends Component {
     const body = JSON.stringify({page});
     console.log(body);
     try {
-      const res = await axios.post(
-        `http://localhost:5000/posts/getall`,
-        body,
-        config
-      );
+      const res = await axios.post(`/posts/getall`, body, config);
       if (res.status === 200) {
         console.log(res.data);
         return res.data;
@@ -583,10 +565,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.get(
-        `http://localhost:5000/posts/${post_uid}`,
-        config
-      );
+      const res = await axios.get(`/posts/${post_uid}`, config);
       if (res.status === 200) {
         return res.data;
       }
@@ -622,11 +601,7 @@ export class Provider extends Component {
     const body = JSON.stringify(text);
     console.log(body);
     try {
-      const res = await axios.put(
-        `http://localhost:5000/posts/${post_uid}`,
-        body,
-        config
-      );
+      const res = await axios.put(`/posts/${post_uid}`, body, config);
       if (res.status === 200) {
         return res.data;
       }
@@ -660,11 +635,7 @@ export class Provider extends Component {
     const body = JSON.stringify(text);
     console.log(body);
     try {
-      const res = await axios.post(
-        `http://localhost:5000/posts/comment/${post_uid}`,
-        body,
-        config
-      );
+      const res = await axios.post(`/posts/comment/${post_uid}`, body, config);
       if (res.status === 200) {
         return res.data;
       }
@@ -701,7 +672,7 @@ export class Provider extends Component {
     console.log(body);
     try {
       const res = await axios.put(
-        `http://localhost:5000/posts/comment/${comment_uid}`,
+        `/posts/comment/${comment_uid}`,
         body,
         config
       );
@@ -739,10 +710,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.delete(
-        `http://localhost:5000/posts/${post_uid}`,
-        config
-      );
+      const res = await axios.delete(`/posts/${post_uid}`, config);
       if (res.status === 200) {
         return 200;
       }
@@ -777,10 +745,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.put(
-        `http://localhost:5000/posts/like/${post_uid}`,
-        config
-      );
+      const res = await axios.put(`/posts/like/${post_uid}`, config);
       if (res.status === 200) {
         return 200;
       }
@@ -815,10 +780,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.put(
-        `http://localhost:5000/posts/comment/like/${comment_uid}`,
-        config
-      );
+      const res = await axios.put(`/posts/comment/like/${comment_uid}`, config);
       if (res.status === 200) {
         return 200;
       }
@@ -852,10 +814,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.delete(
-        `http://localhost:5000/posts/comment/${comment_uid}`,
-        config
-      );
+      const res = await axios.delete(`/posts/comment/${comment_uid}`, config);
       if (res.status === 200) {
         return 200;
       }
@@ -891,11 +850,7 @@ export class Provider extends Component {
     console.log(body);
 
     try {
-      const res = await axios.post(
-        'http://localhost:5000/adventure',
-        body,
-        config
-      );
+      const res = await axios.post('/adventure', body, config);
       if (res.status === 200) {
         return res.data;
       }
@@ -932,11 +887,7 @@ export class Provider extends Component {
     console.log(formData);
 
     try {
-      const res = await axios.post(
-        'http://localhost:5000/upload/exp_cover_photo',
-        formData,
-        config
-      );
+      const res = await axios.post('/upload/exp_cover_photo', formData, config);
       if (res.status === 200) {
         return res.data;
       }
@@ -972,11 +923,7 @@ export class Provider extends Component {
     console.log(body);
 
     try {
-      const res = await axios.put(
-        `http://localhost:5000/adventure/${uid}`,
-        body,
-        config
-      );
+      const res = await axios.put(`/adventure/${uid}`, body, config);
       if (res.status === 200) {
         console.log(res.data);
         return 200;
@@ -1011,10 +958,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.get(
-        `http://localhost:5000/adventure/${adventure_uid}`,
-        config
-      );
+      const res = await axios.get(`/adventure/${adventure_uid}`, config);
       if (res.status === 200) {
         console.log(res.data);
         return res.data;
@@ -1049,10 +993,7 @@ export class Provider extends Component {
     // const body = JSON.stringify();
     // console.log(body);
     try {
-      const res = await axios.get(
-        `http://localhost:5000/adventure/user/adventures`,
-        config
-      );
+      const res = await axios.get(`/adventure/user/adventures`, config);
       if (res.status === 200) {
         return res.data;
       }
@@ -1087,7 +1028,7 @@ export class Provider extends Component {
     //console.log(body);
     try {
       const res = await axios.delete(
-        `http://localhost:5000/adventure/delete/${experience_uid}`,
+        `/adventure/delete/${experience_uid}`,
         config
       );
       if (res.status === 200) {
@@ -1123,10 +1064,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.post(
-        `http://localhost:5000/favorites/${adventure_uid}`,
-        config
-      );
+      const res = await axios.post(`/favorites/${adventure_uid}`, config);
       if (res.status === 200) {
         return res.data;
       }
@@ -1163,7 +1101,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.get(`http://localhost:5000/favorites`, config);
+      const res = await axios.get(`/favorites`, config);
       if (res.status === 200) {
         return res.data;
       }
@@ -1190,7 +1128,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.get(`http://localhost:5000/adventure/featured`);
+      const res = await axios.get(`/adventure/featured`);
       if (res.status === 200) {
         return res.data;
       }
@@ -1218,7 +1156,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.get(`http://localhost:5000/adventure`);
+      const res = await axios.get(`/adventure`);
       if (res.status === 200) {
         return res.data;
       }
@@ -1244,9 +1182,7 @@ export class Provider extends Component {
     //const body = JSON.stringify({});
     //console.log(body);
     try {
-      const res = await axios.get(
-        `http://localhost:5000/review/adventure/${adventure_uid}`
-      );
+      const res = await axios.get(`/review/adventure/${adventure_uid}`);
       if (res.status === 200) {
         return res.data;
       }
@@ -1282,11 +1218,7 @@ export class Provider extends Component {
     const body = JSON.stringify(query);
     console.log(body);
     try {
-      const res = await axios.post(
-        `http://localhost:5000/adventure/search`,
-        body,
-        config
-      );
+      const res = await axios.post(`/adventure/search`, body, config);
       if (res.data.length === 0) {
         return 404;
       }

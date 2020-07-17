@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-//import SampleImg from '../../img/experience-sample.jpg';
 import StockCoverPhoto from '../../img/empty-cover-photo.jpg';
 import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 import Moment from 'react-moment';
