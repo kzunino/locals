@@ -8,11 +8,11 @@ app.use(upload({useTempFiles: true}));
 
 const cors = require('cors');
 const path = require('path');
-const models = require('./models');
+//const models = require('./models');
 
 // variable to enable global error logging
-const enableGlobalErrorLogging =
-  process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
+// const enableGlobalErrorLogging =
+//   process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
 
 // Enable All CORS Requests
 app.use(cors());
