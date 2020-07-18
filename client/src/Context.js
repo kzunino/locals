@@ -76,7 +76,6 @@ export class Provider extends Component {
     };
 
     const body = JSON.stringify({email, password});
-    console.log(body);
     try {
       const res = await axios.post(`/auth`, body, config);
       if (res.status === 200) {
@@ -235,8 +234,9 @@ export class Provider extends Component {
         // 'Access-Control-Allow-Origin': '*',
       },
     };
+
     try {
-      const res = await axios.get('/profile/me', config);
+      const res = await axios.get('/api/profile/me', config);
       if (res.status === 200) {
         return res.data;
       }
@@ -267,7 +267,7 @@ export class Provider extends Component {
     //   },
     // };
     try {
-      const res = await axios.get(`/profile/user/${user_uid}`);
+      const res = await axios.get(`/api/profile/user/${user_uid}`);
       if (res.status === 200) {
         return res.data;
       }
@@ -298,7 +298,7 @@ export class Provider extends Component {
       },
     };
     try {
-      const res = await axios.post('/profile/me', config);
+      const res = await axios.post('/api/profile/me', config);
       if (res.status === 200) {
         return res.data;
       }
@@ -462,7 +462,7 @@ export class Provider extends Component {
       phone_number,
     });
     try {
-      const res = await axios.post('/profile/me', body, config);
+      const res = await axios.post('/api/profile/me', body, config);
       if (res.status === 200) {
         return 200;
       }

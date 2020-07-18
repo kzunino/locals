@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-//const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 const upload = require('express-fileupload');
 app.use(upload({useTempFiles: true}));
@@ -11,8 +11,8 @@ const path = require('path');
 const models = require('./models');
 
 // variable to enable global error logging
-// const enableGlobalErrorLogging =
-//   process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
+const enableGlobalErrorLogging =
+  process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
 
 // Enable All CORS Requests
 app.use(cors());
@@ -25,7 +25,7 @@ app.use(
   })
 );
 
-//app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 //app.use(express.static('client/build'));
 //if running in production mode then it serves static files from build in client
 if (process.env.NODE_ENV === 'production') {
@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/users', require('./routes/users'));
 app.use('/auth', require('./routes/auth'));
 app.use('/posts', require('./routes/posts'));
-app.use('/profile', require('./routes/profile'));
+app.use('/api/profile', require('./routes/profile'));
 app.use('/adventure', require('./routes/adventure'));
 app.use('/review', require('./routes/review'));
 app.use('/favorites', require('./routes/favorites'));
