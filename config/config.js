@@ -15,8 +15,7 @@ module.exports = {
   },
   production: {
     dialect: 'postgres',
-    use_env_variable:
-      'postgres://bjvqvqovwpyqob:f88278fbc6ffef452220d6a2d318c8c798254a9ea48a5615462e91e613fd7a2b@ec2-34-236-215-156.compute-1.amazonaws.com:5432/d498l1h5c5rcbu',
+    use_env_variable: process.env.DATABASE_URL,
     dialectOptions: {
       ssl: true,
     },
