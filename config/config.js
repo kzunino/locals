@@ -1,6 +1,6 @@
 // change to URI, make folder public and put URI into default.json
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
-console.log(process.env);
+console.log(process.env.DATABASE_URL);
 //PG_HOST = 127.0.0.1
 
 module.exports = {
