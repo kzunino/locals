@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 //PG_HOST = 127.0.0.1
+
 module.exports = {
   development: {
     username: process.env.PG_USER,
@@ -22,7 +23,7 @@ module.exports = {
   },
   production: {
     //connectionString: process.env.DATABASE_URL,
-    use_env_variable: process.env.DATABASE_URL,
+    use_env_variable: process.env.DATABASE_URL.toString(),
     dialect: 'postgres',
     dialectOptions: {
       ssl: true,

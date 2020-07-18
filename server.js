@@ -29,6 +29,7 @@ app.use(
 //app.use(express.static('client/build'));
 //if running in production mode then it serves static files from build in client
 if (process.env.NODE_ENV === 'production') {
+  console.log(process.env.DATABASE_URL);
   //points to index.js in client
   app.use(express.static(path.join(__dirname, 'client/build')));
 }
