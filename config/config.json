@@ -24,7 +24,7 @@
     "host": "process.env.HEROKU_HOST",
     "dialect": "postgres",
     "port": "process.env.HEROKU_PORT",
-    "operatorsAliases": "0"
+    "operatorsAliases": "0",
     "dialectOptions": {
       "ssl": true
     }
