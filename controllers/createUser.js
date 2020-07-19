@@ -2,7 +2,7 @@ const User = require('../models').users;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 //const config = require('config');
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const asyncHandler = require('../middleware/asyncHandler');
 

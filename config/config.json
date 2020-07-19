@@ -18,13 +18,8 @@
     "operatorsAliases": "0"
   },
   "production": {
-    "username": "process.env.HEROKU_USER",
-    "password": "process.env.HEROKU_PASSWORD",
-    "database": "process.env.HEROKU_DATABASE",
-    "host": "process.env.HEROKU_HOST",
+    "use_env_variable": "DATABASE_URL",
     "dialect": "postgres",
-    "port": "process.env.HEROKU_PORT",
-    "operatorsAliases": "0",
     "dialectOptions": {
       "ssl": true
     }

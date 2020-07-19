@@ -2,7 +2,7 @@ const cloudinary = require('cloudinary').v2;
 const User = require('../models').users;
 const Profile = require('../models').profile;
 const Adventure = require('../models').adventure;
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 //const config = require('config');
 const asyncHandler = require('../middleware/asyncHandler');
