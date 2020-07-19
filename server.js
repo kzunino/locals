@@ -34,9 +34,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
-//Friendly Start Message
-//app.get('/', (req, res) => res.send('API Running'));
-
 //Routes
 app.use('/users', require('./routes/users'));
 app.use('/auth', require('./routes/auth'));
