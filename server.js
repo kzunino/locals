@@ -25,7 +25,7 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+//app.use(express.static(path.join(__dirname, 'client/build')));
 
 console.log(process.env.NODE_ENV);
 //if running in production mode then it serves static files from build in client
