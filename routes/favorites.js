@@ -3,7 +3,7 @@ const router = express.Router();
 const favorites_controller = require('../controllers/favorites');
 const auth = require('../middleware/auth');
 
-//@Route    PUT /favorites
+//@Route    GET /favorites
 //@desc     Adds/Deletes adventure to user favorites
 //@access   Private
 
