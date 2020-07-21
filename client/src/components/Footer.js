@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 function Footer() {
   let date = new Date();
@@ -17,18 +18,66 @@ function Footer() {
         <tbody className='secondary'>
           <tr>
             <td>+1-415-222-2222</td>
-            <td>Help Center</td>
-            <td>Become a host</td>
+            <td>
+              <Link
+                className='secondary hover'
+                style={{textDecoration: 'none'}}
+                to='/underconstruction'
+              >
+                Help Center
+              </Link>
+            </td>
+            <td>
+              <Link
+                className='secondary hover'
+                style={{textDecoration: 'none'}}
+                to='/underconstruction'
+              >
+                Become a host
+              </Link>
+            </td>
           </tr>
           <tr>
             <td>Email: hello@locals.com</td>
-            <td>Private Policy</td>
-            <td>Become a partner</td>
+            <td>
+              <Link
+                className='secondary hover'
+                style={{textDecoration: 'none'}}
+                to='/underconstruction'
+              >
+                Private Policy
+              </Link>
+            </td>
+            <td>
+              <Link
+                className='secondary hover'
+                style={{textDecoration: 'none'}}
+                to='/underconstruction'
+              >
+                Become a partner
+              </Link>
+            </td>
           </tr>
           <tr>
             <td></td>
-            <td>Cancellation</td>
-            <td>Become and ambassador</td>
+            <td>
+              <Link
+                className='secondary hover'
+                style={{textDecoration: 'none'}}
+                to='/underconstruction'
+              >
+                Cancellation
+              </Link>
+            </td>
+            <td>
+              <Link
+                className='secondary hover'
+                style={{textDecoration: 'none'}}
+                to='/underconstruction'
+              >
+                Become and ambassador
+              </Link>
+            </td>
           </tr>
         </tbody>
       </table>

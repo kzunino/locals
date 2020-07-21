@@ -65,7 +65,7 @@ function MessageBoard({context, context: {user_uid}}) {
       if at all */}
       {posts.length ? (
         <InfiniteScroll
-          className='container- post-wrapper'
+          className='container- post-wrapper pb-2'
           next={() => {
             setPage(page + 1);
             getMorePosts();

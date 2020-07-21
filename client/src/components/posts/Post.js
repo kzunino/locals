@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import withContext from '../../Context';
-// import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
 import Moment from 'react-moment';
 import TextareaAutosize from 'react-autosize-textarea';
@@ -9,14 +8,14 @@ import PortraitPlaceholder from '../../img/portrait-placeholder.png';
 
 const CommentItemWithContext = withContext(CommentItem);
 
-function Post({context, match, context: {user_uid}, history}) {
+function Post({context, match, context: {user_uid, avatar}, history}) {
   // Gets post by params and loads comment Items
   const [postData, setPostData] = useState({});
   const [liked, setLiked] = useState('');
   const [count, setCount] = useState(null);
   const [comment_text, setComment_Text] = useState('');
   const [comments_array, setComments_Array] = useState([]);
-  const [avatar, setAvatar] = useState(null);
+  const [postAvatar, setPostAvatar] = useState(null);
   const [editText, setEditText] = useState({
     updatedText: '',
   });
@@ -40,7 +39,7 @@ function Post({context, match, context: {user_uid}, history}) {
       setComment_Text('');
       isPostLiked(res.post.post_likes);
       setCount(res.post.likeCounts);
-      setAvatar(res.post.user.avatar);
+      setPostAvatar(res.post.user.avatar);
       setComments_Array([...res.post.comments]);
       setComment_Text({comment_text: ''});
       setEditText({updatedText: res.post.text});
@@ -136,7 +135,7 @@ function Post({context, match, context: {user_uid}, history}) {
     <div className='container'>
       <Link
         to='/home/messageboard'
-        className='primary-color'
+        className='primary-color hoverSecondary'
         style={{textDecoration: 'none'}}
       >
         <h6 className='mt-3 m'>Back to Messages</h6>
@@ -150,15 +149,15 @@ function Post({context, match, context: {user_uid}, history}) {
                   <img
                     className='rounded-circle'
                     width='45'
-                    src={avatar || PortraitPlaceholder}
+                    src={postAvatar || PortraitPlaceholder}
                     alt=''
                   />
                 </Link>
               </div>
-              <div className='ml-2 '>
+              <div className='ml-2'>
                 <Link
                   to='/'
-                  className='primary-color'
+                  className='primary-color hoverSecondary'
                   style={{textDecoration: 'none'}}
                 >
                   <div className='h5 m-0'>

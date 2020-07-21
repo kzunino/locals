@@ -22,10 +22,11 @@ function PostItem({
   },
   postData: {post_likes},
   onPostDelete,
+  postData: {comments},
 }) {
   const [liked, setLiked] = useState('');
   const [count, setCount] = useState(likeCounts);
-
+  let commentCount = comments.length;
   //const [likedTrue, setLikedTrue] = useState([]);
 
   useEffect(() => {
@@ -91,7 +92,7 @@ function PostItem({
                 <div className='ml-2'>
                   <Link
                     to={`/profile/${fk_user_uid}`}
-                    className='primary-color'
+                    className='primary-color hoverSecondary'
                     style={{textDecoration: 'none'}}
                   >
                     <div className='h5 m-0'>
@@ -125,7 +126,8 @@ function PostItem({
               </button>
 
               <Link to={`/post/${post_uid}`} className='btn '>
-                <i className='far fa-comment'></i>{' '}
+                {commentCount > 0 ? commentCount : null}{' '}
+                <i className='far fa-comment'></i>...{' '}
               </Link>
               {fk_user_uid === user_uid ? (
                 <Fragment>

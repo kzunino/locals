@@ -31,6 +31,7 @@ import Footer from './components/Footer';
 import MessageBoard from './components/MessageBoard';
 import Search from './components/Search';
 import NotFound from './components/NotFound';
+import UnderConstruction from './components/UnderConstruction';
 
 //Components with context
 const HomeWithContext = withContext(Home);
@@ -93,6 +94,7 @@ function App({location}) {
         <Route path='/signup' component={SignUpWithContext} />
 
         <Route path='/notfound' component={NotFound} />
+        <Route path='/underconstruction' component={UnderConstruction} />
         <Redirect to='/notfound' />
       </Switch>
 

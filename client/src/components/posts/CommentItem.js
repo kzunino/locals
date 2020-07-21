@@ -139,17 +139,21 @@ function CommentItem({
               </Fragment>
             )}
             <div></div>
+
             <button
               onClick={() => {
                 onLike(comment_uid);
                 afterLike();
               }}
               type='btn'
-              className={`btn m-0 p-0 comment-like ${liked}`}
+              className={`btn m-0 p-0 comment-like`}
             >
               {count > 0 ? count : null}{' '}
-              {/* <i className={`fas fa-thumbs-up ${liked}`} />{' '} */}
-              Like
+              {liked ? (
+                <span className={`${liked}`}>Liked</span>
+              ) : (
+                <span>Like</span>
+              )}
             </button>
             {fk_user_uid === user_uid ? (
               <Fragment>

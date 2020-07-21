@@ -32,6 +32,9 @@ button:focus {
 .hover:hover {
   color: rgb(var(--primary-color));
 }
+.hoverSecondary:hover {
+  color: #4a4a4a;
+}
 .primary-color {
   color: rgb(var(--primary-color));
 }
@@ -185,6 +188,7 @@ button:focus {
 
 .card-img-top {
   height: 165px;
+  object-fit: cover;
 }
 
 /* Large Exp Card */

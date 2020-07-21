@@ -12,6 +12,7 @@
   height: 40vh;
   width: 100%;
   z-index: 0;
+  object-fit: cover;
 }
 
 .profile-picture {
